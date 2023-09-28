@@ -20,5 +20,18 @@ namespace API.NgheNhacTrucTuyen.Controllers
         {
             return _taiKhoanBLL.GetTaiKhoan(tenDangnhap);
         }
+        [Route("create-taikhoan")]
+        [HttpPost]
+        public TaiKhoanModel CreateTaiKhoans([FromBody] TaiKhoanModel model)
+        {
+            _taiKhoanBLL.Create(model);
+            return model;
+        }
+        [Route("delete-taikhoan")]
+        [HttpDelete]
+        public bool Delete(string tenDangNhap) 
+        {
+            return _taiKhoanBLL.Delete(tenDangNhap);
+        }
     }
 }

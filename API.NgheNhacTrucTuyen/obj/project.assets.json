@@ -1156,11 +1156,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Phát triển Dịch Vụ\\API.NgheNhacTrucTuyen\\API.NgheNhacTrucTuyen\\API.NgheNhacTrucTuyen.csproj",
+      "projectUniqueName": "D:\\Phát triển Dịch Vụ\\BTL\\API.NgheNhacTrucTuyen\\API.NgheNhacTrucTuyen\\API.NgheNhacTrucTuyen.csproj",
       "projectName": "API.NgheNhacTrucTuyen",
-      "projectPath": "D:\\Phát triển Dịch Vụ\\API.NgheNhacTrucTuyen\\API.NgheNhacTrucTuyen\\API.NgheNhacTrucTuyen.csproj",
+      "projectPath": "D:\\Phát triển Dịch Vụ\\BTL\\API.NgheNhacTrucTuyen\\API.NgheNhacTrucTuyen\\API.NgheNhacTrucTuyen.csproj",
       "packagesPath": "C:\\Users\\AK\\.nuget\\packages\\",
-      "outputPath": "D:\\Phát triển Dịch Vụ\\API.NgheNhacTrucTuyen\\API.NgheNhacTrucTuyen\\obj\\",
+      "outputPath": "D:\\Phát triển Dịch Vụ\\BTL\\API.NgheNhacTrucTuyen\\API.NgheNhacTrucTuyen\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\AK\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -1177,11 +1177,11 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "D:\\Phát triển Dịch Vụ\\API.NgheNhacTrucTuyen\\BLL\\BLL.csproj": {
-              "projectPath": "D:\\Phát triển Dịch Vụ\\API.NgheNhacTrucTuyen\\BLL\\BLL.csproj"
+            "D:\\Phát triển Dịch Vụ\\BTL\\API.NgheNhacTrucTuyen\\BLL\\BLL.csproj": {
+              "projectPath": "D:\\Phát triển Dịch Vụ\\BTL\\API.NgheNhacTrucTuyen\\BLL\\BLL.csproj"
             },
-            "D:\\Phát triển Dịch Vụ\\API.NgheNhacTrucTuyen\\Model\\Model.csproj": {
-              "projectPath": "D:\\Phát triển Dịch Vụ\\API.NgheNhacTrucTuyen\\Model\\Model.csproj"
+            "D:\\Phát triển Dịch Vụ\\BTL\\API.NgheNhacTrucTuyen\\Model\\Model.csproj": {
+              "projectPath": "D:\\Phát triển Dịch Vụ\\BTL\\API.NgheNhacTrucTuyen\\Model\\Model.csproj"
             }
           }
         }

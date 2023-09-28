@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Phát triển Dịch Vụ\\API.NgheNhacTrucTuyen\\Model\\Model.csproj": {}
+    "D:\\Phát triển Dịch Vụ\\BTL\\API.NgheNhacTrucTuyen\\Model\\Model.csproj": {}
   },
   "projects": {
-    "D:\\Phát triển Dịch Vụ\\API.NgheNhacTrucTuyen\\Model\\Model.csproj": {
+    "D:\\Phát triển Dịch Vụ\\BTL\\API.NgheNhacTrucTuyen\\Model\\Model.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Phát triển Dịch Vụ\\API.NgheNhacTrucTuyen\\Model\\Model.csproj",
+        "projectUniqueName": "D:\\Phát triển Dịch Vụ\\BTL\\API.NgheNhacTrucTuyen\\Model\\Model.csproj",
         "projectName": "Model",
-        "projectPath": "D:\\Phát triển Dịch Vụ\\API.NgheNhacTrucTuyen\\Model\\Model.csproj",
+        "projectPath": "D:\\Phát triển Dịch Vụ\\BTL\\API.NgheNhacTrucTuyen\\Model\\Model.csproj",
         "packagesPath": "C:\\Users\\AK\\.nuget\\packages\\",
-        "outputPath": "D:\\Phát triển Dịch Vụ\\API.NgheNhacTrucTuyen\\Model\\obj\\",
+        "outputPath": "D:\\Phát triển Dịch Vụ\\BTL\\API.NgheNhacTrucTuyen\\Model\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\AK\\AppData\\Roaming\\NuGet\\NuGet.Config",

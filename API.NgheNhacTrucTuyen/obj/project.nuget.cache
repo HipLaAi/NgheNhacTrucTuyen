@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "KEuwJgWS0UO/IBXy7j4e3QlB+OY2paB6zSRKS+vgZspfxJ38ode3PiXIIn0YAh4+x3H65uRtV+btKO9P18+6Tg==",
+  "dgSpecHash": "dyfbcufWZHiTOn9Z+K1/vNaT+co3L9mm3lBf65bcdijxbXCy204V/KlyupdtLeruX8+9JKWvHJlTC2cUEYW1kw==",
   "success": true,
-  "projectFilePath": "D:\\Phát triển Dịch Vụ\\API.NgheNhacTrucTuyen\\API.NgheNhacTrucTuyen\\API.NgheNhacTrucTuyen.csproj",
+  "projectFilePath": "D:\\Phát triển Dịch Vụ\\BTL\\API.NgheNhacTrucTuyen\\API.NgheNhacTrucTuyen\\API.NgheNhacTrucTuyen.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\AK\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
     "C:\\Users\\AK\\.nuget\\packages\\microsoft.extensions.configuration\\6.0.1\\microsoft.extensions.configuration.6.0.1.nupkg.sha512",
