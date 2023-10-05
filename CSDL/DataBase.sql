@@ -1,0 +1,259 @@
+USE [master]
+GO
+
+/****** Object:  Database [NgheNhacTrucTuyen]    Script Date: 10/4/2023 1:06:11 AM ******/
+CREATE DATABASE [NgheNhacTrucTuyen]
+ CONTAINMENT = NONE
+ ON  PRIMARY 
+( NAME = N'NgheNhacTrucTuyen', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL15.SQLEXPRESS04\MSSQL\DATA\NgheNhacTrucTuyen.mdf' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
+ LOG ON 
+( NAME = N'NgheNhacTrucTuyen_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL15.SQLEXPRESS04\MSSQL\DATA\NgheNhacTrucTuyen_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
+ WITH CATALOG_COLLATION = DATABASE_DEFAULT
+GO
+
+IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
+begin
+EXEC [NgheNhacTrucTuyen].[dbo].[sp_fulltext_database] @action = 'enable'
+end
+GO
+
+/****** Object:  Table [dbo].[Album]    Script Date: 10/4/2023 1:06:35 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Album](
+	[IDAlbum] [int] IDENTITY(1,1) NOT NULL,
+	[TenAlbum] [nvarchar](250) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[IDAlbum] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+/****** Object:  Table [dbo].[ChiTietTaiKhoan]    Script Date: 10/4/2023 1:08:24 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[ChiTietTaiKhoan](
+	[IDChiTietTaiKhoan] [int] IDENTITY(1,1) NOT NULL,
+	[IDTaiKhoan] [int] NULL,
+	[HoTen] [nvarchar](50) NULL,
+	[GioiTinh] [nvarchar](3) NULL,
+	[NgaySinh] [date] NULL,
+	[SDT] [char](11) NULL,
+	[DiaChi] [nvarchar](250) NULL,
+	[AnhDaiDien] [nvarchar](500) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[IDChiTietTaiKhoan] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[ChiTietTaiKhoan]  WITH CHECK ADD FOREIGN KEY([IDTaiKhoan])
+REFERENCES [dbo].[TaiKhoan] ([IDTaiKhoan])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+
+/****** Object:  Table [dbo].[DanhMucYeuThich]    Script Date: 10/4/2023 1:08:56 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[DanhMucYeuThich](
+	[IDTaiKhoan] [int] NULL,
+	[IDNhac] [int] NULL
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[DanhMucYeuThich]  WITH CHECK ADD FOREIGN KEY([IDNhac])
+REFERENCES [dbo].[Nhac] ([IDNhac])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+
+ALTER TABLE [dbo].[DanhMucYeuThich]  WITH CHECK ADD FOREIGN KEY([IDTaiKhoan])
+REFERENCES [dbo].[TaiKhoan] ([IDTaiKhoan])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+
+/****** Object:  Table [dbo].[DanhSachPhatCuaNguoiDung]    Script Date: 10/4/2023 1:09:33 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[DanhSachPhatCuaNguoiDung](
+	[IDDanhSachPhat] [int] IDENTITY(1,1) NOT NULL,
+	[TenDanhSachPhat] [nvarchar](40) NULL,
+	[IDTaiKhoan] [int] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[IDDanhSachPhat] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[DanhSachPhatCuaNguoiDung]  WITH CHECK ADD FOREIGN KEY([IDTaiKhoan])
+REFERENCES [dbo].[TaiKhoan] ([IDTaiKhoan])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+
+/****** Object:  Table [dbo].[LoaiTaiKhoan]    Script Date: 10/4/2023 1:09:58 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[LoaiTaiKhoan](
+	[IDLoaiTaiKhoan] [int] IDENTITY(1,1) NOT NULL,
+	[TenLoaiTaiKhoan] [nvarchar](50) NULL,
+	[MoTa] [nvarchar](250) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[IDLoaiTaiKhoan] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+/****** Object:  Table [dbo].[NgheSi]    Script Date: 10/4/2023 1:10:28 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[NgheSi](
+	[IDNgheSi] [int] IDENTITY(1,1) NOT NULL,
+	[TenNgheSi] [nvarchar](250) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[IDNgheSi] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+/****** Object:  Table [dbo].[Nhac]    Script Date: 10/4/2023 1:10:54 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Nhac](
+	[IDNhac] [int] IDENTITY(1,1) NOT NULL,
+	[TenNhac] [nvarchar](50) NULL,
+	[IDTheLoai] [int] NULL,
+	[IDAlbum] [int] NULL,
+	[IDNgheSi] [int] NULL,
+	[Audio] [nvarchar](500) NULL,
+	[IMG] [nvarchar](500) NULL,
+	[ThoiLuongNhac] [nvarchar](50) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[IDNhac] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[Nhac]  WITH CHECK ADD FOREIGN KEY([IDAlbum])
+REFERENCES [dbo].[Album] ([IDAlbum])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+
+ALTER TABLE [dbo].[Nhac]  WITH CHECK ADD FOREIGN KEY([IDNgheSi])
+REFERENCES [dbo].[NgheSi] ([IDNgheSi])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+
+ALTER TABLE [dbo].[Nhac]  WITH CHECK ADD FOREIGN KEY([IDTheLoai])
+REFERENCES [dbo].[TheLoai] ([IDTheLoai])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+
+/****** Object:  Table [dbo].[NhacCoTrongDanhSachPhat]    Script Date: 10/4/2023 1:12:09 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[NhacCoTrongDanhSachPhat](
+	[IDDanhSachPhat] [int] NULL,
+	[IDNhac] [int] NULL
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[NhacCoTrongDanhSachPhat]  WITH CHECK ADD FOREIGN KEY([IDDanhSachPhat])
+REFERENCES [dbo].[DanhSachPhatCuaNguoiDung] ([IDDanhSachPhat])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+
+ALTER TABLE [dbo].[NhacCoTrongDanhSachPhat]  WITH CHECK ADD FOREIGN KEY([IDNhac])
+REFERENCES [dbo].[Nhac] ([IDNhac])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+
+/****** Object:  Table [dbo].[TaiKhoan]    Script Date: 10/4/2023 1:12:32 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[TaiKhoan](
+	[IDTaiKhoan] [int] IDENTITY(1,1) NOT NULL,
+	[IDLoaiTaiKhoan] [int] NULL,
+	[TenDangNhap] [char](50) NULL,
+	[MatKhau] [char](50) NULL,
+	[Email] [char](100) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[IDTaiKhoan] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[TaiKhoan]  WITH CHECK ADD FOREIGN KEY([IDLoaiTaiKhoan])
+REFERENCES [dbo].[LoaiTaiKhoan] ([IDLoaiTaiKhoan])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+
+/****** Object:  Table [dbo].[TheLoai]    Script Date: 10/4/2023 1:12:53 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[TheLoai](
+	[IDTheLoai] [int] IDENTITY(1,1) NOT NULL,
+	[TenTheLoai] [nvarchar](250) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[IDTheLoai] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+

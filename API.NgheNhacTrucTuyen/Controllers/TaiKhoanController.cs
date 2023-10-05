@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using BLL;
 using Model;
+using DataModel;
+using Microsoft.AspNetCore.Authorization;
 
-namespace API.NgheNhacTrucTuyen.Controllers
+namespace API.NgheNhacTrucTuyen.Controllers.USER
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -14,24 +16,45 @@ namespace API.NgheNhacTrucTuyen.Controllers
             _taiKhoanBLL = taiKhoanBLL;
         }
 
-        [Route("get-taikhoan-by-tendangnhap/{tenDangnhap}")]
-        [HttpGet]
-        public TaiKhoanModel GetTaiKhoans(string tenDangnhap)
-        {
-            return _taiKhoanBLL.GetTaiKhoan(tenDangnhap);
-        }
-        [Route("create-taikhoan")]
+
+        //[Route("get-taikhoan-by-tendangnhap/{tenDangnhap}")]
+        //[HttpGet]
+        //public TaiKhoanModel GetTaiKhoans(string tenDangnhap)
+        //{
+        //    return _taiKhoanBLL.GetTaiKhoan(tenDangnhap);
+        //}
+        [Route("create-account")]
         [HttpPost]
         public TaiKhoanModel CreateTaiKhoans([FromBody] TaiKhoanModel model)
         {
             _taiKhoanBLL.Create(model);
             return model;
         }
-        [Route("delete-taikhoan")]
+
+        [Route("delete-account")]
         [HttpDelete]
-        public bool Delete(string tenDangNhap) 
+        public string Delete(string tenDangNhap)
         {
-            return _taiKhoanBLL.Delete(tenDangNhap);
+            _taiKhoanBLL.Delete(tenDangNhap);
+            return tenDangNhap;
+        }
+
+        [Route("update-account")]
+        [HttpPost]
+        public TaiKhoanModel UpdateItem([FromBody] TaiKhoanModel model)
+        {
+            _taiKhoanBLL.Update(model);
+            return model;
+        }
+
+        [AllowAnonymous]
+        [HttpPost("login-account")]
+        public IActionResult DangNhap([FromBody] AuthenticateModel model)
+        {
+            var user = _taiKhoanBLL.DangNhap(model.Username, model.Password);
+            if (user == null)
+                return BadRequest(new { message = "Tài khoản hoặc mật khẩu không đúng!" });
+            return Ok(new { tendangnhap = user.TenDangNhap, email = user.Email, token = user.Token });
         }
     }
 }

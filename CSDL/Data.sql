@@ -1,35 +1,60 @@
 ﻿create database NgheNhacTrucTuyen
+go
 use NgheNhacTrucTuyen
+go
 
 create table TheLoai
 (
 IDTheLoai int identity(1,1) primary key,
-TenTheLoai nvarchar(40)
+TenTheLoai nvarchar(250)
 )
+go
 
 create table Album
 (
 IDAlbum int identity(1,1) primary key,
-TenAlbum nvarchar(40)
+TenAlbum nvarchar(250)
 )
+go
 
 create table NgheSi
 (
 IDNgheSi int identity(1,1) primary key,
-TenNgheSi nvarchar(40)
+TenNgheSi nvarchar(250)
 )
+go
+
+create table LoaiTaiKhoan
+(
+IDLoaiTaiKhoan int identity(1,1) primary key,
+TenLoaiTaiKhoan nvarchar (50),
+MoTa nvarchar(250)
+)
+go
 
 create table TaiKhoan
 (
-TenDangNhap char(40) primary key,
-MatKhau char(40),
-HoTen nvarchar(40),
+IDTaiKhoan int identity(1,1) primary key,
+IDLoaiTaiKhoan int foreign key references LoaiTaiKhoan(IDLoaiTaiKhoan) on delete cascade on update cascade,
+TenDangNhap char(50) unique,
+MatKhau char(50),
+Email char(100)
+)
+go
+
+
+create table ChiTietTaiKhoan
+(
+IDChiTietTaiKhoan int identity(1,1) primary key,
+IDTaiKhoan int foreign key references TaiKhoan(IDTaiKhoan) on delete cascade on update cascade,
+HoTen nvarchar(50),
 GioiTinh nvarchar(3) check (GioiTinh in (N'Nam',N'Nữ')),
 NgaySinh date,
 SDT char(11),
-DiaChi nvarchar(40),
-LoaiTaiKhoan char(10) check (LoaiTaiKhoan in (N'ADMIN',N'USER'))
+DiaChi nvarchar(250),
+AnhDaiDien nvarchar(500)
 )
+go
 
 create table Nhac
 (
@@ -37,32 +62,41 @@ IDNhac int identity(1,1) primary key,
 TenNhac nvarchar(50),
 IDTheLoai int foreign key references TheLoai(IDTheLoai) on delete cascade on update cascade,
 IDAlbum int foreign key references Album(IDAlbum) on delete cascade on update cascade,
-IDNgheSi int foreign key references NgheSi(IDNgheSi) on delete cascade on update cascade
+IDNgheSi int foreign key references NgheSi(IDNgheSi) on delete cascade on update cascade,
+Audio nvarchar(500),
+IMG nvarchar(500),
+ThoiLuong nvarchar(50)
 )
+go
 
 create table DanhMucYeuThich
 (
-TenDangNhap char(40) foreign key references TaiKhoan(TenDangNhap) on delete cascade on update cascade,
+IDTaiKhoan int foreign key references TaiKhoan(IDTaiKhoan) on delete cascade on update cascade,
 IDNhac int foreign key references Nhac(IDNhac) on delete cascade on update cascade,
 )
+go
 
 create table DanhSachPhatCuaNguoiDung
 (
 IDDanhSachPhat int identity(1,1) primary key,
 TenDanhSachPhat nvarchar(40),
-TenDangNhap char(40) foreign key references TaiKhoan(TenDangNhap) on delete cascade on update cascade,
+IDTaiKhoan int foreign key references TaiKhoan(IDTaiKhoan) on delete cascade on update cascade,
 )
+go
 
 create table NhacCoTrongDanhSachPhat
 (
 IDDanhSachPhat int foreign key references DanhSachPhatCuaNguoiDung(IDDanhSachPhat) on delete cascade on update cascade,
 IDNhac int foreign key references Nhac(IDNhac) on delete cascade on update cascade
 )
+go
+
 
 use NgheNhacTrucTuyen
-select * from TaiKhoan
-insert into TaiKhoan
-values
-('Hiep','1',N'Vũ Văn Hiệp','Nam','9-5-2003','0901519038',N'Kim Động - Hưng Yên','USER')
+go
 
-exec gettaikhoan 'Hiep'
+insert into LoaiTaiKhoan
+values
+(N'ADMIN',Null),
+(N'USER',Null)
+

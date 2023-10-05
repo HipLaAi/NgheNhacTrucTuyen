@@ -9,16 +9,18 @@ namespace DAL
         {
             _dbHelper = dbHelper;
         }
-        public TaiKhoanModel GetTaiKhoan(string tenDangNhap)
+
+        public TaiKhoanModel DangNhap(string tenDangNhap, string matKhau)
         {
             string msgError = "";
             try
             {
-                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "gettaikhoan",
-                     "@tendangnhap", tenDangNhap);
+                var dn = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "logintaikhoan",
+                    "@tendangnhap", tenDangNhap,
+                    "@matkhau", matKhau);
                 if (!string.IsNullOrEmpty(msgError))
                     throw new Exception(msgError);
-                return dt.ConvertTo<TaiKhoanModel>().FirstOrDefault();
+                return dn.ConvertTo<TaiKhoanModel>().FirstOrDefault();
             }
             catch (Exception ex)
             {
@@ -32,14 +34,10 @@ namespace DAL
             try
             {
                 var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "createtaikhoan",
+                "@idloaitaikhoan", model.IDLoaiTaiKhoan,
                 "@tendangnhap", model.TenDangNhap,
-                "@matkhau", model.MatKhhau,
-                "@hoten", model.HoTen,
-                "@gioitinh", model.GioiTinh,
-                "@ngaysinh", model.NgaySinh,
-                "@sdt", model.SDT,
-                "@diachi", model.DiaChi,
-                "@loaitaikhoan", model.LoaiTaiKhoan);
+                "@matkhau", model.MatKhau,
+                "@email", model.Email);
                 if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
                 {
                     throw new Exception(Convert.ToString(result) + msgError);
@@ -55,28 +53,44 @@ namespace DAL
         public bool Delete(string tenDangNhap)
         {
             string msgError = "";
-            bool kq; // Khởi tạo mặc định là false
             try
             {
-                var result = _dbHelper.ExecuteScalarSProcedure(out msgError, "deletetaikhoan",
-                     "@tendangnhap", tenDangNhap);                
-                // Kiểm tra kết quả trả về từ hàm ExecuteScalarSProcedureWithTransaction
-                if (Convert.ToInt32(result) > 0)
+                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError,"deletetaikhoan",
+                "@tendangnhap", tenDangNhap);
+                if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
                 {
-                    kq = true; // Xóa thành công, đặt kq thành true
+                    throw new Exception(Convert.ToString(result) + msgError);
                 }
-                else
-                {
-                    kq = false;
-                }
-                return kq;
+                return true;
             }
             catch (Exception ex)
             {
                 throw ex;
             }
         }
-    
+
+        public bool Update(TaiKhoanModel model)
+        {
+            string msgError = "";
+            try
+            {
+                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "updatetaikhoan",
+                "@idloaitaikhoan", model.IDLoaiTaiKhoan,
+                "@tendangnhap", model.TenDangNhap,
+                "@matkhau", model.MatKhau,
+                "@email", model.Email);
+                if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
+                {
+                    throw new Exception(Convert.ToString(result) + msgError);
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }    
+
     }
 }
   

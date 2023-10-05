@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API.NgheNhacTrucTuyen", "API.NgheNhacTrucTuyen\API.NgheNhacTrucTuyen.csproj", "{959A9F7A-A95F-4934-AFCB-5CD687831EA8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API.NgheNhacTrucTuyen.USER", "API.NgheNhacTrucTuyen\API.NgheNhacTrucTuyen.USER.csproj", "{959A9F7A-A95F-4934-AFCB-5CD687831EA8}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAL", "DAL\DAL.csproj", "{6DDD996D-4CC3-410E-A24B-AB5099045C72}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLL", "BLL\BLL.csproj", "{74F772F3-9BE2-4FEC-9CE2-F72FB7FA6771}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Model", "Model\Model.csproj", "{F5D1FF6C-4D15-4F65-88B3-77EFF06F8C60}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API.NgheNhacTrucTuyen.ADMIN", "API.NgheNhacTrucTuyen.ADMIN\API.NgheNhacTrucTuyen.ADMIN.csproj", "{89B052DB-5D66-4D45-B82A-595698489E32}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{F5D1FF6C-4D15-4F65-88B3-77EFF06F8C60}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F5D1FF6C-4D15-4F65-88B3-77EFF06F8C60}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F5D1FF6C-4D15-4F65-88B3-77EFF06F8C60}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89B052DB-5D66-4D45-B82A-595698489E32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89B052DB-5D66-4D45-B82A-595698489E32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89B052DB-5D66-4D45-B82A-595698489E32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89B052DB-5D66-4D45-B82A-595698489E32}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

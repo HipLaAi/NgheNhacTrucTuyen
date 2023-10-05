@@ -90,3 +90,11 @@ D:\Phát triển Dịch Vụ\BTL\API.NgheNhacTrucTuyen\API.NgheNhacTrucTuyen\obj
 D:\Phát triển Dịch Vụ\BTL\API.NgheNhacTrucTuyen\API.NgheNhacTrucTuyen\obj\Debug\net6.0\API.NgheNhacTrucTuyen.pdb
 D:\Phát triển Dịch Vụ\BTL\API.NgheNhacTrucTuyen\API.NgheNhacTrucTuyen\obj\Debug\net6.0\API.NgheNhacTrucTuyen.genruntimeconfig.cache
 D:\Phát triển Dịch Vụ\BTL\API.NgheNhacTrucTuyen\API.NgheNhacTrucTuyen\obj\Debug\net6.0\ref\API.NgheNhacTrucTuyen.dll
+D:\Phát triển Dịch Vụ\BTL\API.NgheNhacTrucTuyen\API.NgheNhacTrucTuyen\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+D:\Phát triển Dịch Vụ\BTL\API.NgheNhacTrucTuyen\API.NgheNhacTrucTuyen\bin\Debug\net6.0\Microsoft.IdentityModel.Abstractions.dll
+D:\Phát triển Dịch Vụ\BTL\API.NgheNhacTrucTuyen\API.NgheNhacTrucTuyen\bin\Debug\net6.0\Microsoft.IdentityModel.JsonWebTokens.dll
+D:\Phát triển Dịch Vụ\BTL\API.NgheNhacTrucTuyen\API.NgheNhacTrucTuyen\bin\Debug\net6.0\Microsoft.IdentityModel.Logging.dll
+D:\Phát triển Dịch Vụ\BTL\API.NgheNhacTrucTuyen\API.NgheNhacTrucTuyen\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.dll
+D:\Phát triển Dịch Vụ\BTL\API.NgheNhacTrucTuyen\API.NgheNhacTrucTuyen\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+D:\Phát triển Dịch Vụ\BTL\API.NgheNhacTrucTuyen\API.NgheNhacTrucTuyen\bin\Debug\net6.0\Microsoft.IdentityModel.Tokens.dll
+D:\Phát triển Dịch Vụ\BTL\API.NgheNhacTrucTuyen\API.NgheNhacTrucTuyen\bin\Debug\net6.0\System.IdentityModel.Tokens.Jwt.dll
