@@ -6,8 +6,10 @@ go
 create table TheLoai
 (
 IDTheLoai int identity(1,1) primary key,
-TenTheLoai nvarchar(250)
+TenTheLoai nvarchar(250),
 )
+alter table TheLoai 
+add AnhDaiDien nvarchar(500)
 go
 
 create table Album
@@ -15,6 +17,10 @@ create table Album
 IDAlbum int identity(1,1) primary key,
 TenAlbum nvarchar(250)
 )
+alter table Album 
+add MoTa nvarchar(250)
+alter table Album 
+add AnhDaiDien nvarchar(500)
 go
 
 create table NgheSi
@@ -22,6 +28,8 @@ create table NgheSi
 IDNgheSi int identity(1,1) primary key,
 TenNgheSi nvarchar(250)
 )
+alter table NgheSi 
+add AnhDaiDien nvarchar(500)
 go
 
 create table LoaiTaiKhoan
@@ -100,3 +108,13 @@ values
 (N'ADMIN',Null),
 (N'USER',Null)
 
+insert into Album
+values
+(N'Vũ Phụng Tiên',''),
+(N'Sơn Tùng MTP',''),
+(N'DT Tập Rap',''),
+(N'Namcocain',''),
+(N'Đánh đổi',''),
+(N'Phan Mạnh Quỳnh',''),
+(N'Đen Vâu',''),
+(N'Moi Song','')

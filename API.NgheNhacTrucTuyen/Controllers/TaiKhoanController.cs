@@ -16,19 +16,33 @@ namespace API.NgheNhacTrucTuyen.Controllers.USER
             _taiKhoanBLL = taiKhoanBLL;
         }
 
-
-        //[Route("get-taikhoan-by-tendangnhap/{tenDangnhap}")]
-        //[HttpGet]
-        //public TaiKhoanModel GetTaiKhoans(string tenDangnhap)
-        //{
-        //    return _taiKhoanBLL.GetTaiKhoan(tenDangnhap);
-        //}
         [Route("create-account")]
         [HttpPost]
-        public TaiKhoanModel CreateTaiKhoans([FromBody] TaiKhoanModel model)
+        public IActionResult CreateTaiKhoans([FromBody] TaiKhoanAndChietTietTaiKhoanModel combinedModel)
         {
-            _taiKhoanBLL.Create(model);
-            return model;
+            try
+            {
+                _taiKhoanBLL.Create(combinedModel.taiKhoan, combinedModel.chiTietTaiKhoanModel);
+                return Ok(
+                    new
+                    {
+                        LoaiTaiKhoan = combinedModel.taiKhoan.IDLoaiTaiKhoan,
+                        TenDangNhap = combinedModel.taiKhoan.TenDangNhap,
+                        MatKhau = combinedModel.taiKhoan.MatKhau,
+                        Email = combinedModel.taiKhoan.Email,
+                        HoTen = combinedModel.chiTietTaiKhoanModel.HoTen,
+                        DiaChi = combinedModel.chiTietTaiKhoanModel.DiaChi,
+                        GioiTinh = combinedModel.chiTietTaiKhoanModel.GioiTinh,
+                        NgaySinh = combinedModel.chiTietTaiKhoanModel.NgaySinh,
+                        SDT = combinedModel.chiTietTaiKhoanModel.SDT,
+                        AnhDaiDien = combinedModel.chiTietTaiKhoanModel.AnhDaiDien,
+                    }
+                );
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         [Route("delete-account")]
@@ -41,10 +55,30 @@ namespace API.NgheNhacTrucTuyen.Controllers.USER
 
         [Route("update-account")]
         [HttpPost]
-        public TaiKhoanModel UpdateItem([FromBody] TaiKhoanModel model)
+        public IActionResult UpdateItem([FromBody] TaiKhoanAndChietTietTaiKhoanModel combinedModel)
         {
-            _taiKhoanBLL.Update(model);
-            return model;
+            try
+            {
+                _taiKhoanBLL.Update(combinedModel.taiKhoan, combinedModel.chiTietTaiKhoanModel);
+                return Ok(
+                    new
+                    {
+                        TenDangNhap = combinedModel.taiKhoan.TenDangNhap,
+                        MatKhau = combinedModel.taiKhoan.MatKhau,
+                        Email = combinedModel.taiKhoan.Email,
+                        HoTen = combinedModel.chiTietTaiKhoanModel.HoTen,
+                        DiaChi = combinedModel.chiTietTaiKhoanModel.DiaChi,
+                        GioiTinh = combinedModel.chiTietTaiKhoanModel.GioiTinh,
+                        NgaySinh = combinedModel.chiTietTaiKhoanModel.NgaySinh,
+                        SDT = combinedModel.chiTietTaiKhoanModel.SDT,
+                        AnhDaiDien = combinedModel.chiTietTaiKhoanModel.AnhDaiDien,
+                    }
+                );
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         [AllowAnonymous]
@@ -55,6 +89,38 @@ namespace API.NgheNhacTrucTuyen.Controllers.USER
             if (user == null)
                 return BadRequest(new { message = "Tài khoản hoặc mật khẩu không đúng!" });
             return Ok(new { tendangnhap = user.TenDangNhap, email = user.Email, token = user.Token });
+        }
+
+        [Route("search-account")]
+        [HttpPost]
+        public IActionResult Search([FromBody] Dictionary<string, object> formData)
+        {
+            try
+            {
+                var pageIndex = int.Parse(formData["pageIndex"].ToString());
+                var pageSize = int.Parse(formData["pageSize"].ToString());
+                string hoten = "";
+                if (formData.Keys.Contains("hoTen") && !string.IsNullOrEmpty(Convert.ToString(formData["hoTen"]))) { hoten = Convert.ToString(formData["hoTen"]); }
+                string diachi = "";
+                if (formData.Keys.Contains("diaChi") && !string.IsNullOrEmpty(Convert.ToString(formData["diaChi"]))) { diachi = Convert.ToString(formData["diaChi"]); }
+                string gioitinh = "";
+                if (formData.Keys.Contains("gioiTinh") && !string.IsNullOrEmpty(Convert.ToString(formData["gioiTinh"]))) { gioitinh = Convert.ToString(formData["gioiTinh"]); }
+                long total = 0;
+                var data = _taiKhoanBLL.Search(pageIndex, pageSize, out total, hoten, diachi, gioitinh);
+                return Ok(
+                    new
+                    {
+                        TotalItems = total,
+                        Data = data,
+                        Page = pageIndex,
+                        PageSize = pageSize
+                    }
+                    );
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
     }
 }

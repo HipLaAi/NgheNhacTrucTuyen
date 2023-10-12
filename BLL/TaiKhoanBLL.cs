@@ -43,9 +43,9 @@ namespace BLL
             return user;
         }
 
-        public bool Create(TaiKhoanModel model)
+        public bool Create(TaiKhoanModel model, ChiTietTaiKhoanModel models)
         {
-            return _res.Create(model);
+            return _res.Create(model, models);
         }
 
         public bool Delete(string tenDangNhap)
@@ -53,15 +53,14 @@ namespace BLL
             return _res.Delete(tenDangNhap);
         }
 
-        public bool Update(TaiKhoanModel model)
+        public bool Update(TaiKhoanModel model, ChiTietTaiKhoanModel models)
         {
-            return _res.Update(model);
+            return _res.Update(model, models);
         }
 
-
-        //public TaiKhoanModel GetTaiKhoan(string tenDangNhap)
-        //{
-        //    return _res.GetTaiKhoan(tenDangNhap);
-        //}
+        public List<ChiTietTaiKhoanModel> Search(int pageIndex, int pageSize, out long total, string hoTen, string diaChi, string gioiTinh)
+        {
+            return _res.Search(pageIndex, pageSize, out total, hoTen, diaChi, gioiTinh);
+        }
     }
 }

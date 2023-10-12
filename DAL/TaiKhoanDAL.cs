@@ -1,4 +1,5 @@
 ﻿using Model;
+using System.Reflection;
 
 namespace DAL
 {
@@ -28,7 +29,7 @@ namespace DAL
             }
         }
 
-        public bool Create(TaiKhoanModel model)
+        public bool Create(TaiKhoanModel model, ChiTietTaiKhoanModel models)
         {
             string msgError = "";
             try
@@ -37,7 +38,13 @@ namespace DAL
                 "@idloaitaikhoan", model.IDLoaiTaiKhoan,
                 "@tendangnhap", model.TenDangNhap,
                 "@matkhau", model.MatKhau,
-                "@email", model.Email);
+                "@email", model.Email,
+                "@hoten", models.HoTen,
+                "@gioitinh", models.GioiTinh,
+                "@ngaysinh", models.NgaySinh,
+                "@sdt", models.SDT,
+                "@diachi", models.DiaChi,
+                "@anhdaidien", models.AnhDaiDien);
                 if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
                 {
                     throw new Exception(Convert.ToString(result) + msgError);
@@ -69,16 +76,22 @@ namespace DAL
             }
         }
 
-        public bool Update(TaiKhoanModel model)
+        public bool Update(TaiKhoanModel model, ChiTietTaiKhoanModel models)
         {
             string msgError = "";
             try
             {
                 var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "updatetaikhoan",
-                "@idloaitaikhoan", model.IDLoaiTaiKhoan,
+                "@idtaikhoan", model.IDTaiKhoan,
                 "@tendangnhap", model.TenDangNhap,
                 "@matkhau", model.MatKhau,
-                "@email", model.Email);
+                "@email", model.Email,
+                "@hoten", models.HoTen,
+                "@gioitinh", models.GioiTinh,
+                "@ngaysinh", models.NgaySinh,
+                "@sdt", models.SDT,
+                "@diachi", models.DiaChi,
+                "@anhdaidien", models.AnhDaiDien);
                 if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
                 {
                     throw new Exception(Convert.ToString(result) + msgError);
@@ -89,8 +102,30 @@ namespace DAL
             {
                 throw ex;
             }
-        }    
+        }
 
+        public List<ChiTietTaiKhoanModel> Search(int pageIndex, int pageSize, out long total, string hoTen, string diaChi, string gioiTinh)
+        {
+            string msgError = "";
+            total = 0;
+            try
+            {
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "searchchitiettaikhoan",
+                    "@pageindex", pageIndex,
+                    "@pagesize", pageSize,
+                    "@hoten", hoTen,
+                    "@diachi", diaChi,
+                    "@gioitinh", gioiTinh);
+                if (!string.IsNullOrEmpty(msgError))
+                    throw new Exception(msgError);
+                if (dt.Rows.Count > 0) total = (long)dt.Rows[0]["RecordCount"];
+                return dt.ConvertTo<ChiTietTaiKhoanModel>().ToList();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }
   
