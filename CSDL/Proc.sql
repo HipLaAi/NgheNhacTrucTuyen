@@ -1,6 +1,7 @@
 ﻿use NgheNhacTrucTuyen
 go
 
+----------------thu tuc lien quan den tai khoan----------------
 --thu tuc tao tai khoan
 alter proc createtaikhoan
 (
@@ -159,51 +160,31 @@ as
     end;
 go
 
-use NgheNhacTrucTuyen
-select * from LoaiTaiKhoan
-select * from TaiKhoan
-select * from ChiTietTaiKhoan
-select * from TaiKhoan, ChiTietTaiKhoan where TaiKhoan.IDTaiKhoan = ChiTietTaiKhoan.IDTaiKhoan
-go
-
-exec searchchitiettaikhoan 1,1,'','',''
-exec updatetaikhoan 19,'Hiep','123','vuvanhiep@gmail.com',N'Vũ Văn Hiệp',N'Nam','2003-09-05','0901519038',N'Kim Động - Hưng Yên',''
-
-
-select * from Album
-
+---------thu tuc lien quan den album-------------------
 -- thu tuc them album
-alter proc craetealbum
+create proc createalbum
 	@tenalbum nvarchar(250),
-	@anhdaidien nvarchar(250)
-as
-begin
-	if(not exists (select * from Album where TenAlbum = @tenalbum))
-	begin
-		insert into Album
-		values
-		(@tenalbum,@anhdaidien)
-	end;
-end;
-go
-
--- thu tuc cap nhat album
-create proc updatealbum
-	@idalbum int,
-	@tenalbum nvarchar(250),
+	@anhdaidien nvarchar(500),
 	@mota nvarchar(250),
-	@anhdaidien nvarchar(250)
+	@list_json_chitietalbum nvarchar(max)
 as
-begin
-	if(exists (select * from Album where IDAlbum = @idalbum))
-	begin
-		update Album
-		set TenAlbum = @tenalbum,
-		AnhDaiDien = @anhdaidien,
-		MoTa = @mota
-		where IDAlbum = @idalbum
+    begin
+		declare @idalbum int;
+        insert into Album
+        values
+		(@tenalbum,@anhdaidien,@mota)
+		set @idalbum = (select scope_identity());
+        if(@list_json_chitietalbum IS NOT NULL)
+            begin
+                insert into ChiTietAlbum
+				(IDAlbum, 
+				IDNhac)
+            select  @idalbum, 
+					json_value(a.value, '$.idNhac')
+            from openjson(@list_json_chitietalbum) as a;
+        end;
+    select '';
 	end;
-end;
 go
 
 -- thu tuc xoa album
@@ -212,11 +193,11 @@ create proc deletealbum
 as
 begin
 	delete from Album where IDAlbum = @idalbum
-end;
+	end;
 go
 
 -- thu tuc tim kiem album
-create proc searchalbum
+alter proc searchalbum
 	(@pageindex int, 
 	@pagesize int,
 	@tenalbum nvarchar(250))
@@ -227,9 +208,10 @@ as
             begin
 				set nocount on;
                 select(row_number() over(
-                        order by TenAlbum ASC)) AS RowNumber, 
+                        order by IDAlbum ASC)) AS RowNumber, 
                         ct.TenAlbum,
-						ct.AnhDaiDien
+						ct.AnhDaiDien,
+						ct.MoTa
                 into #Results1
                 from Album as ct
 				WHERE  (@tenalbum = '' Or ct.TenAlbum like N'%'+@tenalbum+'%');                  
@@ -246,9 +228,10 @@ as
             begin
 				set nocount on;
                 select(row_number() over(
-                        order by TenAlbum ASC)) AS RowNumber, 
+                        order by IDAlbum ASC)) AS RowNumber, 
                         ct.TenAlbum,
-						ct.AnhDaiDien
+						ct.AnhDaiDien,
+						ct.MoTa
                 into #Results2
                 from Album as ct
 				WHERE  (@tenalbum = '' Or ct.TenAlbum like N'%'+@tenalbum+'%');               
@@ -262,11 +245,194 @@ as
     end;
 go
 
-select * from Album
+-- thu tuc cap nhat album
+alter proc updatealbum
+	@idalbum int,
+	@tenalbum nvarchar(250),
+	@anhdaidien nvarchar(500),
+	@mota nvarchar(250),
+	@list_json_chitietalbum nvarchar(max)
+as
+begin
+	if(exists (select * from Album where IDAlbum = @idalbum))
+	begin
+		update Album
+		set TenAlbum = @tenalbum,
+		AnhDaiDien = @anhdaidien,
+		MoTa = @mota
+		where IDAlbum = @idalbum;
+
+		if(@list_json_chitietalbum is not null)
+		begin
+			select
+				  json_value(a.value, '$.idChiTietAlbum') as idChiTietAlbum,
+				  json_value(a.value, '$.idAlbum') as idAlbum,
+				  json_value(a.value, '$.idNhac') as idNhac,
+				  json_value(a.value, '$.status') as status 
+				  into #Results 
+			from openjson(@list_json_chitietalbum) as a;
+
+			-- Insert data to table with STATUS = 1;
+			insert into ChiTietAlbum
+						(IDAlbum, 
+						IDNhac) 
+					select
+						@idalbum,
+						#Results.idNhac			 
+			from  #Results 
+			where #Results.status = '1' 
+			
+			-- Update data to table with STATUS = 2
+			--update ChiTietAlbum 
+			--set
+			--from #Results 
+			--WHERE  ChiTietAlbum.IDChiTietAlbum = #Results.idChiTietAlbum AND #Results.status = '2';
+			
+			-- Delete data to table with STATUS = 3
+
+			delete C
+			from ChiTietAlbum C
+			inner join #Results R
+			on C.IDChiTietAlbum=R.idChiTietAlbum
+			where R.status = '3';
+			drop table #Results;
+		end;
+	end;
+end;
+go
+
+---------thu tuc lien quan den nhac-------------------
+-- thu tuc them nhac
+create proc createnhac
+	@tennhac nvarchar(50),
+	@idtheloai int,
+	@idnghesi int,
+	@audio nvarchar(500),
+	@img nvarchar(500),
+	@thoiluong nvarchar(50),
+	@lyrics nvarchar(500)
+as
+begin
+	insert into Nhac
+	values
+	(@tennhac,@idtheloai,@idnghesi,@audio,@img,@thoiluong,@lyrics)
+	end;
+go
+
+-- thu tuc xoa nhac
+create proc deletenhac
+	@idnhac int
+as
+begin
+	delete from Nhac where IDNhac = @idnhac
+	end;
+go
+
+-- thu tuc cap nhat nhac
+create proc updatenhac
+	@idnhac int,
+	@tennhac nvarchar(50),
+	@idtheloai int,
+	@idnghesi int,
+	@audio nvarchar(500),
+	@img nvarchar(500),
+	@thoiluong nvarchar(50),
+	@lyrics nvarchar(500)
+as
+begin
+	update Nhac
+	set TenNhac = @tennhac,
+	IDTheLoai = @idtheloai,
+	IDNgheSi = @idnghesi,
+	Audio = @audio,
+	IMG = @img,
+	ThoiLuong = @thoiluong,
+	Lyrics = @lyrics
+	where IDNhac = @idnhac
+end;
 
 
+select * from Nhac
 
+use NgheNhacTrucTuyen
+select * from LoaiTaiKhoan
+select * from TaiKhoan
+select * from ChiTietTaiKhoan
+select * from TaiKhoan, ChiTietTaiKhoan where TaiKhoan.IDTaiKhoan = ChiTietTaiKhoan.IDTaiKhoan
+go
 
-select * from Album
+-- thu tuc tim kiem nhac
+alter proc searchnhac
+	(@pageindex int, 
+	@pagesize int,
+	@tennhac nvarchar(50),
+	@idtheloai int,
+	@idnghesi int)
+as
+    begin
+        declare @RecordCount bigint;
+        if(@pagesize <> 0)
+            begin
+				set nocount on;
+                select(row_number() over(
+                        order by IDNhac ASC)) AS RowNumber, 
+                        n.IDNhac,
+						n.TenNhac,
+						n.IDTheLoai,
+						n.IDNgheSi,
+						n.Audio,
+						n.IMG,
+						n.ThoiLuong,
+						n.Lyrics
+                into #Results1
+                from Nhac as n
+				WHERE  (@tennhac = '' Or n.TenNhac like N'%'+@tennhac+'%') and						
+				(@idtheloai = '' Or n.IDTheLoai like N'%'+@idtheloai+'%') and (@idnghesi = '' or n.IDNgheSi like N'%'+@idnghesi + '%');                  
+                select @RecordCount = count(*)
+                from #Results1;
+                select *, 
+                        @RecordCount as RecordCount
+                from #Results1
+                where ROWNUMBER BETWEEN(@pageindex - 1) * @pagesize + 1 AND(((@pageindex - 1) * @pagesize + 1) + @pagesize) - 1
+                        OR @pageindex = -1;
+                drop table #Results1; 
+            end;
+            else
+            begin
+				set nocount on;
+                select(row_number() over(
+                order by IDNhac ASC)) AS RowNumber, 
+                        n.IDNhac,
+						n.TenNhac,
+						n.IDTheLoai,
+						n.IDNgheSi,
+						n.Audio,
+						n.IMG,
+						n.ThoiLuong,
+						n.Lyrics
+                into #Results2
+                from Nhac as n
+				WHERE  (@tennhac = '' Or n.TenNhac like N'%'+@tennhac+'%') and						
+				(@idtheloai = '' Or n.IDTheLoai like N'%'+@idtheloai+'%') and (@idnghesi = '' or n.IDNgheSi like N'%'+@idnghesi + '%');            
+                select @RecordCount = count(*)
+                from #Results2;
+                select *, 
+                        @RecordCount AS RecordCount
+                from #Results2;                        
+                drop table #Results2; 
+        end;
+    end;
+go	
 
-exec searchalbum 2,2,'',''
+exec searchchitiettaikhoan 1,1,'','',''
+exec updatetaikhoan 19,'Hiep','123','vuvanhiep@gmail.com',N'Vũ Văn Hiệp',N'Nam','2003-09-05','0901519038',N'Kim Động - Hưng Yên',''
+
+use NgheNhacTrucTuyen
+select * from TheLoai
+select * from NgheSi
+select * from TaiKhoan
+select * from ChiTietTaiKhoan
+select * from ChiTietAlbum
+
+exec searchalbum 2,2,''
+

@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLL", "BLL\BLL.csproj", "{7
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Model", "Model\Model.csproj", "{F5D1FF6C-4D15-4F65-88B3-77EFF06F8C60}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API.NgheNhacTrucTuyen.ADMIN", "API.NgheNhacTrucTuyen.ADMIN\API.NgheNhacTrucTuyen.ADMIN.csproj", "{89B052DB-5D66-4D45-B82A-595698489E32}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API.NgheNhacTrucTuyen.ADMIN", "API.NgheNhacTrucTuyen.ADMIN\API.NgheNhacTrucTuyen.ADMIN.csproj", "{89B052DB-5D66-4D45-B82A-595698489E32}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API.Gateway", "API.Gateway\API.Gateway.csproj", "{4D6E12E8-820C-4EBD-B910-AC8D15B51FBE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{89B052DB-5D66-4D45-B82A-595698489E32}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{89B052DB-5D66-4D45-B82A-595698489E32}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{89B052DB-5D66-4D45-B82A-595698489E32}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D6E12E8-820C-4EBD-B910-AC8D15B51FBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D6E12E8-820C-4EBD-B910-AC8D15B51FBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D6E12E8-820C-4EBD-B910-AC8D15B51FBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D6E12E8-820C-4EBD-B910-AC8D15B51FBE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

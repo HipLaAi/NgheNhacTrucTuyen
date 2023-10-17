@@ -19,10 +19,11 @@ namespace DAL
             string msgError = "";
             try
             {
-                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "craetealbum",
+                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "createalbum",
                 "@tenalbum", model.TenAlbum,
                 "@mota", model.MoTa,
-                "@anhdaidien", model.AnhDaiDien);
+                "@anhdaidien", model.AnhDaiDien,
+                "@list_json_chitietalbum", model.list_json_chitietalbum != null ? MessageConvert.SerializeObject(model.list_json_chitietalbum) : null);
                 if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
                 {
                     throw new Exception(Convert.ToString(result) + msgError);
@@ -63,7 +64,8 @@ namespace DAL
                 "@idalbum", model.IDAlbum,
                 "@tenalbum", model.TenAlbum,
                 "@mota", model.MoTa,
-                "@anhdaidien", model.AnhDaiDien);
+                "@anhdaidien", model.AnhDaiDien,
+                "@list_json_chitietalbum", model.list_json_chitietalbum != null ? MessageConvert.SerializeObject(model.list_json_chitietalbum) : null);
                 if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
                 {
                     throw new Exception(Convert.ToString(result) + msgError);
@@ -82,7 +84,7 @@ namespace DAL
             total = 0;
             try
             {
-                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "searchchitiettaikhoan",
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "searchalbum",
                     "@pageindex", pageIndex,
                     "@pagesize", pageSize,
                     "@tenalbum", tenAlbum);

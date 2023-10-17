@@ -12,24 +12,24 @@ alter table TheLoai
 add AnhDaiDien nvarchar(500)
 go
 
-create table Album
-(
-IDAlbum int identity(1,1) primary key,
-TenAlbum nvarchar(250)
-)
-alter table Album 
-add MoTa nvarchar(250)
-alter table Album 
-add AnhDaiDien nvarchar(500)
-go
+--drop table DanhMucYeuThich
+--go
+--drop table NhacCoTrongDanhSachPhat
+--go
+--drop table Nhac
+--go
+--drop table Album
+--go
+--drop table ChiTietAlbum
+--go
+
 
 create table NgheSi
 (
 IDNgheSi int identity(1,1) primary key,
-TenNgheSi nvarchar(250)
+TenNgheSi nvarchar(250),
+AnhDaiDien nvarchar(500)
 )
-alter table NgheSi 
-add AnhDaiDien nvarchar(500)
 go
 
 create table LoaiTaiKhoan
@@ -69,11 +69,28 @@ create table Nhac
 IDNhac int identity(1,1) primary key,
 TenNhac nvarchar(50),
 IDTheLoai int foreign key references TheLoai(IDTheLoai) on delete cascade on update cascade,
-IDAlbum int foreign key references Album(IDAlbum) on delete cascade on update cascade,
 IDNgheSi int foreign key references NgheSi(IDNgheSi) on delete cascade on update cascade,
 Audio nvarchar(500),
 IMG nvarchar(500),
-ThoiLuong nvarchar(50)
+ThoiLuong nvarchar(50),
+Lyrics nvarchar(500)
+)
+go
+
+create table Album
+(
+IDAlbum int identity(1,1) primary key,
+TenAlbum nvarchar(250),
+AnhDaiDien nvarchar(500),
+MoTa nvarchar(250)
+)
+go
+
+create table ChiTietAlbum
+(
+IDChiTietAlbum int identity(1,1) primary key,
+IDAlbum int foreign key references Album(IDAlbum) on delete cascade on update cascade,
+IDNhac int foreign key references Nhac(IDNhac) on delete cascade on update cascade
 )
 go
 
@@ -103,18 +120,58 @@ go
 use NgheNhacTrucTuyen
 go
 
+insert into NgheSi
+values
+(N'Namcocain',null),
+(N'Obito',null),
+(N'MCK',null),
+(N'Phan Mạnh Quỳnh',null),
+(N'Đen Vâu',null),
+(N'MR.Siro',null),
+(N'Sơn Tùng MTP',null)
+go
+
+insert into TheLoai
+values
+(N'K-Pop',null),
+(N'Nhạc vàng',null),
+(N'EDM',null),
+(N'US-UK',null),
+(N'Bolero',null),
+(N'Nhạc Trẻ Remix',null),
+(N'Ballad',null),
+(N'Rap',null)
+go
+
 insert into LoaiTaiKhoan
 values
 (N'ADMIN',Null),
 (N'USER',Null)
+go
+
+insert into Nhac
+values
+(N'Mười năm',8,5,null,null,null,null),
+(N'Kiểu như tâm tình',8,1,null,null,null,null),
+(N'Truy lùng',8,1,null,null,null,null),
+(N'Con kể ba nghe',8,2,null,null,null,null),
+(N'Đánh đổi',8,2,null,null,null,null)
+go
 
 insert into Album
 values
-(N'Vũ Phụng Tiên',''),
-(N'Sơn Tùng MTP',''),
-(N'DT Tập Rap',''),
-(N'Namcocain',''),
-(N'Đánh đổi',''),
-(N'Phan Mạnh Quỳnh',''),
-(N'Đen Vâu',''),
-(N'Moi Song','')
+(N'Đánh đổi',null,null)
+
+insert into ChiTietAlbum
+values
+(1,4),
+(1,5)
+
+
+use NgheNhacTrucTuyen
+select * from NgheSi
+select * from LoaiTaiKhoan
+select * from LoaiTaiKhoan
+select * from Nhac
+select * from Album
+select * from ChiTietAlbum

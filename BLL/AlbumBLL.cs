@@ -12,7 +12,7 @@ using System.Security.Claims;
 
 namespace BLL
 {
-    public class AlbumBLL
+    public class AlbumBLL: IAlbumBLL
     {
         private IAlbumDAL _res;
         public AlbumBLL(IAlbumDAL res)

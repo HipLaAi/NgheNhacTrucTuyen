@@ -81,8 +81,8 @@ namespace API.NgheNhacTrucTuyen.Controllers.USER
             }
         }
 
-        [AllowAnonymous]
-        [HttpPost("login-account")]
+        [Route("login-account")]
+        [HttpPost]
         public IActionResult DangNhap([FromBody] AuthenticateModel model)
         {
             var user = _taiKhoanBLL.DangNhap(model.Username, model.Password);
