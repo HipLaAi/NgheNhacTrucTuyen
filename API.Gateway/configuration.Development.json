@@ -14,13 +14,13 @@
         }
       ],
       "UpstreamPathTemplate": "/api-admin/Album/{everything}",
-      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
-      //"AuthenticationOptions": {
-      //  "AuthenticationProviderKey": "Bearer",
-      //  "AllowedScopes": []
-      //}
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      }
     },
-
+    //--------------------------------------------------------
     {
       "DownstreamPathTemplate": "/api/NgheSi/{everything}",
       "DownstreamScheme": "https",
@@ -31,13 +31,13 @@
         }
       ],
       "UpstreamPathTemplate": "/api-user/NgheSi/{everything}",
-      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
-      //"AuthenticationOptions": {
-      //  "AuthenticationProviderKey": "Bearer",
-      //  "AllowedScopes": []
-      //}
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      }
     },
-
+    //--------------------------------------------------------
     {
       "DownstreamPathTemplate": "/api/Nhac/{everything}",
       "DownstreamScheme": "https",
@@ -49,12 +49,12 @@
       ],
       "UpstreamPathTemplate": "/api-user/Nhac/{everything}",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
-      //"AuthenticationOptions": {
-      //  "AuthenticationProviderKey": "Bearer",
-      //  "AllowedScopes": []
-      //}
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      }
     },
-
+    //--------------------------------------------------------
     {
       "DownstreamPathTemplate": "/api/TheLoai/{everything}",
       "DownstreamScheme": "https",
@@ -65,13 +65,13 @@
         }
       ],
       "UpstreamPathTemplate": "/api-user/TheLoai/{everything}",
-      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
-      //"AuthenticationOptions": {
-      //  "AuthenticationProviderKey": "Bearer",
-      //  "AllowedScopes": []
-      //}
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      }
     },
-
+    //--------------------------------------------------------
     {
       "DownstreamPathTemplate": "/api/TaiKhoan/{everything}",
       "DownstreamScheme": "https",
@@ -82,11 +82,11 @@
         }
       ],
       "UpstreamPathTemplate": "/api/TaiKhoan/{everything}",
-      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
-      //"AuthenticationOptions": {
-      //  "AuthenticationProviderKey": "Bearer",
-      //  "AllowedScopes": []
-      //}
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      }
     }
   ]
 

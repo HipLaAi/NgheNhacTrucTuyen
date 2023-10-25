@@ -427,8 +427,8 @@ begin
 	declare @idtheloai int
 	set @idtheloai = (select IDTheLoai from Nhac where IDNhac = @idnhac)
 	select *,
-	(select top 5 * from Nhac where IDNgheSi = @idnghesi and IDNhac <> @idnhac for json path) as list_jsonchitietnhactheonghesi,
-	(select top 5 * from Nhac where IDTheLoai = @idtheloai and IDNhac <> @idnhac for json path) as list_jsonchitietnhactheotheloai
+	(select top 5 * from Nhac where IDNgheSi = @idnghesi and IDNhac <> @idnhac order by newid() for json path) as list_jsonchitietnhactheonghesi,
+	(select top 5 * from Nhac where IDTheLoai = @idtheloai and IDNhac <> @idnhac order by newid() for json path) as list_jsonchitietnhactheotheloai
 	from Nhac
 	where IDNhac = @idnhac
 	end;

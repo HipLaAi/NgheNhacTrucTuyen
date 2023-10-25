@@ -46,3 +46,17 @@ D:\Phát triển Dịch Vụ\BTL\API.NgheNhacTrucTuyen\API.Gateway\obj\Debug\net
 D:\Phát triển Dịch Vụ\BTL\API.NgheNhacTrucTuyen\API.Gateway\obj\Debug\net6.0\API.Gateway.genruntimeconfig.cache
 D:\Phát triển Dịch Vụ\BTL\API.NgheNhacTrucTuyen\API.Gateway\obj\Debug\net6.0\ref\API.Gateway.dll
 D:\Phát triển Dịch Vụ\BTL\API.NgheNhacTrucTuyen\API.Gateway\bin\Debug\net6.0\configuration.Development.json
+D:\Phát triển Dịch Vụ\BTL\API.NgheNhacTrucTuyen\API.Gateway\bin\Debug\net6.0\Microsoft.Extensions.Configuration.dll
+D:\Phát triển Dịch Vụ\BTL\API.NgheNhacTrucTuyen\API.Gateway\bin\Debug\net6.0\Microsoft.IdentityModel.Abstractions.dll
+D:\Phát triển Dịch Vụ\BTL\API.NgheNhacTrucTuyen\API.Gateway\bin\Debug\net6.0\System.Data.SqlClient.dll
+D:\Phát triển Dịch Vụ\BTL\API.NgheNhacTrucTuyen\API.Gateway\bin\Debug\net6.0\runtimes\win-arm64\native\sni.dll
+D:\Phát triển Dịch Vụ\BTL\API.NgheNhacTrucTuyen\API.Gateway\bin\Debug\net6.0\runtimes\win-x64\native\sni.dll
+D:\Phát triển Dịch Vụ\BTL\API.NgheNhacTrucTuyen\API.Gateway\bin\Debug\net6.0\runtimes\win-x86\native\sni.dll
+D:\Phát triển Dịch Vụ\BTL\API.NgheNhacTrucTuyen\API.Gateway\bin\Debug\net6.0\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
+D:\Phát triển Dịch Vụ\BTL\API.NgheNhacTrucTuyen\API.Gateway\bin\Debug\net6.0\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll
+D:\Phát triển Dịch Vụ\BTL\API.NgheNhacTrucTuyen\API.Gateway\bin\Debug\net6.0\BLL.dll
+D:\Phát triển Dịch Vụ\BTL\API.NgheNhacTrucTuyen\API.Gateway\bin\Debug\net6.0\DAL.dll
+D:\Phát triển Dịch Vụ\BTL\API.NgheNhacTrucTuyen\API.Gateway\bin\Debug\net6.0\Model.dll
+D:\Phát triển Dịch Vụ\BTL\API.NgheNhacTrucTuyen\API.Gateway\bin\Debug\net6.0\BLL.pdb
+D:\Phát triển Dịch Vụ\BTL\API.NgheNhacTrucTuyen\API.Gateway\bin\Debug\net6.0\DAL.pdb
+D:\Phát triển Dịch Vụ\BTL\API.NgheNhacTrucTuyen\API.Gateway\bin\Debug\net6.0\Model.pdb

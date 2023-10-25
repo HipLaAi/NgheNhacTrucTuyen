@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using BLL;
+using DAL;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -10,6 +12,7 @@ using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace API.Gateway
 {
@@ -38,12 +41,30 @@ namespace API.Gateway
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Gateway", Version = "v1" });
             });
 
-            //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            //    .AddJwtBearer(options =>
-            //    {
-            //        options.Authority = "https://your-identity-server.com"; // Cấu hình Authority của identity server
-            //        options.Audience = "your-api-resource"; // Cấu hình Audience của API
-            //    });
+            services.AddTransient<IDatabaseHelper, DatabaseHelper>();
+            services.AddTransient<ITaiKhoanDAL, TaiKhoanDAL>();
+            services.AddTransient<ITaiKhoanBLL, TaiKhoanBLL>();
+
+            // Cấu hình JWT Authentication
+            IConfiguration configuration = WebApplication.CreateBuilder().Configuration;
+            var appSettingsSection = configuration.GetSection("AppSettings");
+            services.Configure<AppSettings>(appSettingsSection);
+
+            var appSettings = appSettingsSection.Get<AppSettings>();
+            var key = Encoding.ASCII.GetBytes(appSettings.Secret);
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                            .AddJwtBearer(options =>
+                            {
+                                options.TokenValidationParameters = new TokenValidationParameters
+                                {
+                                    ValidateLifetime = true,
+                                    ValidateIssuer = false,
+                                    ValidateAudience = false,
+                                    IssuerSigningKey = new SymmetricSecurityKey(key)
+                                };
+
+                            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -71,6 +92,8 @@ namespace API.Gateway
             {
                 endpoints.MapControllers();
             });
+
+            app.UseMiddleware<JWTMiddleware>();
 
             await app.UseOcelot();
         }
