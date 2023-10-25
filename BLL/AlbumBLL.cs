@@ -25,7 +25,7 @@ namespace BLL
             return _res.Create(model);
         }
 
-        public bool Delete(string idAlbum)
+        public bool Delete(int idAlbum)
         {
             return _res.Delete(idAlbum);
         }

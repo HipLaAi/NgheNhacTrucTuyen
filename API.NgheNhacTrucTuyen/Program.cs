@@ -14,6 +14,12 @@ builder.Services.AddCors(options =>
 builder.Services.AddTransient<IDatabaseHelper, DatabaseHelper>();
 builder.Services.AddTransient<ITaiKhoanDAL, TaiKhoanDAL>();
 builder.Services.AddTransient<ITaiKhoanBLL, TaiKhoanBLL>();
+builder.Services.AddTransient<INhacDAL, NhacDAL>();
+builder.Services.AddTransient<INhacBLL, NhacBLL>();
+builder.Services.AddTransient<ITheLoaiDAL, TheLoaiDAL>();
+builder.Services.AddTransient<ITheLoaiBLL, TheLoaiBLL>();
+builder.Services.AddTransient<INgheSiDAL, NgheSiDAL>();
+builder.Services.AddTransient<INgheSiBLL, NgheSiBLL>();
 
 // configure strongly typed settings objects
 IConfiguration configuration = builder.Configuration;
@@ -46,20 +52,19 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
 var app = builder.Build();
-
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-app.UseHttpsRedirection();
-
+app.UseRouting();
+app.UseCors(x => x
+    .AllowAnyOrigin()
+    .AllowAnyMethod()
+    .AllowAnyHeader());
+app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.Run();

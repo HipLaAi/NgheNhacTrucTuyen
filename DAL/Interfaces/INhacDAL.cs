@@ -10,8 +10,9 @@ namespace DAL
     public partial interface INhacDAL
     {
         bool Create(NhacModel model);
-        bool Delete(string idNhac);
+        bool Delete(int idNhac);
         bool Update(NhacModel model);
-        public List<NhacModel> Search(int pageIndex, int pageSize, out long total, string tenNhac, int idTheLoai, int idNgheSi);
+        List<NhacModel> Search(int pageIndex, int pageSize, out long total, string tenNhac, int idTheLoai, int idNgheSi);
+        List<NhacModel> GetByID(int idNhac);
     }
 }

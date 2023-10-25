@@ -33,7 +33,7 @@ namespace API.NgheNhacTrucTuyen.ADMIN.Controllers
 
         [Route("delete-album")]
         [HttpDelete]
-        public string Delete(string idAlbum)
+        public int Delete(int idAlbum)
         {
             _aLbumBLL.Delete(idAlbum);
             return idAlbum;

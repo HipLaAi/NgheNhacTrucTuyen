@@ -16,5 +16,7 @@ namespace Model
         public string IMG { get; set; }
         public string ThoiLuong { get; set; }
         public string Lyrics { get; set; }
+        public List<NhacModel> list_jsonchitietnhactheonghesi { get; set; }
+        public List<NhacModel> list_jsonchitietnhactheotheloai {  get; set; }
     }
 }

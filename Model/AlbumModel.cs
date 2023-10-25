@@ -17,8 +17,8 @@ namespace Model
 
     public class ChiTietAlbum
     {
-        public string IDChiTietAlbum { get; set; }
-        public string IDAlbum { get; set;}
-        public string IDNhac { get; set; }
+        public int IDChiTietAlbum { get; set; }
+        public int IDAlbum { get; set;}
+        public int IDNhac { get; set; }
     }
 }

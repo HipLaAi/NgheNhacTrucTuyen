@@ -208,7 +208,8 @@ as
             begin
 				set nocount on;
                 select(row_number() over(
-                        order by IDAlbum ASC)) AS RowNumber, 
+                        order by IDAlbum ASC)) AS RowNumber,
+						ct.IDAlbum,
                         ct.TenAlbum,
 						ct.AnhDaiDien,
 						ct.MoTa
@@ -229,6 +230,7 @@ as
 				set nocount on;
                 select(row_number() over(
                         order by IDAlbum ASC)) AS RowNumber, 
+						ct.IDAlbum,
                         ct.TenAlbum,
 						ct.AnhDaiDien,
 						ct.MoTa
@@ -349,16 +351,7 @@ begin
 	ThoiLuong = @thoiluong,
 	Lyrics = @lyrics
 	where IDNhac = @idnhac
-end;
-
-
-select * from Nhac
-
-use NgheNhacTrucTuyen
-select * from LoaiTaiKhoan
-select * from TaiKhoan
-select * from ChiTietTaiKhoan
-select * from TaiKhoan, ChiTietTaiKhoan where TaiKhoan.IDTaiKhoan = ChiTietTaiKhoan.IDTaiKhoan
+	end;
 go
 
 -- thu tuc tim kiem nhac
@@ -386,8 +379,114 @@ as
 						n.Lyrics
                 into #Results1
                 from Nhac as n
-				WHERE  (@tennhac = '' Or n.TenNhac like N'%'+@tennhac+'%') and						
-				(@idtheloai = '' Or n.IDTheLoai like N'%'+@idtheloai+'%') and (@idnghesi = '' or n.IDNgheSi like N'%'+@idnghesi + '%');                  
+				where  (@tennhac = '' Or n.TenNhac like N'%'+@tennhac+'%') and						
+				(@idtheloai = 0 Or n.IDTheLoai = @idtheloai) and (@idnghesi = 0 or n.IDNgheSi = @idnghesi);                  
+                select @RecordCount = count(*)
+                from #Results1;
+                select *, 
+                        @RecordCount as RecordCount
+                from #Results1
+                where ROWNUMBER BETWEEN(@pageindex - 1) * @pagesize + 1 AND(((@pageindex - 1) * @pagesize + 1) + @pagesize) - 1
+                        OR @pageindex = -1;
+                drop table #Results1; 
+            end;
+            else
+            begin
+				set nocount on;
+                                select(row_number() over(
+                        order by IDNhac ASC)) AS RowNumber, 
+                        n.IDNhac,
+						n.TenNhac,
+						n.IDTheLoai,
+						n.IDNgheSi,
+						n.Audio,
+						n.IMG,
+						n.ThoiLuong,
+						n.Lyrics
+                into #Results2
+                from Nhac as n
+				where  (@tennhac = '' Or n.TenNhac like N'%'+@tennhac+'%') and						
+				(@idtheloai = 0 Or n.IDTheLoai = @idtheloai) and (@idnghesi = 0 or n.IDNgheSi = @idnghesi);              
+                select @RecordCount = count(*)
+                from #Results2;
+                select *, 
+                        @RecordCount AS RecordCount
+                from #Results2;                        
+                drop table #Results2; 
+        end;
+    end;
+go	
+
+-- thu tuc chi tiet nhac
+alter proc detailnhac
+	@idnhac int
+as
+begin
+	declare @idnghesi int
+	set @idnghesi = (select IDNgheSi from Nhac where IDNhac = @idnhac)
+	declare @idtheloai int
+	set @idtheloai = (select IDTheLoai from Nhac where IDNhac = @idnhac)
+	select *,(select top 5 * from Nhac where IDNgheSi = @idnghesi for json path) as list_jsonchitietnhactheonghesi,(select top 5 * from Nhac where IDTheLoai = @idtheloai for json path) as list_jsonchitietnhactheotheloai
+	from Nhac
+	where IDNhac = @idnhac
+	end;
+go
+
+---------thu tuc lien quan den nghe si-------------------
+-- thu tuc them nghe si
+create proc createnghesi
+	@tennghesi nvarchar(250),
+	@anhdaidien nvarchar(500)
+as
+begin
+	insert into NgheSi
+	values
+	(@tennghesi,@anhdaidien)
+	end;
+go
+
+-- thu tuc xoa nghe si
+create proc deletenghesi
+	@idnghesi int
+as
+begin
+	delete from NgheSi where IDNgheSi = @idnghesi
+	end;
+go
+
+-- thu tuc cap nhat nghe si
+create proc updatenghesi
+	@idnghesi int,
+	@tennghesi nvarchar(250),
+	@anhdaidien nvarchar(500)
+as
+begin
+	update NgheSi
+	set TenNgheSi = @tennghesi,
+	AnhDaiDien = @anhdaidien
+	where IDNgheSi = @idnghesi
+	end;
+go
+
+-- thu tuc tim kiem nghe si
+create proc searchnghesi
+	(@pageindex int, 
+	@pagesize int,
+	@tennghesi nvarchar(250))
+as
+    begin
+        declare @RecordCount bigint;
+        if(@pagesize <> 0)
+            begin
+				set nocount on;
+                select(row_number() over(
+                        order by IDNgheSi ASC)) AS RowNumber, 
+                        n.IDNgheSi,
+						n.TenNgheSi,
+						n.AnhDaiDien
+                into #Results1
+                from NgheSi as n
+				where  (@tennghesi = '' Or n.TenNgheSi like N'%'+@tennghesi+'%');                  
                 select @RecordCount = count(*)
                 from #Results1;
                 select *, 
@@ -401,19 +500,13 @@ as
             begin
 				set nocount on;
                 select(row_number() over(
-                order by IDNhac ASC)) AS RowNumber, 
-                        n.IDNhac,
-						n.TenNhac,
-						n.IDTheLoai,
-						n.IDNgheSi,
-						n.Audio,
-						n.IMG,
-						n.ThoiLuong,
-						n.Lyrics
+                        order by IDNgheSi ASC)) AS RowNumber, 
+                        n.IDNgheSi,
+						n.TenNgheSi,
+						n.AnhDaiDien
                 into #Results2
-                from Nhac as n
-				WHERE  (@tennhac = '' Or n.TenNhac like N'%'+@tennhac+'%') and						
-				(@idtheloai = '' Or n.IDTheLoai like N'%'+@idtheloai+'%') and (@idnghesi = '' or n.IDNgheSi like N'%'+@idnghesi + '%');            
+                from NgheSi as n
+				where  (@tennghesi = '' Or n.TenNgheSi like N'%'+@tennghesi+'%');            
                 select @RecordCount = count(*)
                 from #Results2;
                 select *, 
@@ -424,15 +517,117 @@ as
     end;
 go	
 
-exec searchchitiettaikhoan 1,1,'','',''
-exec updatetaikhoan 19,'Hiep','123','vuvanhiep@gmail.com',N'Vũ Văn Hiệp',N'Nam','2003-09-05','0901519038',N'Kim Động - Hưng Yên',''
+
+
+---------thu tuc lien quan den the loai-------------------
+-- thu tuc them the loai
+create proc createtheloai
+	@tentheloai nvarchar(250),
+	@anhdaidien nvarchar(500)
+as
+begin
+	insert into TheLoai
+	values
+	(@tentheloai,@anhdaidien)
+	end;
+go
+
+-- thu tuc xoa the loai
+create proc deletetheloai
+	@idtheloai int
+as
+begin
+	delete from TheLoai where IDTheLoai = @idtheloai
+	end;
+go
+
+-- thu tuc cap nhat the loai
+create proc updatetheloai
+	@idtheloai int,
+	@tentheloai nvarchar(250),
+	@anhdaidien nvarchar(500)
+as
+begin
+	update TheLoai
+	set TenTheLoai = @tentheloai,
+	AnhDaiDien = @anhdaidien
+	where IDTheLoai = @idtheloai
+	end;
+go
+
+-- thu tuc tim kiem the loai
+create proc searchtheloai
+	(@pageindex int, 
+	@pagesize int,
+	@tentheloai nvarchar(250))
+as
+    begin
+        declare @RecordCount bigint;
+        if(@pagesize <> 0)
+            begin
+				set nocount on;
+                select(row_number() over(
+                        order by IDTheLoai ASC)) AS RowNumber, 
+                        t.IDTheLoai,
+						t.TenTheLoai,
+						t.AnhDaiDien
+                into #Results1
+                from TheLoai as t
+				where  (@tentheloai = '' Or t.TenTheLoai like N'%'+@tentheloai+'%');                  
+                select @RecordCount = count(*)
+                from #Results1;
+                select *, 
+                        @RecordCount as RecordCount
+                from #Results1
+                where ROWNUMBER BETWEEN(@pageindex - 1) * @pagesize + 1 AND(((@pageindex - 1) * @pagesize + 1) + @pagesize) - 1
+                        OR @pageindex = -1;
+                drop table #Results1; 
+            end;
+            else
+            begin
+				set nocount on;
+                select(row_number() over(
+                        order by IDTheLoai ASC)) AS RowNumber, 
+                        t.IDTheLoai,
+						t.TenTheLoai,
+						t.AnhDaiDien
+                into #Results2
+                from TheLoai as t
+				where  (@tentheloai = '' Or t.TenTheLoai like N'%'+@tentheloai+'%');            
+                select @RecordCount = count(*)
+                from #Results2;
+                select *, 
+                        @RecordCount AS RecordCount
+                from #Results2;                        
+                drop table #Results2; 
+        end;
+    end;
+go	
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 use NgheNhacTrucTuyen
-select * from TheLoai
-select * from NgheSi
+
 select * from TaiKhoan
 select * from ChiTietTaiKhoan
-select * from ChiTietAlbum
 
-exec searchalbum 2,2,''
+select * from TheLoai
+select * from NgheSi
+select * from TheLoai
+select * from Album
+select * from ChiTietAlbum
+select * from Nhac
+
+
 

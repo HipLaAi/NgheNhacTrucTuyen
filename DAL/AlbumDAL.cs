@@ -36,7 +36,7 @@ namespace DAL
             }
         }
 
-        public bool Delete(string idAlbum)
+        public bool Delete(int idAlbum)
         {
             string msgError = "";
             try

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -40,7 +41,7 @@ namespace DAL
             }
         }
 
-        public bool Delete(string idNhac)
+        public bool Delete(int idNhac)
         {
             string msgError = "";
             try
@@ -100,6 +101,22 @@ namespace DAL
                 if (!string.IsNullOrEmpty(msgError))
                     throw new Exception(msgError);
                 if (dt.Rows.Count > 0) total = (long)dt.Rows[0]["RecordCount"];
+                return dt.ConvertTo<NhacModel>().ToList();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public List<NhacModel> GetByID(int idNhac)
+        {
+            string msgError = "";
+            try
+            {
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "detailnhac",
+                    "@idnhac", idNhac);
+                if (!string.IsNullOrEmpty(msgError))
+                    throw new Exception(msgError);
                 return dt.ConvertTo<NhacModel>().ToList();
             }
             catch (Exception ex)
