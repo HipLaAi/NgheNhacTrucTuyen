@@ -10,6 +10,5 @@ namespace Model
     {
         public TaiKhoanModel taiKhoan { get; set; }
         public ChiTietTaiKhoanModel chiTietTaiKhoanModel { get; set; }
-
     }
 }

@@ -1,5 +1,4 @@
 ﻿using BLL;
-using DAL;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -41,30 +40,30 @@ namespace API.Gateway
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Gateway", Version = "v1" });
             });
 
-            services.AddTransient<IDatabaseHelper, DatabaseHelper>();
-            services.AddTransient<ITaiKhoanDAL, TaiKhoanDAL>();
-            services.AddTransient<ITaiKhoanBLL, TaiKhoanBLL>();
+            //services.AddTransient<IDatabaseHelper, DatabaseHelper>();
+            //services.AddTransient<ITaiKhoanDAL, TaiKhoanDAL>();
+            //services.AddTransient<ITaiKhoanBLL, TaiKhoanBLL>();
 
-            // Cấu hình JWT Authentication
-            IConfiguration configuration = WebApplication.CreateBuilder().Configuration;
-            var appSettingsSection = configuration.GetSection("AppSettings");
-            services.Configure<AppSettings>(appSettingsSection);
+            //// Cấu hình JWT Authentication
+            //IConfiguration configuration = WebApplication.CreateBuilder().Configuration;
+            //var appSettingsSection = configuration.GetSection("AppSettings");
+            //services.Configure<AppSettings>(appSettingsSection);
 
-            var appSettings = appSettingsSection.Get<AppSettings>();
-            var key = Encoding.ASCII.GetBytes(appSettings.Secret);
+            //var appSettings = appSettingsSection.Get<AppSettings>();
+            //var key = Encoding.ASCII.GetBytes(appSettings.Secret);
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                            .AddJwtBearer(options =>
-                            {
-                                options.TokenValidationParameters = new TokenValidationParameters
-                                {
-                                    ValidateLifetime = true,
-                                    ValidateIssuer = false,
-                                    ValidateAudience = false,
-                                    IssuerSigningKey = new SymmetricSecurityKey(key)
-                                };
+            //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            //                .AddJwtBearer(options =>
+            //                {
+            //                    options.TokenValidationParameters = new TokenValidationParameters
+            //                    {
+            //                        ValidateLifetime = true,
+            //                        ValidateIssuer = false,
+            //                        ValidateAudience = false,
+            //                        IssuerSigningKey = new SymmetricSecurityKey(key)
+            //                    };
 
-                            });
+            //                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -93,14 +92,14 @@ namespace API.Gateway
                 endpoints.MapControllers();
             });
 
-            app.UseMiddleware<JWTMiddleware>();
+            //app.UseMiddleware<JWTMiddleware>();
 
             await app.UseOcelot();
         }
     }
 
-    public class AppSettings
-    {
-        public string Secret { get; set; }
-    }
+    //public class AppSettings
+    //{
+    //    public string Secret { get; set; }
+    //}
 }

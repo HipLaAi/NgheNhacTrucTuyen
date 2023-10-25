@@ -9,9 +9,7 @@
       "API.Gateway/1.0.0": {
         "dependencies": {
           "BLL": "1.0.0",
-          "DAL": "1.0.0",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "6.0.22",
-          "Model": "1.0.0",
           "Ocelot": "16.0.2",
           "Swashbuckle.AspNetCore": "6.5.0"
         },

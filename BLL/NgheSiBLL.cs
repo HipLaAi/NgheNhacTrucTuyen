@@ -35,5 +35,15 @@ namespace BLL
         {
             return _res.Search(pageIndex, pageSize, out total, tenNgheSi);
         }
+
+        public List<NgheSiModel> GetByID(int idNgheSi)
+        {
+            return _res.GetByID(idNgheSi);
+        }
+
+        public NgheSiModel GetByName(string tenNgheSi)
+        {
+            return _res.GetByName(tenNgheSi);
+        }
     }
 }

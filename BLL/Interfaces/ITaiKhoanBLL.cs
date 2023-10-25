@@ -9,6 +9,7 @@ namespace BLL
 {
     public partial interface ITaiKhoanBLL
     {
+        TaiKhoanModel GetByID(int idTaiKhoan);
         TaiKhoanModel DangNhap(string tenDangNhap, string matKhau);
         bool Create(TaiKhoanModel model, ChiTietTaiKhoanModel models);
         bool Delete(string tenDangNhap);

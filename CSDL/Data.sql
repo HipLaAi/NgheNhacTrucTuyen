@@ -12,17 +12,6 @@ alter table TheLoai
 add AnhDaiDien nvarchar(500)
 go
 
---drop table DanhMucYeuThich
---go
---drop table NhacCoTrongDanhSachPhat
---go
---drop table Nhac
---go
---drop table Album
---go
---drop table ChiTietAlbum
---go
-
 
 create table NgheSi
 (
@@ -80,6 +69,7 @@ go
 create table Album
 (
 IDAlbum int identity(1,1) primary key,
+IDNgheSi int foreign key references NgheSi(IDNgheSi) on delete no action on update no action,
 TenAlbum nvarchar(250),
 AnhDaiDien nvarchar(500),
 MoTa nvarchar(250)
@@ -160,12 +150,35 @@ go
 
 insert into Album
 values
-(N'Đánh đổi',null,null)
+(2,N'Đánh đổi','https://i.scdn.co/image/ab67616d00001e0225e6b25d49687cd63f7a034e','Obito'),
+(3,N'99%','https://i.scdn.co/image/ab67616d0000b273b315e8bb7ef5e57e9a25bb0f','MCK'),
+(9,N'Ai cũng phải bắt đầu từ đâu đó','https://i.scdn.co/image/ab67616d0000b2738a063486be97d863207e1ca4','HIEUTHUHAI'),
+(4,N'Anh ghét làm bạn em','https://i.scdn.co/image/ab67616d00001e02d8230115476ed18d7e288557',N'Phan Mạnh Quỳnh'),
+(5,N'dongvui harmony','https://i.scdn.co/image/ab67616d0000b273178c0bcd6f92107315535908',N'Đen Vâu'),
+(7,N'm-tp M-TP','https://i.scdn.co/image/ab67616d0000b273af31997b23b7e6e65de1816b',N'Sơn Tùng MTP')
+
+select * from TaiKhoan
 
 insert into ChiTietAlbum
 values
-(1,4),
-(1,5)
+(10,4),
+(10,5),
+(10,6),
+(11,8),
+(12,9),
+(13,10),
+(13,11),
+(13,12),
+(14,13),
+(14,14),
+(14,15),
+(14,16),
+(15,17),
+(15,18),
+(15,19),
+(15,20)
+
+
 
 
 use NgheNhacTrucTuyen

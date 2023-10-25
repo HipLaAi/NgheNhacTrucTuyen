@@ -39,5 +39,20 @@ namespace BLL
         {
             return _res.Search(pageIndex, pageSize, out total, tenAlbum);
         }
+
+        public List<AlbumModel> TopNew(int top)
+        {
+            return _res.TopNew(top);
+        }
+
+        public List<AlbumModel> GetByID(int idAlbum)
+        {
+            return _res.GetByID(idAlbum);
+        }
+
+        public AlbumModel GetByName(string tenAlbum)
+        {
+            return _res.GetByName(tenAlbum);
+        }
     }
 }

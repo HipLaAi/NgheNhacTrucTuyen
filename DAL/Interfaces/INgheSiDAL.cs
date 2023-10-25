@@ -12,6 +12,8 @@ namespace DAL
         bool Create(NgheSiModel model);
         bool Delete(int idNgheSi);
         bool Update(NgheSiModel model);
-        public List<NgheSiModel> Search(int pageIndex, int pageSize, out long total, string tenNgheSi);
+        List<NgheSiModel> Search(int pageIndex, int pageSize, out long total, string tenNgheSi);
+        List<NgheSiModel> GetByID(int idNgheSi);
+        NgheSiModel GetByName(string tenNgheSi);
     }
 }

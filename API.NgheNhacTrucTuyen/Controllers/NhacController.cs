@@ -9,7 +9,7 @@ namespace API.NgheNhacTrucTuyen.Controllers.USER
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class NhacController : Controller
     {
         private INhacBLL _nhacBLL;
@@ -48,6 +48,7 @@ namespace API.NgheNhacTrucTuyen.Controllers.USER
             return model;
         }
 
+        [AllowAnonymous]
         [Route("search-nhac")]
         [HttpPost]
         public IActionResult Search([FromBody] Dictionary<string, object> formData)
@@ -79,6 +80,8 @@ namespace API.NgheNhacTrucTuyen.Controllers.USER
                 throw new Exception(ex.Message);
             }
         }
+
+        [AllowAnonymous]
         [Route("getbyid-nhac")]
         [HttpGet]
         public IActionResult GetByID(int idNhac)

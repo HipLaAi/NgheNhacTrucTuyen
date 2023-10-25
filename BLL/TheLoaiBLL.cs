@@ -35,5 +35,13 @@ namespace BLL
         {
             return _res.Search(pageIndex, pageSize, out total, tenTheLoai);
         }
+        public TheLoaiModel GetByName(string tenTheLoai)
+        {
+            return _res.GetByName(tenTheLoai);
+        }
+        public List<TheLoaiModel> GetByID(int idTheLoai)
+        {
+            return _res.GetByID(idTheLoai);
+        }
     }
 }

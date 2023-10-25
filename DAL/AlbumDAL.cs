@@ -20,6 +20,7 @@ namespace DAL
             try
             {
                 var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "createalbum",
+                "@idnghesi",model.IDNgheSi,
                 "@tenalbum", model.TenAlbum,
                 "@mota", model.MoTa,
                 "@anhdaidien", model.AnhDaiDien,
@@ -62,6 +63,7 @@ namespace DAL
             {
                 var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "updatealbum",
                 "@idalbum", model.IDAlbum,
+                "@idnghesi", model.IDNgheSi,
                 "@tenalbum", model.TenAlbum,
                 "@mota", model.MoTa,
                 "@anhdaidien", model.AnhDaiDien,
@@ -98,5 +100,55 @@ namespace DAL
                 throw ex;
             }
         }
+
+        public List<AlbumModel> TopNew(int top)
+        {
+            string msgError = "";
+            try
+            {
+                var dn = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "newalbum",
+                    "@top", top);
+                if (!string.IsNullOrEmpty(msgError))
+                    throw new Exception(msgError);
+                return dn.ConvertTo<AlbumModel>().ToList();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public List<AlbumModel> GetByID(int idAlbum)
+        {
+            string msgError = "";
+            try
+            {
+                var dn = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "detailalbum",
+                    "@idalbum", idAlbum);
+                if (!string.IsNullOrEmpty(msgError))
+                    throw new Exception(msgError);
+                return dn.ConvertTo<AlbumModel>().ToList();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public AlbumModel GetByName(string tenAlbum)
+        {
+            string msgError = "";
+            try
+            {
+                var dn = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "getbytenalbum",
+                    "@tenalbum", tenAlbum);
+                if (!string.IsNullOrEmpty(msgError))
+                    throw new Exception(msgError);
+                return dn.ConvertTo<AlbumModel>().FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
     }
 }

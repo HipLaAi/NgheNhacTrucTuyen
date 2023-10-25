@@ -160,9 +160,20 @@ as
     end;
 go
 
+-- thu tuc lay thong tin tai khoan
+create proc getbyidtaikhoan
+	@idtaikhoan int
+as
+begin
+	select * from TaiKhoan
+	where IDTaiKhoan = @idtaikhoan
+	end;
+go
+
 ---------thu tuc lien quan den album-------------------
 -- thu tuc them album
-create proc createalbum
+alter proc createalbum
+	@idnghesi int,
 	@tenalbum nvarchar(250),
 	@anhdaidien nvarchar(500),
 	@mota nvarchar(250),
@@ -172,7 +183,7 @@ as
 		declare @idalbum int;
         insert into Album
         values
-		(@tenalbum,@anhdaidien,@mota)
+		(@idnghesi,@tenalbum,@anhdaidien,@mota)
 		set @idalbum = (select scope_identity());
         if(@list_json_chitietalbum IS NOT NULL)
             begin
@@ -250,6 +261,7 @@ go
 -- thu tuc cap nhat album
 alter proc updatealbum
 	@idalbum int,
+	@idnghesi int,
 	@tenalbum nvarchar(250),
 	@anhdaidien nvarchar(500),
 	@mota nvarchar(250),
@@ -259,7 +271,8 @@ begin
 	if(exists (select * from Album where IDAlbum = @idalbum))
 	begin
 		update Album
-		set TenAlbum = @tenalbum,
+		set IDNgheSi = @idnghesi,
+		TenAlbum = @tenalbum,
 		AnhDaiDien = @anhdaidien,
 		MoTa = @mota
 		where IDAlbum = @idalbum;
@@ -285,22 +298,60 @@ begin
 			where #Results.status = '1' 
 			
 			-- Update data to table with STATUS = 2
-			--update ChiTietAlbum 
-			--set
-			--from #Results 
-			--WHERE  ChiTietAlbum.IDChiTietAlbum = #Results.idChiTietAlbum AND #Results.status = '2';
+			update ct
+			set ct.IDAlbum = r.idAlbum,
+				ct.IDNhac = r.idNhac
+			from ChiTietAlbum ct
+			join #Results r on ct.IDChiTietAlbum = r.idChiTietAlbum
+			where r.status = '2';
 			
 			-- Delete data to table with STATUS = 3
-
 			delete C
-			from ChiTietAlbum C
-			inner join #Results R
-			on C.IDChiTietAlbum=R.idChiTietAlbum
-			where R.status = '3';
+			from ChiTietAlbum c
+			inner join #Results r
+			on c.IDChiTietAlbum=r.idChiTietAlbum
+			where r.status = '3';
 			drop table #Results;
 		end;
 	end;
 end;
+go
+
+-- thu tuc lay cac album moi gan day
+alter proc newalbum
+	@top int
+as
+begin
+	select top(@top) * from Album
+	order by IDAlbum desc
+	end;
+go
+
+-- thu tuc chi tiet album
+alter proc detailalbum
+	@idalbum int
+as
+begin
+	declare @idnghesi int
+	set @idnghesi = (select IDNgheSi from Album where IDAlbum = @idalbum)
+	select *,
+	(select top 5 n.* from Nhac n join ChiTietAlbum ct on n.IDNhac = ct.IDNhac where ct.IDAlbum = @idalbum order by newid() for json path) 
+	as list_jsonnhactrongalbum,
+	(select n.* from Nhac n left join ChiTietAlbum ct on n.IDNhac = ct.IDNhac and ct.IDAlbum = @idalbum where ct.IDNhac is null and n.IDNgheSi = @idnghesi  order by newid() for json path) 
+	as list_jsonnhactheonghesikhongcotrongalbum
+	from Album
+	where IDAlbum = @idalbum
+	end;
+go
+
+-- thu tuc tim kiem theo ten album
+alter proc getbytenalbum
+	@tenalbum nvarchar(100)
+as
+begin
+	select * from Album 
+	where TenAlbum like (N'%'+ @tenalbum +'%')
+	end;
 go
 
 ---------thu tuc lien quan den nhac-------------------
@@ -317,7 +368,7 @@ as
 begin
 	insert into Nhac
 	values
-	(@tennhac,@idtheloai,@idnghesi,@audio,@img,@thoiluong,@lyrics)
+		(@tennhac,@idtheloai,@idnghesi,@audio,@img,@thoiluong,@lyrics)
 	end;
 go
 
@@ -434,6 +485,27 @@ begin
 	end;
 go
 
+-- thu tuc tim kiem theo ten nhac hoac ten nghe si
+alter proc seachnhacvanghesi
+	@ten nvarchar(100)
+as
+begin
+	select
+		n.TenNhac,
+		ns.TenNgheSi,
+		case
+			when n.TenNhac like (N'%'+@ten+'%') then 1
+			else 0
+		end as MatchType
+	from Nhac n join NgheSi ns 
+	on n.IDNgheSi = ns.IDNgheSi
+	where
+        n.TenNhac like (N'%'+@ten+'%') or
+        ns.TenNgheSi like (N'%'+@ten+'%')
+	order by MatchType desc
+	end;
+go
+
 ---------thu tuc lien quan den nghe si-------------------
 -- thu tuc them nghe si
 create proc createnghesi
@@ -519,7 +591,27 @@ as
     end;
 go	
 
+-- thu tuc chi tiet nghe si
+create proc detailnghesi
+	@idnghesi int
+as
+begin
+	select *,
+	(select top 5 * from Nhac where IDNgheSi = @idnghesi order by newid() for json path) as list_jsonchitietnhactheonghesi,
+	(select top 5 * from Album where IDNgheSi = 3 order by newid() for json path) as list_jsonchitietalbumtheonghesi
+	from NgheSi
+	where IDNgheSi = @idnghesi
+	end;
+go
 
+-- thu tuc tim kiem nghe si theo ten
+create proc getbytennghesi
+	@tennghesi nvarchar(100)
+as
+begin
+	select * from NgheSi where TenNgheSi like N'%'+ @tennghesi +'%'
+	end;
+go
 
 ---------thu tuc lien quan den the loai-------------------
 -- thu tuc them the loai
@@ -604,7 +696,31 @@ as
                 drop table #Results2; 
         end;
     end;
-go	
+go
+
+-- thu tuc tim kiem theo ten the loai
+create proc getbytentheloai
+	@tentheloai nvarchar(100)
+as
+begin
+	select * from TheLoai where TenTheLoai like N'%'+@tentheloai+'%'
+	end;
+go
+
+-- thu tuc chi tiet the loai
+create proc detailtheloai
+	@idtheloai int
+as
+begin
+	select *,
+	(select top 10 * from Nhac where IDTheLoai = @idtheloai order by newid() for json path) as list_jsonchitietnhactheotheloai
+	from TheLoai
+	where IDTheLoai = @idtheloai
+	end;
+go
+
+
+
 
 
 

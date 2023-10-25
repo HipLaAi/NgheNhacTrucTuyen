@@ -11,5 +11,6 @@ namespace Model
         public int IDTheLoai { get; set; }
         public string TenTheLoai { get; set; }
         public string AnhDaiDien { get; set; }
+        public List<NhacModel> list_jsonchitietnhactheotheloai { get; set; }
     }
 }

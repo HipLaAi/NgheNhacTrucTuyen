@@ -49,3 +49,6 @@ D:\Phát triển Dịch Vụ\BTL\API.NgheNhacTrucTuyen\API.NgheNhacTrucTuyen.ADM
 D:\Phát triển Dịch Vụ\BTL\API.NgheNhacTrucTuyen\API.NgheNhacTrucTuyen.ADMIN\obj\Debug\net6.0\API.NgheNhacTrucTuyen.ADMIN.pdb
 D:\Phát triển Dịch Vụ\BTL\API.NgheNhacTrucTuyen\API.NgheNhacTrucTuyen.ADMIN\obj\Debug\net6.0\API.NgheNhacTrucTuyen.ADMIN.genruntimeconfig.cache
 D:\Phát triển Dịch Vụ\BTL\API.NgheNhacTrucTuyen\API.NgheNhacTrucTuyen.ADMIN\obj\Debug\net6.0\ref\API.NgheNhacTrucTuyen.ADMIN.dll
+D:\Phát triển Dịch Vụ\BTL\API.NgheNhacTrucTuyen\API.NgheNhacTrucTuyen.ADMIN\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+D:\Phát triển Dịch Vụ\BTL\API.NgheNhacTrucTuyen\API.NgheNhacTrucTuyen.ADMIN\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.dll
+D:\Phát triển Dịch Vụ\BTL\API.NgheNhacTrucTuyen\API.NgheNhacTrucTuyen.ADMIN\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll

@@ -95,5 +95,37 @@ namespace DAL
                 throw ex;
             }
         }
+        public TheLoaiModel GetByName(string tenTheLoai)
+        {
+            string msgError = "";
+            try
+            {
+                var dn = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "getbytentheloai",
+                    "@tentheloai", tenTheLoai);
+                if (!string.IsNullOrEmpty(msgError))
+                    throw new Exception(msgError);
+                return dn.ConvertTo<TheLoaiModel>().FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public List<TheLoaiModel> GetByID(int idTheLoai)
+        {
+            string msgError = "";
+            try
+            {
+                var dn = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "detailtheloai",
+                    "@idtheloai", idTheLoai);
+                if (!string.IsNullOrEmpty(msgError))
+                    throw new Exception(msgError);
+                return dn.ConvertTo<TheLoaiModel>().ToList();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

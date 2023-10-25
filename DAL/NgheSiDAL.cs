@@ -95,5 +95,39 @@ namespace DAL
                 throw ex;
             }
         }
+
+        public List<NgheSiModel> GetByID(int idNgheSi)
+        {
+            string msgError = "";
+            try
+            {
+                var dn = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "detailnghesi",
+                    "@idnghesi", idNgheSi);
+                if (!string.IsNullOrEmpty(msgError))
+                    throw new Exception(msgError);
+                return dn.ConvertTo<NgheSiModel>().ToList();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public NgheSiModel GetByName(string tenNgheSi)
+        {
+            string msgError = "";
+            try
+            {
+                var dn = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "getbytennghesi",
+                    "@tennghesi", tenNgheSi);
+                if (!string.IsNullOrEmpty(msgError))
+                    throw new Exception(msgError);
+                return dn.ConvertTo<NgheSiModel>().FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

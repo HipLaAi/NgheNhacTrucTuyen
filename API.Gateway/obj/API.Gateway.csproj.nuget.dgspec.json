@@ -30,12 +30,6 @@
             "projectReferences": {
               "D:\\Phát triển Dịch Vụ\\BTL\\API.NgheNhacTrucTuyen\\BLL\\BLL.csproj": {
                 "projectPath": "D:\\Phát triển Dịch Vụ\\BTL\\API.NgheNhacTrucTuyen\\BLL\\BLL.csproj"
-              },
-              "D:\\Phát triển Dịch Vụ\\BTL\\API.NgheNhacTrucTuyen\\DAL\\DAL.csproj": {
-                "projectPath": "D:\\Phát triển Dịch Vụ\\BTL\\API.NgheNhacTrucTuyen\\DAL\\DAL.csproj"
-              },
-              "D:\\Phát triển Dịch Vụ\\BTL\\API.NgheNhacTrucTuyen\\Model\\Model.csproj": {
-                "projectPath": "D:\\Phát triển Dịch Vụ\\BTL\\API.NgheNhacTrucTuyen\\Model\\Model.csproj"
               }
             }
           }

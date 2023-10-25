@@ -3,7 +3,7 @@ using System.Reflection;
 
 namespace DAL
 {
-    public class TaiKhoanDAL : ITaiKhoanDAL
+    public class TaiKhoanDAL : ITaiKhoanDAL 
     {
         private IDatabaseHelper _dbHelper;
         public TaiKhoanDAL(IDatabaseHelper dbHelper)
@@ -120,6 +120,23 @@ namespace DAL
                     throw new Exception(msgError);
                 if (dt.Rows.Count > 0) total = (long)dt.Rows[0]["RecordCount"];
                 return dt.ConvertTo<ChiTietTaiKhoanModel>().ToList();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public TaiKhoanModel GetByID (int idTaiKhoan)
+        {
+            string msgError = "";
+            try
+            {
+                var dn = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "getbyidtaikhoan",
+                    "@idtaikhoan", idTaiKhoan);
+                if (!string.IsNullOrEmpty(msgError))
+                    throw new Exception(msgError);
+                return dn.ConvertTo<TaiKhoanModel>().FirstOrDefault();
             }
             catch (Exception ex)
             {

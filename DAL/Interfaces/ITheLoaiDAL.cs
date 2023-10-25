@@ -12,6 +12,9 @@ namespace DAL
         bool Create(TheLoaiModel model);
         bool Delete(int idTheLoai);
         bool Update(TheLoaiModel model);
-        public List<TheLoaiModel> Search(int pageIndex, int pageSize, out long total, string tenTheLoai);
+        List<TheLoaiModel> Search(int pageIndex, int pageSize, out long total, string tenTheLoai);
+        TheLoaiModel GetByName(string tenTheLoai);
+        List<TheLoaiModel> GetByID(int idTheLoai);
+
     }
 }

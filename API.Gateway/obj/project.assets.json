@@ -2195,9 +2195,7 @@
   "projectFileDependencyGroups": {
     "net6.0": [
       "BLL >= 1.0.0",
-      "DAL >= 1.0.0",
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 6.0.22",
-      "Model >= 1.0.0",
       "Ocelot >= 16.0.2",
       "Swashbuckle.AspNetCore >= 6.5.0"
     ]
@@ -2231,12 +2229,6 @@
           "projectReferences": {
             "D:\\Phát triển Dịch Vụ\\BTL\\API.NgheNhacTrucTuyen\\BLL\\BLL.csproj": {
               "projectPath": "D:\\Phát triển Dịch Vụ\\BTL\\API.NgheNhacTrucTuyen\\BLL\\BLL.csproj"
-            },
-            "D:\\Phát triển Dịch Vụ\\BTL\\API.NgheNhacTrucTuyen\\DAL\\DAL.csproj": {
-              "projectPath": "D:\\Phát triển Dịch Vụ\\BTL\\API.NgheNhacTrucTuyen\\DAL\\DAL.csproj"
-            },
-            "D:\\Phát triển Dịch Vụ\\BTL\\API.NgheNhacTrucTuyen\\Model\\Model.csproj": {
-              "projectPath": "D:\\Phát triển Dịch Vụ\\BTL\\API.NgheNhacTrucTuyen\\Model\\Model.csproj"
             }
           }
         }

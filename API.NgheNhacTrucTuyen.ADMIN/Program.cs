@@ -1,5 +1,9 @@
 using BLL;
 using DAL;
+using DataModel;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddCors(options =>
@@ -8,8 +12,38 @@ builder.Services.AddCors(options =>
 });
 // Add services to the container.
 builder.Services.AddTransient<IDatabaseHelper, DatabaseHelper>();
-builder.Services.AddTransient<IAlbumDAL, AlbumDAL>();
-builder.Services.AddTransient<IAlbumBLL, AlbumBLL>();
+builder.Services.AddTransient<ITaiKhoanDAL, TaiKhoanDAL>();
+builder.Services.AddTransient<ITaiKhoanBLL, TaiKhoanBLL>();
+builder.Services.AddTransient<INgheSiDAL, NgheSiDAL>();
+builder.Services.AddTransient<INgheSiBLL, NgheSiBLL>();
+builder.Services.AddTransient<ITheLoaiDAL, TheLoaiDAL>();
+builder.Services.AddTransient<ITheLoaiBLL, TheLoaiBLL>();
+
+// configure strongly typed settings objects
+IConfiguration configuration = builder.Configuration;
+var appSettingsSection = configuration.GetSection("AppSettings");
+builder.Services.Configure<AppSettings>(appSettingsSection);
+
+// configure jwt authentication
+var appSettings = appSettingsSection.Get<AppSettings>();
+var key = Encoding.ASCII.GetBytes(appSettings.Secret);
+builder.Services.AddAuthentication(x =>
+{
+    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(x =>
+{
+    x.RequireHttpsMetadata = false;
+    x.SaveToken = true;
+    x.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(key),
+        ValidateIssuer = false,
+        ValidateAudience = false
+    };
+});
 
 // Add services to the container.
 builder.Services.AddControllers();

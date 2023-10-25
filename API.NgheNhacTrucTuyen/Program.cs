@@ -12,16 +12,12 @@ builder.Services.AddCors(options =>
 });
 // Add services to the container.
 builder.Services.AddTransient<IDatabaseHelper, DatabaseHelper>();
-builder.Services.AddTransient<ITaiKhoanDAL, TaiKhoanDAL>();
-builder.Services.AddTransient<ITaiKhoanBLL, TaiKhoanBLL>();
+builder.Services.AddTransient<IAlbumDAL, AlbumDAL>();
+builder.Services.AddTransient<IAlbumBLL, AlbumBLL>();
 builder.Services.AddTransient<INhacDAL, NhacDAL>();
 builder.Services.AddTransient<INhacBLL, NhacBLL>();
-builder.Services.AddTransient<ITheLoaiDAL, TheLoaiDAL>();
-builder.Services.AddTransient<ITheLoaiBLL, TheLoaiBLL>();
-builder.Services.AddTransient<INgheSiDAL, NgheSiDAL>();
-builder.Services.AddTransient<INgheSiBLL, NgheSiBLL>();
 
-// configure strongly typed settings objects
+//// configure strongly typed settings objects
 IConfiguration configuration = builder.Configuration;
 var appSettingsSection = configuration.GetSection("AppSettings");
 builder.Services.Configure<AppSettings>(appSettingsSection);
