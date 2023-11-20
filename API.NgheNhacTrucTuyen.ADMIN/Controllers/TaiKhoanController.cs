@@ -54,6 +54,7 @@ namespace API.NgheNhacTrucTuyen.Controllers.ADMIN
             return tenDangNhap;
         }
 
+        [AllowAnonymous]
         [Route("update-account")]
         [HttpPost]
         public IActionResult UpdateItem([FromBody] TaiKhoanAndChietTietTaiKhoanModel combinedModel)
@@ -90,7 +91,7 @@ namespace API.NgheNhacTrucTuyen.Controllers.ADMIN
             var user = _taiKhoanBLL.DangNhap(model.Username, model.Password);
             if (user == null)
                 return BadRequest(new { message = "Tài khoản hoặc mật khẩu không đúng!" });
-            return Ok(new { tendangnhap = user.TenDangNhap, email = user.Email, token = user.Token });
+            return Ok(new {loaitaikhoan = user.IDLoaiTaiKhoan, token = user.Token });
         }
 
         [Route("search-account")]

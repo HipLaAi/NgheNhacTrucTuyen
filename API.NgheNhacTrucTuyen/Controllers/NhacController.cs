@@ -9,7 +9,7 @@ namespace API.NgheNhacTrucTuyen.Controllers.USER
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class NhacController : Controller
     {
         private INhacBLL _nhacBLL;
@@ -17,20 +17,34 @@ namespace API.NgheNhacTrucTuyen.Controllers.USER
         {
             _nhacBLL = nhacBLL;
         }
+        //[Route("create-nhac")]
+        //[HttpPost]
+        //public NhacModel CreateNhac([FromBody] NhacModel model)
+        //{
+        //    try
+        //    {
+        //        _nhacBLL.Create(model);
+        //        return model;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new Exception(ex.Message);
+        //    }
+        //}
+
+
+        //-----------------------------------------------
         [Route("create-nhac")]
         [HttpPost]
-        public NhacModel CreateNhac([FromBody] NhacModel model)
+        public IActionResult CreateNhac([FromBody] NhacModel model)
         {
-            try
-            {
-                _nhacBLL.Create(model);
-                return model;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
+            var music = _nhacBLL.Create(model);
+            if (music != null)
+                return Ok(new { message = "Nhạc đã tồn tài" });
+            return Ok(new { message = "Thêm thành công" });
         }
+        //-----------------------------------------------
+
 
         [Route("delete-nhac")]
         [HttpDelete]
@@ -93,6 +107,18 @@ namespace API.NgheNhacTrucTuyen.Controllers.USER
                     Data = data
                 }
                 ) ;
+        }
+        [Route("toplove-nhac")]
+        [HttpGet]
+        public IActionResult TopLove(int top)
+        {
+            var data = _nhacBLL.GetByID(top);
+            return Ok(
+                new
+                {
+                    Data = data
+                }
+                );
         }
     }
 }

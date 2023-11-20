@@ -43,5 +43,9 @@ namespace BLL
         {
             return _res.GetByID(idTheLoai);
         }
+        public List<TheLoaiModel> GetAll()
+        {
+            return _res.GetAll();
+        }
     }
 }

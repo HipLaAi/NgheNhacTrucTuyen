@@ -15,19 +15,18 @@ namespace DAL
             _dbHelper = dbHelper;
         }
 
-        public bool Create(NgheSiModel model)
+        public NgheSiModel Create(NgheSiModel model)
         {
             string msgError = "";
             try
             {
-                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "createnghesi",
+                var result = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "createnghesi",
                 "@tennghesi", model.TenNgheSi,
-                "@anhdaidien", model.AnhDaiDien);
-                if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
-                {
-                    throw new Exception(Convert.ToString(result) + msgError);
-                }
-                return true;
+                "@anhdaidien", model.AnhDaiDien,
+                "@mota", model.MoTa);
+                if (!string.IsNullOrEmpty(msgError))
+                    throw new Exception(msgError);
+                return result.ConvertTo<NgheSiModel>().FirstOrDefault();
             }
             catch (Exception ex)
             {
@@ -62,7 +61,9 @@ namespace DAL
                 var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "updatenghesi",
                 "@idnghesi", model.IDNgheSi,
                 "@tennghesi", model.TenNgheSi,
-                "@anhdaidien", model.AnhDaiDien);
+                "@anhdaidien", model.AnhDaiDien,
+                "@mota", model.MoTa,
+                "@soluongbaihat", model.SoLuongBaiHat);
                 if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
                 {
                     throw new Exception(Convert.ToString(result) + msgError);
@@ -129,5 +130,22 @@ namespace DAL
                 throw ex;
             }
         }
+
+        public List<NgheSiModel> GetAll()
+        {
+            string msgError = "";
+            try
+            {
+                var dn = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "getallnghesi");
+                if (!string.IsNullOrEmpty(msgError))
+                    throw new Exception(msgError);
+                return dn.ConvertTo<NgheSiModel>().ToList();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
     }
 }

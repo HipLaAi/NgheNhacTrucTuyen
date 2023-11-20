@@ -2,6 +2,8 @@
 using Model;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,7 +18,12 @@ namespace BLL
             _res = res;
         }
 
-        public bool Create(NhacModel model)
+        //public bool Create(NhacModel model)
+        //{
+        //    return _res.Create(model);
+        //}
+
+        public NhacModel Create(NhacModel model)
         {
             return _res.Create(model);
         }
@@ -39,5 +46,7 @@ namespace BLL
         {
             return _res.GetByID(idNhac);
         }
+
+
     }
 }

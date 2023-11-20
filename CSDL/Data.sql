@@ -9,7 +9,7 @@ IDTheLoai int identity(1,1) primary key,
 TenTheLoai nvarchar(250),
 )
 alter table TheLoai 
-add AnhDaiDien nvarchar(500)
+add MoTa nvarchar(250), SoLuongBaiHat int ,AnhDaiDien nvarchar(max)
 go
 
 
@@ -19,6 +19,8 @@ IDNgheSi int identity(1,1) primary key,
 TenNgheSi nvarchar(250),
 AnhDaiDien nvarchar(500)
 )
+alter table NgheSi
+add MoTa nvarchar(250), SoLuongBaiHat int 
 go
 
 create table LoaiTaiKhoan
@@ -65,6 +67,20 @@ ThoiLuong nvarchar(50),
 Lyrics nvarchar(500)
 )
 go
+alter table Nhac 
+alter column Audio nvarchar(max)
+go
+alter table Nhac 
+alter column IMG nvarchar(max)
+go
+alter table Nhac 
+alter column Lyrics nvarchar(max)
+go
+
+alter table Nhac 
+drop column ThoiLuong
+go
+
 
 create table Album
 (
@@ -86,7 +102,16 @@ go
 
 create table DanhMucYeuThich
 (
+IDDanhMucYeuThich int identity(1,1) primary key,
 IDTaiKhoan int foreign key references TaiKhoan(IDTaiKhoan) on delete cascade on update cascade,
+AnhDaiDien nvarchar(500)
+)
+go
+
+create table ChiTietDanhMucYeuThich
+(
+IDChiTietDanhMucYeuThich int identity(1,1) primary key,
+IDDanhMucYeuThich int foreign key references DanhMucYeuThich(IDDanhMucYeuThich) on delete cascade on update cascade,
 IDNhac int foreign key references Nhac(IDNhac) on delete cascade on update cascade,
 )
 go
@@ -101,7 +126,25 @@ go
 
 create table NhacCoTrongDanhSachPhat
 (
+IDNhacCoTrongDanhSachPhat int identity(1,1) primary key,
 IDDanhSachPhat int foreign key references DanhSachPhatCuaNguoiDung(IDDanhSachPhat) on delete cascade on update cascade,
+IDNhac int foreign key references Nhac(IDNhac) on delete cascade on update cascade
+)
+go
+
+create table DanhSachPhat
+(
+IDDanhSachPhat int identity(1,1) primary key,
+TenDanhSachPhat nvarchar(250),
+AnhDaiDien nvarchar(500),
+MoTa nvarchar(250)
+)
+go
+
+create table ChiTietDanhSachPhat
+(
+IDChiTietDanhSachPhat int identity(1,1) primary key,
+IDDanhSachPhat int foreign key references DanhSachPhat(IDDanhSachPhat) on delete cascade on update cascade,
 IDNhac int foreign key references Nhac(IDNhac) on delete cascade on update cascade
 )
 go
@@ -179,6 +222,44 @@ values
 (15,20)
 
 
+-- Trigger-----------------------------
+------------Liên quan đến bảng Nhac------------
+--Trigger thêm nhạc--------------------
+alter trigger trg_createnhac
+on Nhac
+after insert
+as
+begin
+    set nocount on;
+    update NgheSi
+    set SoLuongBaiHat = isnull(SoLuongBaiHat, 0) + 1
+    from NgheSi
+    inner join inserted on NgheSi.IDNgheSi = inserted.IDNgheSi;
+	end;
+go
+
+--Trigger cập nhật nhạc--------------------
+alter trigger trg_updatenhac
+on Nhac
+after update
+as
+begin
+    set nocount on;
+    update ns
+    set ns.SoLuongBaiHat = case when ns.SoLuongBaiHat > 0 then ns.SoLuongBaiHat - 1 else 0 end
+    from NgheSi ns
+    inner join deleted d on ns.IDNgheSi = d.IDNgheSi
+    where d.IDNgheSi is not null;
+
+    update ns
+    set ns.SoLuongBaiHat = isnull(ns.SoLuongBaiHat, 0) + 1
+    from NgheSi ns
+    inner join inserted i on ns.IDNgheSi = i.IDNgheSi
+    where i.IDNgheSi is not null;
+	end;
+go
+
+
 
 
 use NgheNhacTrucTuyen
@@ -186,5 +267,6 @@ select * from NgheSi
 select * from LoaiTaiKhoan
 select * from LoaiTaiKhoan
 select * from Nhac
+select * from TheLoai
 select * from Album
 select * from ChiTietAlbum

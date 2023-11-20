@@ -7,7 +7,7 @@ namespace API.NgheNhacTrucTuyen.Controllers.ADMIN
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class NgheSiController : Controller
     {
         private INgheSiBLL _nghesiBLL;
@@ -15,20 +15,32 @@ namespace API.NgheNhacTrucTuyen.Controllers.ADMIN
         {
             _nghesiBLL = nghesiBLL;
         }
+        //[Route("create-nghesi")]
+        //[HttpPost]
+        //public NgheSiModel CreateNhac([FromBody] NgheSiModel model)
+        //{
+        //    try
+        //    {
+        //        _nghesiBLL.Create(model);
+        //        return model;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new Exception(ex.Message);
+        //    }
+        //}
+        //------------------------------------
+        [AllowAnonymous]
         [Route("create-nghesi")]
         [HttpPost]
-        public NgheSiModel CreateNhac([FromBody] NgheSiModel model)
+        public IActionResult CreateNhac([FromBody] NgheSiModel model)
         {
-            try
-            {
-                _nghesiBLL.Create(model);
-                return model;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
+            var music = _nghesiBLL.Create(model);
+            if (music != null)
+                return Ok(new { message = "Nghệ sĩ đã tồn tại" });
+            return Ok(new { message = "Thêm thành công" });
         }
+        //-----------------------------------
 
         [Route("delete-nghesi")]
         [HttpDelete]
@@ -92,6 +104,14 @@ namespace API.NgheNhacTrucTuyen.Controllers.ADMIN
         public NgheSiModel GetByName(string tenNgheSi)
         {
             return _nghesiBLL.GetByName(tenNgheSi);
+        }
+
+        [AllowAnonymous]
+        [Route("getall-nghesi")]
+        [HttpGet]
+        public List<NgheSiModel> GetAll()
+        {
+            return _nghesiBLL.GetAll();
         }
     }
 }

@@ -14,6 +14,6 @@ namespace BLL
         bool Create(TaiKhoanModel model, ChiTietTaiKhoanModel models);
         bool Delete(string tenDangNhap);
         bool Update(TaiKhoanModel model, ChiTietTaiKhoanModel models);
-        public List<ChiTietTaiKhoanModel> Search(int pageIndex, int pageSize, out long total, string hoTen, string diaChi, string gioiTinh);
+        List<ChiTietTaiKhoanModel> Search(int pageIndex, int pageSize, out long total, string hoTen, string diaChi, string gioiTinh);
     }
 }

@@ -356,19 +356,31 @@ go
 
 ---------thu tuc lien quan den nhac-------------------
 -- thu tuc them nhac
-create proc createnhac
+alter proc createnhac
 	@tennhac nvarchar(50),
 	@idtheloai int,
 	@idnghesi int,
-	@audio nvarchar(500),
-	@img nvarchar(500),
-	@thoiluong nvarchar(50),
-	@lyrics nvarchar(500)
+	@audio nvarchar(max),
+	@img nvarchar(max),
+	@lyrics nvarchar(max)
 as
 begin
-	insert into Nhac
-	values
-		(@tennhac,@idtheloai,@idnghesi,@audio,@img,@thoiluong,@lyrics)
+	if(not exists (select * from Nhac where TenNhac = @tennhac))
+	begin
+		insert into Nhac
+		(
+		TenNhac,
+		IDTheLoai,
+		IDNgheSi,
+		Audio,
+		IMG,
+		Lyrics
+		)
+		values
+			(@tennhac,@idtheloai,@idnghesi,@audio,@img,@lyrics)
+		end;
+	else
+		select * from Nhac where TenNhac = @tennhac
 	end;
 go
 
@@ -382,14 +394,13 @@ begin
 go
 
 -- thu tuc cap nhat nhac
-create proc updatenhac
+alter proc updatenhac
 	@idnhac int,
 	@tennhac nvarchar(50),
 	@idtheloai int,
 	@idnghesi int,
 	@audio nvarchar(500),
 	@img nvarchar(500),
-	@thoiluong nvarchar(50),
 	@lyrics nvarchar(500)
 as
 begin
@@ -399,7 +410,6 @@ begin
 	IDNgheSi = @idnghesi,
 	Audio = @audio,
 	IMG = @img,
-	ThoiLuong = @thoiluong,
 	Lyrics = @lyrics
 	where IDNhac = @idnhac
 	end;
@@ -426,7 +436,6 @@ as
 						n.IDNgheSi,
 						n.Audio,
 						n.IMG,
-						n.ThoiLuong,
 						n.Lyrics
                 into #Results1
                 from Nhac as n
@@ -452,7 +461,6 @@ as
 						n.IDNgheSi,
 						n.Audio,
 						n.IMG,
-						n.ThoiLuong,
 						n.Lyrics
                 into #Results2
                 from Nhac as n
@@ -507,15 +515,31 @@ begin
 go
 
 ---------thu tuc lien quan den nghe si-------------------
--- thu tuc them nghe si
-create proc createnghesi
-	@tennghesi nvarchar(250),
-	@anhdaidien nvarchar(500)
+-- thu tuc lay tat ca nghe si
+alter proc getallnghesi
 as
 begin
-	insert into NgheSi
-	values
-	(@tennghesi,@anhdaidien)
+	select * from NgheSi
+	order by TenNgheSi asc
+	end
+go
+
+-- thu tuc them nghe si
+alter proc createnghesi
+	@tennghesi nvarchar(250),
+	@anhdaidien nvarchar(500),
+	@mota nvarchar(500)
+as
+begin
+	if(not exists (select * from NgheSi where TenNgheSi = @tennghesi))
+	begin
+		insert into NgheSi
+		(TenNgheSi,AnhDaiDien,MoTa)
+		values
+		(@tennghesi,@anhdaidien,@mota)
+	end;
+	else
+		select * from NgheSi where TenNgheSi = @tennghesi
 	end;
 go
 
@@ -529,21 +553,25 @@ begin
 go
 
 -- thu tuc cap nhat nghe si
-create proc updatenghesi
+alter proc updatenghesi
 	@idnghesi int,
 	@tennghesi nvarchar(250),
-	@anhdaidien nvarchar(500)
+	@anhdaidien nvarchar(500),
+	@mota nvarchar(500),
+	@soluongbaihat int
 as
 begin
 	update NgheSi
 	set TenNgheSi = @tennghesi,
-	AnhDaiDien = @anhdaidien
+	AnhDaiDien = @anhdaidien,
+	MoTa = @mota,
+	SoLuongBaiHat = @soluongbaihat
 	where IDNgheSi = @idnghesi
 	end;
 go
 
 -- thu tuc tim kiem nghe si
-create proc searchnghesi
+alter proc searchnghesi
 	(@pageindex int, 
 	@pagesize int,
 	@tennghesi nvarchar(250))
@@ -557,7 +585,9 @@ as
                         order by IDNgheSi ASC)) AS RowNumber, 
                         n.IDNgheSi,
 						n.TenNgheSi,
-						n.AnhDaiDien
+						n.AnhDaiDien,
+						n.MoTa,
+						n.SoLuongBaiHat
                 into #Results1
                 from NgheSi as n
 				where  (@tennghesi = '' Or n.TenNgheSi like N'%'+@tennghesi+'%');                  
@@ -577,7 +607,9 @@ as
                         order by IDNgheSi ASC)) AS RowNumber, 
                         n.IDNgheSi,
 						n.TenNgheSi,
-						n.AnhDaiDien
+						n.AnhDaiDien,
+						n.MoTa,
+						n.SoLuongBaiHat
                 into #Results2
                 from NgheSi as n
 				where  (@tennghesi = '' Or n.TenNgheSi like N'%'+@tennghesi+'%');            
@@ -614,6 +646,15 @@ begin
 go
 
 ---------thu tuc lien quan den the loai-------------------
+-- thu tuc lay tat ca the loai
+alter proc getalltheoai
+as
+begin
+	select * from TheLoai
+	order by TenTheLoai asc
+	end
+go
+
 -- thu tuc them the loai
 create proc createtheloai
 	@tentheloai nvarchar(250),
@@ -719,7 +760,41 @@ begin
 	end;
 go
 
+---------thu tuc lien quan den danh muc yeu thich-------------------
+create proc createdanhmucyeuthich
+	@idtaikhoan int,
+	@anhdaidien nvarchar(500),
+	@list_json_chitietdanhmucyeuthich nvarchar(max)
+as
+    begin
+		declare @iddanhmucyeuthich int;
+        insert into DanhMucYeuThich
+        values
+		(@idtaikhoan,@anhdaidien)
+		set @iddanhmucyeuthich = (select scope_identity());
+        if(@list_json_chitietdanhmucyeuthich IS NOT NULL)
+            begin
+                insert into ChiTietDanhMucYeuThich
+				(IDDanhMucYeuThich, 
+				IDNhac)
+				select  @iddanhmucyeuthich, 
+						json_value(a.value, '$.idNhac')
+				from openjson(@list_json_chitietdanhmucyeuthich) as a;
+        end;
+    select '';
+	end;
+go
 
+create proc toplovemusic
+	@top int
+as
+begin
+	select top(@top) * from Nhac
+	end;
+go
+
+
+select COUNT(IDNhac) distinct(IDAlbum) from ChiTietAlbum
 
 
 
@@ -746,6 +821,9 @@ select * from TheLoai
 select * from Album
 select * from ChiTietAlbum
 select * from Nhac
+select * from DanhMucYeuThich
+select * from ChiTietDanhMucYeuThich
+select * from DanhSachPhat
+select * from ChiTietDanhSachPhat
 
-
-
+exec logintaikhoan 'admin','2569'

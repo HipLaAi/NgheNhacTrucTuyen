@@ -15,6 +15,6 @@ namespace DAL
         List<TheLoaiModel> Search(int pageIndex, int pageSize, out long total, string tenTheLoai);
         TheLoaiModel GetByName(string tenTheLoai);
         List<TheLoaiModel> GetByID(int idTheLoai);
-
+        List<TheLoaiModel> GetAll();
     }
 }

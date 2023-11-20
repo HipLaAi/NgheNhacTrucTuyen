@@ -15,31 +15,54 @@ namespace DAL
         {
             _dbHelper = dbHelper;
         }
-        
-        public bool Create(NhacModel model)
+
+        //public bool Create(NhacModel model)
+        //{
+        //    string msgError = "";
+        //    try
+        //    {
+        //        var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "createnhac",
+                //"@tennhac", model.TenNhac,
+                //"@idtheloai", model.IDTheLoai,
+                //"@idnghesi", model.IDNgheSi,
+                //"@audio", model.Audio,
+                //"@img", model.IMG,
+                //"@lyrics", model.Lyrics);
+        //        if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
+        //        {
+        //            throw new Exception(Convert.ToString(result) + msgError);
+        //        }
+        //        return true;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+        //    }
+        //}
+
+        //-------------------------------------------------
+        public NhacModel Create(NhacModel model)
         {
             string msgError = "";
             try
             {
-                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "createnhac",
+                var result = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "createnhac",
                 "@tennhac", model.TenNhac,
                 "@idtheloai", model.IDTheLoai,
                 "@idnghesi", model.IDNgheSi,
                 "@audio", model.Audio,
                 "@img", model.IMG,
-                "@thoiluong", model.ThoiLuong,
                 "@lyrics", model.Lyrics);
-                if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
-                {
-                    throw new Exception(Convert.ToString(result) + msgError);
-                }
-                return true;
+                if (!string.IsNullOrEmpty(msgError))
+                    throw new Exception(msgError);
+                return result.ConvertTo<NhacModel>().FirstOrDefault();
             }
             catch (Exception ex)
             {
                 throw ex;
             }
         }
+        //-------------------------------------------------
 
         public bool Delete(int idNhac)
         {
@@ -72,7 +95,6 @@ namespace DAL
                 "@idnghesi", model.IDNgheSi,
                 "@audio", model.Audio,
                 "@img", model.IMG,
-                "@thoiluong", model.ThoiLuong,
                 "@lyrics", model.Lyrics);
                 if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
                 {

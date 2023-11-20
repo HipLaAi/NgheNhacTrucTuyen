@@ -16,7 +16,7 @@ namespace BLL
             _res = res;
         }
 
-        public bool Create(NgheSiModel model)
+        public NgheSiModel Create(NgheSiModel model)
         {
             return _res.Create(model);
         }
@@ -44,6 +44,11 @@ namespace BLL
         public NgheSiModel GetByName(string tenNgheSi)
         {
             return _res.GetByName(tenNgheSi);
+        }
+
+        public List<NgheSiModel> GetAll()
+        {
+            return _res.GetAll();
         }
     }
 }

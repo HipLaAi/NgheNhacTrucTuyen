@@ -88,5 +88,13 @@ namespace API.NgheNhacTrucTuyen.Controllers.ADMIN
         {
             return _theloaiBLL.GetByID(idTheLoai);
         }
+
+        [Route("getall-theloai")]
+        [HttpGet]
+        [AllowAnonymous]
+        public List<TheLoaiModel> GetAll()
+        {
+            return _theloaiBLL.GetAll();
+        }
     }
 }
