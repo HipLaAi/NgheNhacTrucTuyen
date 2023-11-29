@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="..\buildMultiTargeting\API.NgheNhacTrucTuyen.USER.props" />
-</Project>
