@@ -33,7 +33,7 @@ namespace API.NgheNhacTrucTuyen.Controllers.ADMIN
         [AllowAnonymous]
         [Route("create-nghesi")]
         [HttpPost]
-        public IActionResult CreateNhac([FromBody] NgheSiModel model)
+        public IActionResult CreateNgheSi([FromBody] NgheSiModel model)
         {
             var music = _nghesiBLL.Create(model);
             if (music != null)

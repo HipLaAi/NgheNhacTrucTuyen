@@ -46,7 +46,13 @@ namespace BLL
         {
             return _res.GetByID(idNhac);
         }
-
-
+        public List<NhacModel> GetNhacByIDNgheSi(int idNgheSi)
+        {
+            return _res.GetNhacByIDNgheSi(idNgheSi);
+        }
+        public bool UpdateView(int idNhac)
+        {
+            return _res.UpdateView(idNhac);
+        }
     }
 }

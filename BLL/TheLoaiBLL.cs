@@ -16,7 +16,7 @@ namespace BLL
             _res = res;
         }
 
-        public bool Create(TheLoaiModel model)
+        public TheLoaiModel Create(TheLoaiModel model)
         {
             return _res.Create(model);
         }

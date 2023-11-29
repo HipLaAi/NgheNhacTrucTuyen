@@ -16,30 +16,6 @@ namespace DAL
             _dbHelper = dbHelper;
         }
 
-        //public bool Create(NhacModel model)
-        //{
-        //    string msgError = "";
-        //    try
-        //    {
-        //        var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "createnhac",
-                //"@tennhac", model.TenNhac,
-                //"@idtheloai", model.IDTheLoai,
-                //"@idnghesi", model.IDNgheSi,
-                //"@audio", model.Audio,
-                //"@img", model.IMG,
-                //"@lyrics", model.Lyrics);
-        //        if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
-        //        {
-        //            throw new Exception(Convert.ToString(result) + msgError);
-        //        }
-        //        return true;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw ex;
-        //    }
-        //}
-
         //-------------------------------------------------
         public NhacModel Create(NhacModel model)
         {
@@ -140,6 +116,41 @@ namespace DAL
                 if (!string.IsNullOrEmpty(msgError))
                     throw new Exception(msgError);
                 return dt.ConvertTo<NhacModel>().ToList();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public List<NhacModel> GetNhacByIDNgheSi(int idNgheSi)
+        {
+            string msgError = "";
+            try
+            {
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "getnhacbyidnghesi",
+                    "@idnghesi", idNgheSi);
+                if (!string.IsNullOrEmpty(msgError))
+                    throw new Exception(msgError);
+                return dt.ConvertTo<NhacModel>().ToList();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public bool UpdateView(int idNhac)
+        {
+            string msgError = "";
+            try
+            {
+                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "updateluotnghe",
+                "@idnhac", idNhac);
+                if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
+                {
+                    throw new Exception(Convert.ToString(result) + msgError);
+                }
+                return true;
             }
             catch (Exception ex)
             {

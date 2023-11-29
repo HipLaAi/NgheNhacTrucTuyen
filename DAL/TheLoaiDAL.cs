@@ -15,19 +15,18 @@ namespace DAL
             _dbHelper = dbHelper;
         }
 
-        public bool Create(TheLoaiModel model)
+        public TheLoaiModel Create(TheLoaiModel model)
         {
             string msgError = "";
             try
             {
-                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "createtheloai",
+                var result = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "createtheloai",
                 "@tentheloai", model.TenTheLoai,
-                "@anhdaidien", model.AnhDaiDien);
-                if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
-                {
-                    throw new Exception(Convert.ToString(result) + msgError);
-                }
-                return true;
+                "@anhdaidien", model.AnhDaiDien,
+                "@mota", model.MoTa);
+                if (!string.IsNullOrEmpty(msgError))
+                    throw new Exception(msgError);
+                return result.ConvertTo<TheLoaiModel>().FirstOrDefault();
             }
             catch (Exception ex)
             {
@@ -62,7 +61,9 @@ namespace DAL
                 var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "updatetheloai",
                 "@idtheloai", model.IDTheLoai,
                 "@tentheloai", model.TenTheLoai,
-                "@anhdaidien", model.AnhDaiDien);
+                "@anhdaidien", model.AnhDaiDien,
+                "@mota",model.MoTa,
+                "@soluongbaihat",model.SoLuongBaiHat);
                 if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
                 {
                     throw new Exception(Convert.ToString(result) + msgError);

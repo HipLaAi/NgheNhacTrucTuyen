@@ -18,17 +18,12 @@ namespace API.NgheNhacTrucTuyen.Controllers.ADMIN
 
         [Route("create-theloai")]
         [HttpPost]
-        public TheLoaiModel CreateNhac([FromBody] TheLoaiModel model)
+        public IActionResult CreateTheLoai([FromBody] TheLoaiModel model)
         {
-            try
-            {
-                _theloaiBLL.Create(model);
-                return model;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
+            var music = _theloaiBLL.Create(model);
+            if (music != null)
+                return Ok(new { message = "Thể loại đã tồn tại" });
+            return Ok(new { message = "Thêm thành công" });
         }
 
         [Route("delete-theloai")]
@@ -47,7 +42,6 @@ namespace API.NgheNhacTrucTuyen.Controllers.ADMIN
             return model;
         }
 
-        [AllowAnonymous]
         [Route("search-theloai")]
         [HttpPost]
         public IActionResult Search([FromBody] Dictionary<string, object> formData)

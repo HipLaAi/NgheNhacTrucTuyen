@@ -15,5 +15,7 @@ namespace DAL
         List<NhacModel> Search(int pageIndex, int pageSize, out long total, string tenNhac, int idTheLoai, int idNgheSi);
         List<NhacModel> GetByID(int idNhac);
         NhacModel Create(NhacModel model);
+        List<NhacModel> GetNhacByIDNgheSi (int idNgheSi);
+        bool UpdateView(int idNhac);
     }
 }

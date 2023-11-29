@@ -222,6 +222,7 @@ as
                         order by IDAlbum ASC)) AS RowNumber,
 						ct.IDAlbum,
                         ct.TenAlbum,
+						ct.IDNgheSi,
 						ct.AnhDaiDien,
 						ct.MoTa
                 into #Results1
@@ -243,6 +244,7 @@ as
                         order by IDAlbum ASC)) AS RowNumber, 
 						ct.IDAlbum,
                         ct.TenAlbum,
+						ct.IDNgheSi,
 						ct.AnhDaiDien,
 						ct.MoTa
                 into #Results2
@@ -281,7 +283,7 @@ begin
 		begin
 			select
 				  json_value(a.value, '$.idChiTietAlbum') as idChiTietAlbum,
-				  json_value(a.value, '$.idAlbum') as idAlbum,
+				  @idalbum as idAlbum,
 				  json_value(a.value, '$.idNhac') as idNhac,
 				  json_value(a.value, '$.status') as status 
 				  into #Results 
@@ -297,20 +299,20 @@ begin
 			from  #Results 
 			where #Results.status = '1' 
 			
-			-- Update data to table with STATUS = 2
-			update ct
-			set ct.IDAlbum = r.idAlbum,
-				ct.IDNhac = r.idNhac
-			from ChiTietAlbum ct
-			join #Results r on ct.IDChiTietAlbum = r.idChiTietAlbum
-			where r.status = '2';
+			-- Update data to table with STATUS = 3
+			--update ct
+			--set ct.IDAlbum = r.idAlbum,
+			--	ct.IDNhac = r.idNhac
+			--from ChiTietAlbum ct
+			--join #Results r on ct.IDChiTietAlbum = r.idChiTietAlbum
+			--where r.status = '3';
 			
-			-- Delete data to table with STATUS = 3
+			-- Delete data to table with STATUS = 2
 			delete C
 			from ChiTietAlbum c
 			inner join #Results r
-			on c.IDChiTietAlbum=r.idChiTietAlbum
-			where r.status = '3';
+			on c.IDAlbum=r.idAlbum and c.IDNhac = r.idNhac
+			where r.status = '2';
 			drop table #Results;
 		end;
 	end;
@@ -390,6 +392,15 @@ create proc deletenhac
 as
 begin
 	delete from Nhac where IDNhac = @idnhac
+	end;
+go
+
+-- thu lay danh sach nhac theo nghe si
+create proc getnhacbyidnghesi
+	@idnghesi int
+as
+begin
+	select * from Nhac where IDNgheSi = @idnghesi
 	end;
 go
 
@@ -513,6 +524,17 @@ begin
 	order by MatchType desc
 	end;
 go
+
+-- thu tuc cap nhat luot nghe
+create proc updateluotnghe
+	@idnhac int
+as
+begin
+	update Nhac
+	set LuotNghe = isnull(LuotNghe, 0) + 1
+	where IDNhac = @idnhac
+end;
+
 
 ---------thu tuc lien quan den nghe si-------------------
 -- thu tuc lay tat ca nghe si
@@ -656,14 +678,21 @@ begin
 go
 
 -- thu tuc them the loai
-create proc createtheloai
+alter proc createtheloai
 	@tentheloai nvarchar(250),
-	@anhdaidien nvarchar(500)
+	@anhdaidien nvarchar(500),
+	@mota nvarchar(500)
 as
 begin
-	insert into TheLoai
-	values
-	(@tentheloai,@anhdaidien)
+	if(not exists (select * from TheLoai where TenTheLoai = @tentheloai))
+	begin
+		insert into TheLoai
+		(TenTheLoai,AnhDaiDien,MoTa)
+		values
+		(@tentheloai,@anhdaidien,@mota)
+		end;
+	else
+		select * from TheLoai where TenTheLoai = @tentheloai
 	end;
 go
 
@@ -677,21 +706,25 @@ begin
 go
 
 -- thu tuc cap nhat the loai
-create proc updatetheloai
+alter proc updatetheloai
 	@idtheloai int,
 	@tentheloai nvarchar(250),
-	@anhdaidien nvarchar(500)
+	@anhdaidien nvarchar(500),
+	@mota nvarchar(500),
+	@soluongbaihat int
 as
 begin
 	update TheLoai
 	set TenTheLoai = @tentheloai,
-	AnhDaiDien = @anhdaidien
+	AnhDaiDien = @anhdaidien,
+	SoLuongBaiHat = @soluongbaihat,
+	MoTa = @mota
 	where IDTheLoai = @idtheloai
 	end;
 go
 
 -- thu tuc tim kiem the loai
-create proc searchtheloai
+alter proc searchtheloai
 	(@pageindex int, 
 	@pagesize int,
 	@tentheloai nvarchar(250))
@@ -705,6 +738,7 @@ as
                         order by IDTheLoai ASC)) AS RowNumber, 
                         t.IDTheLoai,
 						t.TenTheLoai,
+						t.SoLuongBaiHat,
 						t.AnhDaiDien
                 into #Results1
                 from TheLoai as t
@@ -725,6 +759,7 @@ as
                         order by IDTheLoai ASC)) AS RowNumber, 
                         t.IDTheLoai,
 						t.TenTheLoai,
+						t.SoLuongBaiHat,
 						t.AnhDaiDien
                 into #Results2
                 from TheLoai as t
@@ -827,3 +862,4 @@ select * from DanhSachPhat
 select * from ChiTietDanhSachPhat
 
 exec logintaikhoan 'admin','2569'
+

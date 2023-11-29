@@ -9,7 +9,7 @@ namespace DAL
 {
     public partial interface ITheLoaiDAL
     {
-        bool Create(TheLoaiModel model);
+        TheLoaiModel Create(TheLoaiModel model);
         bool Delete(int idTheLoai);
         bool Update(TheLoaiModel model);
         List<TheLoaiModel> Search(int pageIndex, int pageSize, out long total, string tenTheLoai);

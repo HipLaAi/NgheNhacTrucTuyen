@@ -76,10 +76,10 @@ go
 alter table Nhac 
 alter column Lyrics nvarchar(max)
 go
-
-alter table Nhac 
-drop column ThoiLuong
+alter table Nhac
+add LuotNghe int
 go
+
 
 
 create table Album
@@ -235,6 +235,11 @@ begin
     set SoLuongBaiHat = isnull(SoLuongBaiHat, 0) + 1
     from NgheSi
     inner join inserted on NgheSi.IDNgheSi = inserted.IDNgheSi;
+
+	update TheLoai
+	set SoLuongBaiHat = isnull(SoLuongBaiHat,0) + 1
+	from TheLoai
+	inner join inserted on TheLoai.IDTheLoai = inserted.IDTheLoai;
 	end;
 go
 
@@ -256,6 +261,18 @@ begin
     from NgheSi ns
     inner join inserted i on ns.IDNgheSi = i.IDNgheSi
     where i.IDNgheSi is not null;
+
+	update tl
+    set tl.SoLuongBaiHat = case when tl.SoLuongBaiHat > 0 then tl.SoLuongBaiHat - 1 else 0 end
+    from TheLoai tl
+    inner join deleted d on tl.IDTheLoai = d.IDTheLoai
+    where d.IDTheLoai is not null;
+
+    update tl
+    set tl.SoLuongBaiHat = isnull(tl.SoLuongBaiHat, 0) + 1
+    from TheLoai tl
+    inner join inserted i on tl.IDTheLoai = i.IDTheLoai
+    where i.IDTheLoai is not null;
 	end;
 go
 
