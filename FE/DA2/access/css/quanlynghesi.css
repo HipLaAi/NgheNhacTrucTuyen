@@ -1,0 +1,116 @@
+table{
+    margin-top: 20px;
+    border: 1px solid rgba(221, 221, 221, 0.41);
+    width: 100%;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.179);
+    overflow: hidden;
+}
+table th{
+    height: 50px;
+    color: #ffffff;
+    background-color: #2b1657;
+    text-align: start;
+    padding-left: 15px;
+}
+table td{
+    text-align: start;
+    height: 55px;
+    padding-left: 15px;
+}
+table tr{
+    background-color: #00000000;
+    transition: all 0.3s linear;
+}
+table input{
+    accent-color: #d5d8d5;
+}
+table tr:hover{
+    background-color: rgb(224, 224, 224);
+}
+table td i{
+    padding: 4px;
+    border-radius: 5px;
+    transform: scale(1.1);
+    margin: 1px;
+    transition: all 0.3s linear;
+}
+table td i:nth-child(1){
+    background-color: rgba(221, 125, 0, 0.264);
+    color: rgb(244, 131, 1);
+}
+table td i:nth-child(2){
+    background-color: rgba(221, 77, 77, 0.259);
+    color: rgb(244, 1, 1);
+}
+table td i:hover{
+    cursor: pointer;
+    background-color: #ffffff;
+}
+table td label{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-self: center;
+    height: 100%;
+    width: 100%;
+}
+table td label:hover img{
+    transform: scale(1.05);
+    border: 1px solid rgb(255, 255, 255);
+}
+table td .img{
+    border: 1px solid rgba(255, 255, 255, 0);
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.188);
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    transition: all 0.3s linear;
+}
+table td .file_img{
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}   
+table select{
+    border-radius: 5px;
+    width: 170px;
+    height: 40px;
+    background-color: #5954622c;
+    border: 1px solid rgba(0, 0, 0, 0.173);
+    font-size: 14px;
+    color: gray;
+    padding-left: 10px;
+}
+.table select option{
+    color: rgb(0, 0, 0);
+    border: 1px solid rgb(0, 0, 0);
+}
+.table select option:disabled{
+    color: gray;
+}
+table td input[type=number]{
+    height: 40px;
+    width: 120px;
+    border-radius: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.173);
+    background-color: #5954622c;
+    font-size: 14px;
+    color: gray;
+    padding-left: 10px;
+}
+table td textarea{
+    margin-top: 5px;
+    padding-left: 10px;
+    padding-top: 5px;
+    font-size: 15px;
+    color: gray;
+    border: 1px solid rgba(0, 0, 0, 0.173);
+    border-radius: 5px;
+}
+table th:nth-child(2){
+    width: 170px;
+}

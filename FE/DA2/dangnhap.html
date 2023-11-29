@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập</title>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="access/css/login.css">
+    <link rel="shortcut icon" href="access/image/—Pngtree—music logo_8736577.png" type="image/x-icon">
+    <script src="access/js/angular.min.js"></script>
+    <script src="access/js/global.js"></script>
+
+<body ng-app="NgheNhacTrucTuyen"  ng-controller="ControllCtrl">
+    <div class="container">
+        <img id="logo" title="Music" src="D:\Phát triển Dịch Vụ\BTL\API.NgheNhacTrucTuyen\FILE\IMG\—Pngtree—music logo_8736577.png" alt="">
+        <hr style="width: 100%">
+        <p id="title">Để tiếp tục, hãy đăng nhập.</p>
+        <table border="0px" cellpasing = 0>
+            <tr>
+                <td colspan="3" id="errorUser" style="display: none;">
+                    <button class="errorUser" style="color: white;display: flex;justify-content: start;">
+                        <span style="display: flex;justify-content: center;align-items: center;width: 20px;height: 20px;border: 2px solid white;border-radius: 50%;font-size: 15px;">!</span>
+                        <span style="margin-left: 10px;margin-top: 5px;font-size: 13px;font-weight: normal;letter-spacing: 0px;">Tên người dùng hoặc mật khẩu không chính xác.</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <button id="btnFacebook">
+                        <img id="picFacebook" src="https://cdn3.iconfinder.com/data/icons/picons-social/57/46-facebook-512.png" alt="">
+                        <span>TIẾP TỤC VỚI FACEBOOK</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <button id="btnApple">
+                        <img src="https://cdn-icons-png.flaticon.com/512/154/154870.png" alt="">
+                        <span>TIẾP TỤC VỚI APPLE</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <button id="btnGoogle">
+                        <img src="https://cdn4.iconfinder.com/data/icons/socialcones/508/Google-256.png" alt="">
+                        <span>TIẾP TỤC VỚI GOOGLE</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <button id="btnPhone">
+                        <span>TIẾP TỤC VỚI SỐ ĐIỆN THOẠI</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td class="hr"><hr></td>
+                <td id="or">HOẶC</td>
+                <td class="hr"><hr></td>
+            </tr>
+            <tr>
+                <td class="tittle" colspan="3">
+                    Địa chỉ email hoặc tên người dùng
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3" >
+                    <input class="textbox" type="email" name="email" id="txtEmail" placeholder="Địa chỉ email hoặc tên người dùng" required>
+                </td>
+            </tr>
+            <tr>
+                <td id="errorEmail" colspan="3" style="display: none;color: red;font-size: 14px;">
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                    Vui lòng nhập tên người dùng hoặc địa chỉ email.
+                </td>
+            </tr>
+            <tr>
+                <td class="tittle" colspan="3">
+                    Mật khẩu
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <div class="password-input" style="position: relative; width: 100%;">
+                        <input class="textbox" type="password" placeholder="Mật khẩu" id="txtPassWord" required>
+                        <i id="icon" style="position: absolute;right: 10px;top: 15px;" class="fa-sharp fa-solid fa-eye-slash"></i>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td id="errorPassWord" colspan="3" style="display: none;color: red;font-size: 14px;">
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                    Vui lòng nhập mật khẩu của bạn.
+                </td>
+            </tr>
+            <tr>
+                <td style="height: 60px;" colspan="3">
+                    <a id="pass" href="#" style="font-weight: 500;font-size: 14px;">Quên mật khẩu của bạn?</a>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" >
+                    <label style="font-size: 14px;display: flex;align-items: center;">
+                        <button id="button">
+                            <i style="color: white;" class="fa-solid fa-check"></i>
+                        </button>
+                        <span style="margin-left: 10px;-webkit-user-select:none;">Hãy nhớ tôi</span>
+                    </label>
+                </td>
+                <td style="text-align: end;">
+                    <input id="sign" type="button" value="Đăng nhập" ng-click="Login()">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3" style="height: 50px;">
+                    <hr style="width: 100%;border: 0.5px solid rgb(230, 230, 230);">
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align: center;height: 50px;font-weight: 600;font-size: 17px;" colspan="3">
+                    Bạn chưa có tài khoản?
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <button id="btnPhone" onclick="window.location.href='./dangky.html'">
+                        <span>ĐĂNG KÝ</span>
+                    </button>
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+<script src="access/js/login.js"></script>
+<script src="access/js/truycap.js"></script>
+</html>

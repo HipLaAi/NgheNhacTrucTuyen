@@ -1,0 +1,135 @@
+#modal_create,#modal_update,#modal_delete {
+    position: fixed;
+    top: 0;
+    left: 250px;
+    width: calc(100% - 250px);
+    height: 100%;
+    background-color: #0000002a;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    opacity: 0;
+    transition: all 0.5s linear;
+}
+
+#modal_create .container ,#modal_update .container, #modal_delete .container{
+    width: 800px;
+    border-radius: 10px;
+    background-color: #ffffff;
+    transform: translateY(-100%);
+    transition: all 0.5s linear;
+}
+.container .title{
+    width: 100%;
+    height: 20px;
+    display: flex;
+    align-items: center;
+}
+.container .title span{
+    font-size: 16px;
+    font-weight: 600;
+    color: black;
+}
+#modal_create .container hr,#modal_update .container hr{
+    border-top: 2px solid rgba(208, 47, 236, 0.436);
+}
+.table_modal{
+    width: 100%;
+}
+.table_modal table{
+    width: 100%;
+    padding-left: 50px;
+}
+.table_modal table th{
+    background-color: #ffffff00;
+    width: 50%;
+    color: #000000;
+}
+.table_modal table tr:hover{
+    background-color: #00000000;
+}
+.table_modal input[type=text]{
+    padding-left: 5px;
+    width: 200px;
+    height: 40px;
+    background-color: #5954622c;
+    border: 0;
+    border-radius: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.173);
+    transition: all 0.3s linear;
+}
+.table_modal input[type=text]:focus{
+    background-color: #00000000;
+    border: 1px solid black;
+}
+.table_modal select{
+    border-radius: 5px;
+    width: 200px;
+    /* height: 40px; */
+    background-color: #5954622c;
+    border: 1px solid rgba(0, 0, 0, 0.173);
+    font-size: 14px;
+    color: gray;
+    padding-left: 10px;
+    max-height: 120px;
+    overflow-y:scroll;
+}
+.table_modal select option{
+    color: rgb(0, 0, 0);
+    border: 1px solid rgb(0, 0, 0);
+}
+.table_modal select option:disabled{
+    color: gray;
+}
+.table_modal td label{
+    position: relative;
+    display: grid;
+    height: 100%;
+    width: 100%;
+}
+.table_modal td .file_audio{
+    height: 100%;
+    margin-top: 20px;
+    margin-left: 0;
+}
+.table_modal td .img{
+    width: 200px;
+    height: 200px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+.table_modal td .file_img{
+    opacity: 1;
+    position: relative;
+    width: 80px;
+    height: 30px;
+}
+.table_modal td span{
+    overflow: auto;
+    color: #000000;
+    display: block;
+    height: 200px;
+    word-wrap: break-word;
+}
+.table_modal td input[type=file]{
+    width: 90px;
+}
+.table_modal td button i{
+    color: black;
+    background-color: #00000000;
+}
+.table_modal td button i:hover{
+    background-color: #00000000;
+}
+.table_modal td button span{
+    font-weight: 600;
+    display: inline;
+}
+.table_modal td button:nth-child(1){
+    background-color: rgb(127, 211, 127);
+}
+.table_modal td button:nth-child(2){
+    background-color: rgb(211, 127, 127);
+}

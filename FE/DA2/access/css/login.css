@@ -1,0 +1,180 @@
+.container{
+    display: grid;
+    place-items: center;
+    font-family: arial;
+    width: 100%;
+    flex-wrap: nowrap;
+}
+#logo{
+    -webkit-user-select: none;
+    width: 150px;
+    height: 100%;
+}
+#title{
+    padding-top: 30px;
+    font-size: 14px;
+    font-weight: 770;
+    letter-spacing: 0px;
+}
+table button{
+    -webkit-user-select: none;
+    margin-top: 10px;
+    width: 450px;
+    border-radius: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: default;
+}
+.errorUser{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 450px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(216, 44, 44);
+    border-radius: 0;
+    border: 0;
+}
+table button span{
+    font-size: 13px;
+    font-weight: 550;
+    margin-top: 5px;
+    margin-left: 20px;
+    letter-spacing: 1.5px;
+}
+#btnFacebook:hover,#btnGoogle:hover,#btnPhone:hover{
+    border: 1px solid black;
+}
+#btnApple:hover{
+    border: 1px solid rgb(0, 0, 0);
+}
+#btnFacebook{
+    background-color: rgb(93, 108, 166);
+    border: 0;
+    color: rgb(255, 255, 255);
+}
+#btnFacebook img{
+    object-fit: fill;
+    width: 30px;
+    height: 30px;
+    filter:brightness(0) invert(100%) sepia(100%) saturate(100%) hue-rotate(100deg);
+}
+#btnGoogle{
+    background-color: rgb(255, 255, 255);
+    border: 2px solid gray;
+    color: gray;
+}
+#btnGoogle img{
+    object-fit: fill;
+    width: 30px;
+    height: 30px;
+}
+#btnApple{
+    background-color: rgb(0, 0, 0);
+    border: 0;
+    border: 1px solid rgb(133, 133, 133);
+    color: rgb(255, 255, 255);
+}
+#btnApple img{
+    object-fit: fill;
+    width: 30px;
+    height: 30px;
+    filter:brightness(0) invert(100%) sepia(100%) saturate(100%) hue-rotate(100deg);
+}
+#btnPhone{
+    background-color: rgb(255, 255, 255);
+    border: 2px solid gray;
+    color: gray;
+}
+.hr{
+    color: grey;
+    width: 200px;
+    height: 60px;
+}
+#or{
+    padding-top: 5px;
+    text-align: center;
+    width: 50px;
+    height: 60px;
+    font-size: 15px;
+    font-weight: 600;
+}
+.tittle{
+    padding-top: 25px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: default;
+}
+.textbox{
+    font-size: 14px;
+    padding-left: 15px;
+    width: 100%;
+    height: 45px;
+    border-radius: 5px;
+    border: 2px solid gray;
+    box-sizing: border-box;
+}
+input:hover{
+    border: 2.2px solid rgb(0, 0, 0);
+}
+input[type="checkbox"] {
+    margin: 0px 10px 0px 0px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 3px;;
+    width: 14px;
+    height: 14px;
+    border: 1px solid rgb(104, 24, 100);
+
+}
+/* input[type="checkbox"]:checked {
+    transition-duration: 0.1s;
+    border: 4px solid green;
+    background-color: rgb(255, 255, 255);
+    background-color: #cccc;
+}*/
+#button{
+    margin-top: -3px;
+    width: 15px;
+    height: 15px;
+    background-color: rgb(149, 18, 134);
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+    border-radius: 3px;
+}
+input[type="button"]{
+    font-size: 17px;
+    font-weight: 700;
+    width: 170px;
+    height: 55px;
+    border-radius: 50px;
+    border: 0;
+    background-color: rgb(149, 92, 214);
+    transition: all 0.3s;
+}
+input[type="button"]:hover{
+    transform: scale(1.02);
+    cursor: default;
+}
+
+#icon{
+    color: grey;
+    transition: all 0.3s ease;
+}
+#icon:hover{
+    transform: scale(1.2);
+    color: black;
+}
+#pass{
+    color: black;
+}
+#pass:hover{
+    color: green;
+}

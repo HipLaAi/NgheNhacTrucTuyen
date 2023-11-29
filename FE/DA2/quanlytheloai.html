@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin</title>
+    <link rel="icon" type="image/png" href="access/image/—Pngtree—music logo_8736577.png"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="access/css/admin.css">
+    <link rel="stylesheet" href="access/css/quanlynghesi.css">
+    <link rel="stylesheet" href="access/css/modal.css">
+    <script src="access/js/angular.min.js"></script>
+    <script src="access/js/global.js"></script>
+</head>
+<body ng-app="NgheNhacTrucTuyen"  ng-controller="AdminCtrl">
+    <div id="header">
+        <li>
+            <i class="fa-solid fa-right-from-bracket"></i>
+        </li>
+    </div>
+    <nav id="sidebar" class="scroll">
+        <div class="logo">
+            <img src="D:\Phát triển Dịch Vụ\BTL\API.NgheNhacTrucTuyen\FILE\IMG\—Pngtree—music logo_8736577.png" alt="">
+            <h3>ADMIN</h3>
+            <span>Chào mừng bạn trở lại</span>
+        </div>
+        <hr>
+        <ul class="menu">
+             <li onclick="window.location.href='./quanlynhac.html'">
+                <i class="fa-solid fa-music"></i>
+                <span>Quản lý nhạc</span>
+            </li>
+            <li onclick="window.location.href='./quanlyalbum.html'">
+                <i class="fa-solid fa-record-vinyl"></i>
+                <span>Quản lý album</span>
+            </li>
+            <li onclick="window.location.href='./quanlynghesi.html'">
+                <i class="fa-solid fa-address-card"></i>
+                <span>Quản lý nghệ sĩ</span>
+            </li>
+            <li style="background-color: #8a4de6; color: #111d3d;" onclick="window.location.href='./quanlytheloai.html'">
+                <i class="fa-solid fa-palette"></i>
+                <span style="color: #111d3d;">Quản lý thể loại nhạc</span>
+            </li>
+            <li>
+                <i class="fa-brands fa-playstation"></i>
+                <span>Quản lý danh sách phát</span>
+            </li>
+            <li>
+                <i class="fa-solid fa-users"></i>
+                <span>Quản lý người dùng</span>
+            </li>
+            <li>
+                <i class="fa-brands fa-playstation"></i>
+                <span>Quản lý danh sách phát</span>
+            </li>
+        </ul>
+    </nav>
+    <div id="main">
+        <div class="top">
+            <h3>Quản lý thể loại</h3>
+            <h3 id="h3"></h3>
+        </div>
+        <div class="container">
+            <div class="button">
+                <button onclick="openFormAddMusic()">
+                    <i class="fa-solid fa-plus"></i>
+                    <span>Thêm thể loại mới</span>
+                </button>
+                <button>
+                    <i class="fa-solid fa-floppy-disk"></i>
+                    <span>Cập nhật thể loại</span>
+                </button>
+                <button>
+                    <i class="fa-solid fa-trash-can"></i>
+                    <span>Xóa tất cả</span>
+                </button>
+            </div>
+            <hr>
+            <div class="table">
+                <div class="tools">
+                    <label>
+                        Hiện
+                        <select name="" id="pageSizeTL" onchange="handleSelectChangeSizeTL()">
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
+                        danh mục
+                    </label>
+                    <label>
+                        Tìm kiếm: 
+                        <input type="search">
+                    </label>
+                </div>
+                <table  cellspacing = 0; border="1" id="mytable">
+                    <thead>
+                        <tr>
+                            <th>
+                                <input class="checkbox" type="checkbox">
+                            </th>
+                            <th onclick="sortTable(1)">Tên thể loại</th>
+                            <th>Ảnh</th>
+                            <th onclick="sortTable(3)">Số lượng bài hát</th>
+                            <th onclick="sortTable(4)">Mô tả</th>
+                            <th>Chức năng</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody">
+                        <tr ng-repeat="tl in listTheLoaiSearch">
+                            <td>
+                                <input class="checkbox" type="checkbox">
+                            </td>
+                            <td>{{tl.tenTheLoai}}</td>
+                            <td>
+                                <label>
+                                    <img accept="image/*" class="img" src="{{tl.anhDaiDien}}" alt="">
+                                    <input class="file_img" type="file">
+                                </label>
+                            </td>
+                            <td> 
+                                <input type="number" value="{{tl.soLuongBaiHat}}">                                                                                                                                              
+                            </td>
+                            <td>
+                                <textarea name="" id="" cols="40" rows="5">{{tl.moTa}}</textarea>
+                            </td>
+                            <td>
+                                <i ng-click="LoadDetailTheLoai(tl.idTheLoai)" onclick="openFormUpdateMusic()" class="fa-solid fa-pen-to-square"></i>
+                                <i class="fa-solid fa-delete-left"></i>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div id="page">
+                    <label>
+                        Trang
+                        <select name="" id="pageIndexTL" onchange="handleSelectChangeIndexTL()">
+                            <option ng-repeat="i in listIndexTL" value="{{i}}">
+                                {{i}}
+                            </option>
+                        </select>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="footer"></div>
+    </div>
+
+    <div id="modal_create">
+        <div class="container">
+            <div class="title">
+                <span>Thêm thể loại mới</span>
+            </div>
+            <hr>
+            <div class="table_modal">
+                <table>
+                    <tr>
+                        <th>Tên thể loại</th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="text" id="tenTheLoai">
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>Ảnh</th>
+                        <th>Mô tả</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>
+                                <input class="file_img" type="file"/>
+                                <img accept="image/*" class="img" src="" alt="">
+                            </label>
+                        </td>
+                        <td>
+                            <textarea name="" id="moTa" cols="30" rows="10"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <button ng-click="AddTheLoai()" type="button">
+                                <i class="fa-solid fa-plus"></i>
+                                <span>Thêm</span>
+                            </button>                            
+                            <button onclick="closeFormAddMusic()">
+                                <i class="fa-solid fa-xmark"></i>
+                                <span>Hủy</span>
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal_update">
+        <div class="container">
+            <div class="title">
+                <span>Cập nhật thể loại</span>
+            </div>
+            <hr>
+            <div class="table_modal">
+                <table ng-repeat="tl in TheLoaiByID">
+                    <tr>
+                        <th>Tên thể loại</th>
+                        <th>Số lượng bài hát</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="text" id="tenTheLoaiUpdate" value="{{tl.tenTheLoai}}">
+                        </td>
+                        <td>
+                            <input type="number" value="{{tl.soLuongBaiHat}}" id="soLuongBaiHat">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Ảnh</th>
+                        <th>Mô tả</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>
+                                <input class="file_img" type="file"/>
+                                <img id="img" accept="image/*" class="img" src="{{tl.anhDaiDien}}" alt="">
+                            </label>
+                        </td>
+                        <td>
+                            <textarea name="" id="textarea" cols="40" rows="10" data-idtheloai="{{tl.idTheLoai}}">{{tl.moTa}}</textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <button ng-click="UpdateTheLoai()" type="button">
+                                <i class="fa-solid fa-plus"></i>
+                                <span>Cập nhật</span>
+                            </button>                            
+                            <button onclick="closeFormUpdateMusic()">
+                                <i class="fa-solid fa-xmark"></i>
+                                <span>Hủy</span>
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="access/js/admin.js"></script>
+    <script src="access/js/quanly.js"></script>
+</body>
+</html>
+<script>
+    var user = JSON.parse(localStorage.getItem('Token'));
+    if (!user) {
+        window.location.href = "dangnhap.html";
+    }
+</script>
