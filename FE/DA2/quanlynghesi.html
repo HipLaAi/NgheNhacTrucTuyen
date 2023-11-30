@@ -50,10 +50,6 @@
                 <i class="fa-solid fa-users"></i>
                 <span>Quản lý người dùng</span>
             </li>
-            <li>
-                <i class="fa-brands fa-playstation"></i>
-                <span>Quản lý danh sách phát</span>
-            </li>
         </ul>
     </nav>
     <div id="main">
@@ -134,7 +130,7 @@
                             </td>
                             <td>
                                 <i ng-click="LoadDetailNgheSi(ns.idNgheSi)" onclick="openFormUpdateMusic()" class="fa-solid fa-pen-to-square"></i>
-                                <i class="fa-solid fa-delete-left"></i>
+                                <i ng-click="LoadDetailNgheSi(ns.idNgheSi)" onclick="openFormDeleteMusic()" class="fa-solid fa-delete-left"></i>
                             </td>
                         </tr>
                     </tbody>
@@ -246,6 +242,37 @@
                                 <span>Cập nhật</span>
                             </button>                            
                             <button onclick="closeFormUpdateMusic()">
+                                <i class="fa-solid fa-xmark"></i>
+                                <span>Hủy</span>
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal_delete">
+        <div class="container" style="width: 400px;">
+            <div class="title">
+                <span>Xóa nghệ sĩ</span>
+            </div>
+            <hr>
+            <div class="table_modal">
+                <table style="padding: 0;" ng-repeat="ns in NgheSiByID">
+                    <tr>
+                        <th style="text-align: center;">Bạn có chắc muốn xóa nghệ sĩ?</th>
+                    </tr>
+                    <tr>
+                        <th style="text-align: center;">{{ns.tenNgheSi}}</th>
+                    </tr>
+                    <tr>
+                        <td style="display: flex; justify-content: center;">
+                            <button ng-click="DeleteNgheSiByID(ns.idNgheSi)" type="button">
+                                <i class="fa-solid fa-trash-can"></i>
+                                <span>Xóa</span>
+                            </button>                            
+                            <button onclick="closeForDeleteMusic()">
                                 <i class="fa-solid fa-xmark"></i>
                                 <span>Hủy</span>
                             </button>

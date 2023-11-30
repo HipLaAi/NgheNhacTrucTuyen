@@ -50,10 +50,6 @@
                 <i class="fa-solid fa-users"></i>
                 <span>Quản lý người dùng</span>
             </li>
-            <li>
-                <i class="fa-brands fa-playstation"></i>
-                <span>Quản lý danh sách phát</span>
-            </li>
         </ul>
     </nav>
     <div id="main">
@@ -71,7 +67,7 @@
                     <i class="fa-solid fa-floppy-disk"></i>
                     <span>Cập nhật thể loại</span>
                 </button>
-                <button>
+                <button onclick="openFormDeleteDataMusic()">
                     <i class="fa-solid fa-trash-can"></i>
                     <span>Xóa tất cả</span>
                 </button>
@@ -110,7 +106,7 @@
                     <tbody id="tbody">
                         <tr ng-repeat="tl in listTheLoaiSearch">
                             <td>
-                                <input class="checkbox" type="checkbox">
+                                <input class="checkbox" type="checkbox" value="{{tl.idTheLoai}}">
                             </td>
                             <td>{{tl.tenTheLoai}}</td>
                             <td>
@@ -127,7 +123,7 @@
                             </td>
                             <td>
                                 <i ng-click="LoadDetailTheLoai(tl.idTheLoai)" onclick="openFormUpdateMusic()" class="fa-solid fa-pen-to-square"></i>
-                                <i class="fa-solid fa-delete-left"></i>
+                                <i ng-click="LoadDetailTheLoai(tl.idTheLoai)" onclick="openFormDeleteMusic()" class="fa-solid fa-delete-left"></i>
                             </td>
                         </tr>
                     </tbody>
@@ -239,6 +235,65 @@
                                 <span>Cập nhật</span>
                             </button>                            
                             <button onclick="closeFormUpdateMusic()">
+                                <i class="fa-solid fa-xmark"></i>
+                                <span>Hủy</span>
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal_delete">
+        <div class="container" style="width: 400px;">
+            <div class="title">
+                <span>Xóa nghệ sĩ</span>
+            </div>
+            <hr>
+            <div class="table_modal">
+                <table style="padding: 0;" ng-repeat="tl in TheLoaiByID">
+                    <tr>
+                        <th style="text-align: center;">Bạn có chắc muốn xóa nghệ sĩ?</th>
+                    </tr>
+                    <tr>
+                        <th style="text-align: center;">{{tl.tenTheLoai}}</th>
+                    </tr>
+                    <tr>
+                        <td style="display: flex; justify-content: center;">
+                            <button ng-click="DeleteTheLoaiByID(tl.idTheLoai)" type="button">
+                                <i class="fa-solid fa-trash-can"></i>
+                                <span>Xóa</span>
+                            </button>                            
+                            <button onclick="closeForDeleteMusic()">
+                                <i class="fa-solid fa-xmark"></i>
+                                <span>Hủy</span>
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal_deletedata">
+        <div class="container" style="width: 400px;">
+            <div class="title">
+                <span>Xóa thể loại</span>
+            </div>
+            <hr>
+            <div class="table_modal">
+                <table style="padding: 0;">
+                    <tr>
+                        <th style="text-align: center;">Bạn có chắc muốn xóa danh sách thể loại?</th>
+                    </tr>
+                    <tr>
+                        <td style="display: flex; justify-content: center;">
+                            <button ng-click="DeleteTheLoaiData()" type="button">
+                                <i class="fa-solid fa-trash-can"></i>
+                                <span>Xóa</span>
+                            </button>                            
+                            <button onclick="closeFormDeleteDataMusic()">
                                 <i class="fa-solid fa-xmark"></i>
                                 <span>Hủy</span>
                             </button>

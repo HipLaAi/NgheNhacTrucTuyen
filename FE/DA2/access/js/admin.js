@@ -25,6 +25,25 @@ function checkbox() {
     });
 }
 
+
+function openFormDeleteDataMusic(){
+  $('#modal_deletedata').style.opacity = 1;
+  $('#modal_deletedata').style.pointerEvents  = 'auto';
+  $('#modal_deletedata .container').style.transform  = 'translateY(0)';
+  angular.element(document.querySelector('[ng-app]')).scope().$apply(function($scope) {
+    $scope.ResetData();
+  });
+}
+
+function closeFormDeleteDataMusic(){
+  $('#modal_deletedata').style.opacity = 0;
+  $('#modal_deletedata').style.pointerEvents  = 'none';
+  $('#modal_deletedata .container').style.transform  = 'translateY(-100%)';
+  angular.element(document.querySelector('[ng-app]')).scope().$apply(function($scope) {
+    $scope.ResetData();
+  });
+}
+
 function openFormAddMusic(){
   $('#modal_create').style.opacity = 1;
   $('#modal_create').style.pointerEvents  = 'auto';

@@ -144,5 +144,23 @@ namespace DAL
             }
         }
 
+        public bool DeleteData(TheLoaiDataModel model)
+        {
+            string msgError = "";
+            try
+            {
+                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "deletenhieutheloai",
+                "@list_json_idtheloai", model.list_json_idtheloai != null ? MessageConvert.SerializeObject(model.list_json_idtheloai) : null);
+                if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
+                {
+                    throw new Exception(Convert.ToString(result) + msgError);
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

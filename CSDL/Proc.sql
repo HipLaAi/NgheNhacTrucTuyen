@@ -182,6 +182,7 @@ as
     begin
 		declare @idalbum int;
         insert into Album
+		(IDNgheSi,TenAlbum,AnhDaiDien,MoTa)
         values
 		(@idnghesi,@tenalbum,@anhdaidien,@mota)
 		set @idalbum = (select scope_identity());
@@ -224,7 +225,8 @@ as
                         ct.TenAlbum,
 						ct.IDNgheSi,
 						ct.AnhDaiDien,
-						ct.MoTa
+						ct.MoTa,
+						ct.SoLuongBaiHat
                 into #Results1
                 from Album as ct
 				WHERE  (@tenalbum = '' Or ct.TenAlbum like N'%'+@tenalbum+'%');                  
@@ -246,7 +248,8 @@ as
                         ct.TenAlbum,
 						ct.IDNgheSi,
 						ct.AnhDaiDien,
-						ct.MoTa
+						ct.MoTa,
+						ct.SoLuongBaiHat
                 into #Results2
                 from Album as ct
 				WHERE  (@tenalbum = '' Or ct.TenAlbum like N'%'+@tenalbum+'%');               
@@ -354,6 +357,27 @@ begin
 	select * from Album 
 	where TenAlbum like (N'%'+ @tenalbum +'%')
 	end;
+go
+
+-- thu tuc cap nhat luot nghe
+create proc updateluotnghealbum
+	@idalbum int
+as
+begin
+	update Album
+	set LuotNghe = isnull(LuotNghe, 0) + 1
+	where IDAlbum = @idalbum
+end;
+
+-- thu tuc lay album thinh hanh
+create proc topalbumthinhhanh
+	@top int
+as
+begin
+	select top(@top) * from Album
+	where LuotNghe > 0
+	order by LuotNghe desc
+end;
 go
 
 ---------thu tuc lien quan den nhac-------------------
@@ -535,6 +559,17 @@ begin
 	where IDNhac = @idnhac
 end;
 
+-- thu tuc luot nghe
+create proc topnhacthinhhanh
+	@top int
+as
+begin
+	select top(@top) * from Nhac
+	where LuotNghe > 0
+	order by LuotNghe desc
+end;
+go
+
 
 ---------thu tuc lien quan den nghe si-------------------
 -- thu tuc lay tat ca nghe si
@@ -573,6 +608,9 @@ begin
 	delete from NgheSi where IDNgheSi = @idnghesi
 	end;
 go
+
+exec deletenghesi 19
+select * from NgheSi
 
 -- thu tuc cap nhat nghe si
 alter proc updatenghesi
@@ -795,6 +833,24 @@ begin
 	end;
 go
 
+-- thu tuc xoa nhieu the loai
+create proc deletenhieutheloai
+	@list_json_idtheloai nvarchar(max)
+as
+    begin
+       select
+		json_value(js.value, '$.idTheLoai') as idTheLoai
+		into #Results 
+		from openjson(@list_json_idtheloai) as js;
+			
+		delete tl
+		from TheLoai tl
+		inner join #Results r
+		on tl.IDTheLoai=r.idTheLoai
+		drop table #Results;
+end;
+go
+
 ---------thu tuc lien quan den danh muc yeu thich-------------------
 create proc createdanhmucyeuthich
 	@idtaikhoan int,
@@ -820,6 +876,7 @@ as
 	end;
 go
 
+-- thu tuc nhac yeu thich
 create proc toplovemusic
 	@top int
 as
@@ -827,18 +884,6 @@ begin
 	select top(@top) * from Nhac
 	end;
 go
-
-
-select COUNT(IDNhac) distinct(IDAlbum) from ChiTietAlbum
-
-
-
-
-
-
-
-
-
 
 
 
@@ -849,7 +894,6 @@ use NgheNhacTrucTuyen
 
 select * from TaiKhoan
 select * from ChiTietTaiKhoan
-
 select * from TheLoai
 select * from NgheSi
 select * from TheLoai
@@ -861,5 +905,9 @@ select * from ChiTietDanhMucYeuThich
 select * from DanhSachPhat
 select * from ChiTietDanhSachPhat
 
-exec logintaikhoan 'admin','2569'
+update Album
+set SoLuongBaiHat = 3
+where IDAlbum = 10
 
+exec updateluotnghealbum 16
+exec updateluotnghe 14

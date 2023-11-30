@@ -106,7 +106,7 @@
                                 </div>
                                 <div class="lobby_listitemalbum">
                                     <!-- api -->
-                                    <div class="album-item" ng-repeat="a in listTopNewAlbum">
+                                    <div class="album-item" ng-repeat="a in listTopHotAlbum">
                                         <div class="album-item_img ">
                                             <img src="{{a.anhDaiDien}}"
                                                 alt="">
@@ -149,17 +149,17 @@
                                     <button class="rank-more">Xem thêm</button>
 
                                     <!-- api -->
-                                    <div class="item rank-item "data-index=${index} ng-repeat="a in listTopNewAlbum">
-                                        <span class="rank-item_rating">{{a.idAlbum}}</span>
+                                    <div class="item rank-item "data-index="" ng-repeat="n in listTopHotNhac">
+                                        <span class="rank-item_rating">{{$index + 1}}</span>
                                         <div class="item_img rank-item_img">
-                                            <img src="{{a.anhDaiDien}}"
+                                            <img src="{{n.img}}"
                                                 alt="">
                                         </div>
                                         <div class="item_profile rank-item_profile">
-                                            <h4>{{a.tenAlbum}}</h4>
-                                            <a href="">{{a.idNgheSi}}</a>                        
+                                            <h4>{{n.tenNhac}}</h4>
+                                            <a href="" ng-repeat="ns in listNgheSi" ng-show="ns.idNgheSi === n.idNgheSi">{{ns.tenNgheSi}}</a>                        
                                         </div>
-                                        <audio class="audio" src="{{a.idAlbum}}"></audio>
+                                        <audio class="audio" src="{{n.adio}}"></audio>
                                     </div>
                                     <!-- --- -->
 
@@ -218,56 +218,69 @@
                                     <div class="discovery-listitem_right">
                                         <!-- --đang code-- -->
                                         <!-- api -->
-                                        <div class="item discovery-item" ng-repeat="a in listTopNewAlbum">               
+                                        <div class="item discovery-item" ng-repeat="n in listNhacRight">               
                                             <div class="item_img discovery-item_img">
-                                                <img src="{{a.anhDaiDien}}"
+                                                <img src="{{n.img}}"
                                                     alt="">
                                             </div>
                                             <div class="item_profile discovery-item_profile">
-                                                <h4>{{a.tenAlbum}}</h4>
-                                                <a href="">{{a.idNgheSi}}</a>
+                                                <h4>{{n.tenNhac}}</h4>
+                                                <a href="" ng-repeat="ns in listNgheSi" ng-show="ns.idNgheSi === n.idNgheSi">{{ns.tenNgheSi}}</a>                        
                                             </div>          
                                         </div>
                                         <!-- --- -->
                                     </div>
                                     <div class="discovery-listitem_center">
                                         <!-- api -->
-                                        <div class="item discovery-item" ng-repeat="a in listTopNewAlbum">               
+                                        <div class="item discovery-item" ng-repeat="n in listNhacCenter">               
                                             <div class="item_img discovery-item_img">
-                                                <img src="{{a.anhDaiDien}}"
+                                                <img src="{{n.img}}"
                                                     alt="">
                                             </div>
                                             <div class="item_profile discovery-item_profile">
-                                                <h4>{{a.tenAlbum}}</h4>
-                                                <a href="">{{a.idNgheSi}}</a>
+                                                <h4>{{n.tenNhac}}</h4>
+                                                <a href="" ng-repeat="ns in listNgheSi" ng-show="ns.idNgheSi === n.idNgheSi">{{ns.tenNgheSi}}</a>                        
                                             </div>          
                                         </div>
                                         <!-- --- -->
                                     </div>
                                     <div class="discovery-listitem_left">
                                         <!-- api -->
-                                        <div class="item discovery-item" ng-repeat="a in listTopNewAlbum">               
+                                        <div class="item discovery-item" ng-repeat="n in listNhacLeft">               
                                             <div class="item_img discovery-item_img">
-                                                <img src="{{a.anhDaiDien}}"
+                                                <img src="{{n.img}}"
                                                     alt="">
                                             </div>
                                             <div class="item_profile discovery-item_profile">
-                                                <h4>{{a.tenAlbum}}</h4>
-                                                <a href="">{{a.idNgheSi}}</a>
+                                                <h4>{{n.tenNhac}}</h4>
+                                                <a href="" ng-repeat="ns in listNgheSi" ng-show="ns.idNgheSi === n.idNgheSi">{{ns.tenNgheSi}}</a>                        
                                             </div>          
                                         </div>
                                         <!-- --- -->
                                     </div>
                                 </div>
                             </div>
-                            <div class="broadcast">
+                            <!-- <div class="broadcast">
                                 <div class="title broadcast-title">
                                     <h2>MV NỔI BẬT</h2>
                                     <a href="">TẤT CẢ</a>
                                 </div>
                                 <div class="broadcast-listitem">
+                                    <div class="broadcast-item">                
+                                        <div class="broadcast-item_img">
+                                            <img src="https://www.elle.vn/wp-content/uploads/2017/07/25/hinh-anh-dep-1.jpg" alt="">
+                                        </div>
+                                        <div class="broadcast-item_frofile">
+                                            <div class="profile-img">
+                                                <img src="" alt="">
+                                            </div>
+                                            <div class="profile-details">
+                                                <span>{{n.idNgheSi}}</span>
+                                            </div>
+                                         </div>            
+                                    </div> 
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="albumchill">
                                 <div class="title albumchill-title">
                                     <h2>Chill</h2>
@@ -276,7 +289,17 @@
                                     </a>
                                 </div>
                                 <div class="albumchill-list">
-
+                                    <!-- --- api --- -->
+                                    <div class="albumchill-item" ng-repeat="n in listNhacLeft">
+                                        <div class="albumchill-item_img">
+                                            <img src="{{n.img}}"
+                                                alt="">
+                                        </div>
+                                        <div class="albumchill-item_profile">
+                                            <p href="" ng-repeat="ns in listNgheSi" ng-show="ns.idNgheSi === n.idNgheSi"> {{ns.tenNgheSi}}</p>
+                                        </div>
+                                    </div>
+                                    <!-- ------- -->
                                 </div>
                             </div>
                         </div>
@@ -1391,9 +1414,7 @@
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
-
                             </div>
                         </div>
                     </div>
@@ -1406,4 +1427,10 @@
 <script src="access/js/scrip.js"></script>
 <!-- <script src="access/js/main.js"></script> -->
 <script src="access/js/trangchinh.js"></script>
+<script>
+    var user = JSON.parse(localStorage.getItem('Token'));
+    if (!user) {
+        window.location.href = "dangnhap.html";
+    }
+</script>
 

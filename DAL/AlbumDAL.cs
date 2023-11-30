@@ -150,5 +150,23 @@ namespace DAL
             }
         }
 
+        public List<AlbumModel> TopHot(int top)
+        {
+            string msgError = "";
+            try
+            {
+                var dn = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "topalbumthinhhanh",
+                    "@top", top);
+                if (!string.IsNullOrEmpty(msgError))
+                    throw new Exception(msgError);
+                return dn.ConvertTo<AlbumModel>().ToList();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
     }
 }

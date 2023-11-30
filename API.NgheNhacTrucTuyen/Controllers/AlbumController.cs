@@ -17,39 +17,7 @@ namespace API.NgheNhacTrucTuyen.Controllers.USER
             _aLbumBLL = aLbumBLL;
         }
 
-        [AllowAnonymous]
-        [Route("create-album")]
-        [HttpPost]
-        public AlbumModel CreateAlbum([FromBody] AlbumModel model)
-        {
-            try
-            {
-                _aLbumBLL.Create(model);
-                return model;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
 
-        [AllowAnonymous]
-        [Route("delete-album")]
-        [HttpDelete]
-        public int Delete(int idAlbum)
-        {
-            _aLbumBLL.Delete(idAlbum);
-            return idAlbum;
-        }
-
-        [AllowAnonymous]
-        [Route("update-album")]
-        [HttpPost]
-        public AlbumModel UpdateItem([FromBody] AlbumModel model)
-        {
-            _aLbumBLL.Update(model);
-            return model;
-        }
         [AllowAnonymous]
         [Route("search-album")]
         [HttpPost]
@@ -107,6 +75,14 @@ namespace API.NgheNhacTrucTuyen.Controllers.USER
         public AlbumModel GetByName(string tenAlbum)
         {
             return _aLbumBLL.GetByName(tenAlbum);
+        }
+
+        [AllowAnonymous]
+        [Route("tophot-album")]
+        [HttpPost]
+        public List<AlbumModel> TopHot(int top)
+        {
+            return _aLbumBLL.TopHot(top);
         }
     }
 }

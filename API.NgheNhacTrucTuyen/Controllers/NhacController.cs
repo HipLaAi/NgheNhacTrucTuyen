@@ -9,39 +9,13 @@ namespace API.NgheNhacTrucTuyen.Controllers.USER
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+
     public class NhacController : Controller
     {
         private INhacBLL _nhacBLL;
         public NhacController(INhacBLL nhacBLL)
         {
             _nhacBLL = nhacBLL;
-        }
-
-        [Route("create-nhac")]
-        [HttpPost]
-        public IActionResult CreateNhac([FromBody] NhacModel model)
-        {
-            var music = _nhacBLL.Create(model);
-            if (music != null)
-                return Ok(new { message = "Nhạc đã tồn tài" });
-            return Ok(new { message = "Thêm thành công" });
-        }
-
-        [Route("delete-nhac")]
-        [HttpDelete]
-        public int Delete(int idNhac)
-        {
-            _nhacBLL.Delete(idNhac);
-            return idNhac;
-        }
-
-        [Route("update-nhac")]
-        [HttpPost]
-        public NhacModel UpdateItem([FromBody] NhacModel model)
-        {
-            _nhacBLL.Update(model);
-            return model;
         }
 
         [Route("search-nhac")]
@@ -89,7 +63,6 @@ namespace API.NgheNhacTrucTuyen.Controllers.USER
                 ) ;
         }
 
-        [AllowAnonymous]
         [Route("toplove-nhac")]
         [HttpGet]
         public IActionResult TopLove(int top)
@@ -103,7 +76,6 @@ namespace API.NgheNhacTrucTuyen.Controllers.USER
                 );
         }
 
-        [AllowAnonymous]
         [Route("getnhacbyidnghesi-nhac")]
         [HttpGet]
         public IActionResult GetNhacByIDNgheSi(int idNgheSi)
@@ -117,7 +89,6 @@ namespace API.NgheNhacTrucTuyen.Controllers.USER
                 );
         }
 
-        [AllowAnonymous]
         [Route("updateview-nhac")]
         [HttpPost]
         public bool UpdateView(int idNhac)
@@ -125,5 +96,17 @@ namespace API.NgheNhacTrucTuyen.Controllers.USER
             return _nhacBLL.UpdateView(idNhac);
         }
 
+        [Route("tophot-nhac")]
+        [HttpGet]
+        public IActionResult TopHot(int top)
+        {
+            var data = _nhacBLL.TopHot(top);
+            return Ok(
+                new
+                {
+                    Data = data
+                }
+                );
+        }
     }
 }

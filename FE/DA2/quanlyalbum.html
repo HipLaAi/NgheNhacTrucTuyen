@@ -49,10 +49,6 @@
                 <i class="fa-solid fa-users"></i>
                 <span>Quản lý người dùng</span>
             </li>
-            <li>
-                <i class="fa-brands fa-playstation"></i>
-                <span>Quản lý danh sách phát</span>
-            </li>
         </ul>
     </nav>
     <div id="main">
@@ -123,14 +119,14 @@
                                 {{ns.tenNgheSi}}                                
                             </td>
                             <td> 
-                                <input type="number" value="{{a.idAlbum}}">                                                                                                                                              
+                                <input type="number" value="{{a.soLuongBaiHat}}">                                                                                                                                              
                             </td>
                             <td>
                                 <textarea name="" id="" cols="40" rows="5">{{a.moTa}}</textarea>
                             </td>
                             <td>
                                 <i ng-click="LoadDetailAlbum(a.idAlbum)" onclick="openFormUpdateMusic()" class="fa-solid fa-pen-to-square"></i>
-                                <i class="fa-solid fa-delete-left"></i>
+                                <i ng-click="LoadDetailAlbum(a.idAlbum)" onclick="openFormDeleteMusic()" class="fa-solid fa-delete-left"></i>
                             </td>
                         </tr>
                     </tbody>
@@ -378,6 +374,37 @@
                         <span style="color: rgb(0, 0, 0);">Đóng</span>
                     </button>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal_delete">
+        <div class="container" style="width: 400px;">
+            <div class="title">
+                <span>Xóa Album</span>
+            </div>
+            <hr>
+            <div class="table_modal">
+                <table style="padding: 0;" ng-repeat="a in AlbumByID">
+                    <tr>
+                        <th style="text-align: center;">Bạn có chắc muốn xóa album?</th>
+                    </tr>
+                    <tr>
+                        <th style="text-align: center;">{{a.tenAlbum}}</th>
+                    </tr>
+                    <tr>
+                        <td style="display: flex; justify-content: center;">
+                            <button ng-click="DeleteAlbumByID(a.idAlbum)" type="button">
+                                <i class="fa-solid fa-trash-can"></i>
+                                <span>Xóa</span>
+                            </button>                            
+                            <button onclick="closeForDeleteMusic()">
+                                <i class="fa-solid fa-xmark"></i>
+                                <span>Hủy</span>
+                            </button>
+                        </td>
+                    </tr>
+                </table>
             </div>
         </div>
     </div>

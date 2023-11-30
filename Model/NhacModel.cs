@@ -15,6 +15,7 @@ namespace Model
         public string Audio { get; set; }
         public string IMG { get; set; }
         public string Lyrics { get; set; }
+        public int LuotNghe { get; set; }
         public List<NhacModel> list_jsonchitietnhactheonghesi { get; set; }
         public List<NhacModel> list_jsonchitietnhactheotheloai {  get; set; }
     }

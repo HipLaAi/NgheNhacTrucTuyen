@@ -16,5 +16,6 @@ namespace DAL
         TheLoaiModel GetByName(string tenTheLoai);
         List<TheLoaiModel> GetByID(int idTheLoai);
         List<TheLoaiModel> GetAll();
+        bool DeleteData(TheLoaiDataModel model);
     }
 }

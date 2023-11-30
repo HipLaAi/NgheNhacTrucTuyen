@@ -7,7 +7,7 @@ namespace API.NgheNhacTrucTuyen.Controllers.ADMIN
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class NgheSiController : Controller
     {
         private INgheSiBLL _nghesiBLL;
@@ -30,7 +30,6 @@ namespace API.NgheNhacTrucTuyen.Controllers.ADMIN
         //    }
         //}
         //------------------------------------
-        [AllowAnonymous]
         [Route("create-nghesi")]
         [HttpPost]
         public IActionResult CreateNgheSi([FromBody] NgheSiModel model)
@@ -44,10 +43,10 @@ namespace API.NgheNhacTrucTuyen.Controllers.ADMIN
 
         [Route("delete-nghesi")]
         [HttpDelete]
-        public int Delete(int idTheLoai)
+        public int Delete(int idNgheSi)
         {
-            _nghesiBLL.Delete(idTheLoai);
-            return idTheLoai;
+            _nghesiBLL.Delete(idNgheSi);
+            return idNgheSi;
         }
 
         [Route("update-nghesi")]
@@ -57,7 +56,6 @@ namespace API.NgheNhacTrucTuyen.Controllers.ADMIN
             _nghesiBLL.Update(model);
             return model;
         }
-        //[AllowAnonymous]
         [Route("search-nghesi")]
         [HttpPost]
         public IActionResult Search([FromBody] Dictionary<string, object> formData)
@@ -85,7 +83,6 @@ namespace API.NgheNhacTrucTuyen.Controllers.ADMIN
                 throw new Exception(ex.Message);
             }
         }
-        [AllowAnonymous]
         [Route("getbyid-nghesi")]
         [HttpGet]
         public IActionResult GetByID(int idNgheSi)

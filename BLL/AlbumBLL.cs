@@ -54,5 +54,10 @@ namespace BLL
         {
             return _res.GetByName(tenAlbum);
         }
+
+        public List<AlbumModel> TopHot(int top)
+        {
+            return _res.TopHot(top);
+        }
     }
 }

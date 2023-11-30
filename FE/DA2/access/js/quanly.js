@@ -22,10 +22,10 @@ app.controller("AdminCtrl", function ($scope, $http) {
 
     $scope.listAlbum;
     $scope.AlbumByID;
-    $scope.listNhacTrongAlbum;
-    $scope.listNhacKhongCoTrongAlbum;
-    $scope.listNhacCapNhat = [];
     $scope.listIndexA;
+    $scope.listNhacKhongCoTrongAlbum = [];
+    $scope.listNhacCapNhat = [];
+    $scope.listNhacTrongAlbum = [];
 
 
     //-----------Function---------------------------------
@@ -111,6 +111,9 @@ app.controller("AdminCtrl", function ($scope, $http) {
         $http({
             method: 'GET',
             url: current_url + '/api-admin/nghesi/getall-nghesi',
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('Token')
+            }
         }).then(function (response) {  
             $scope.listNgheSi = response.data;  
         });
@@ -129,7 +132,8 @@ app.controller("AdminCtrl", function ($scope, $http) {
             url: current_url + '/api-admin/nghesi/create-nghesi',
             data: item,
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('Token')
             }
         }).then(
             function(response) {
@@ -156,6 +160,9 @@ app.controller("AdminCtrl", function ($scope, $http) {
                 method: 'POST',
                 data: { pageIndex: index, pageSize: size },
                 url: current_url + '/api-admin/nghesi/search-nghesi',
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('Token')
+                }
             }).then(function (response) {
                 $scope.listNgheSiSearch = response.data.data;
                 const pageCount = Math.ceil(response.data.totalItems / $('#pageSizeNS').value);
@@ -173,7 +180,8 @@ app.controller("AdminCtrl", function ($scope, $http) {
             method: 'GET',
             url: current_url + '/api-admin/nghesi/getbyid-nghesi?idNgheSi=' + id,
             headers: {
-                'Content-Type': undefined
+                'Content-Type': undefined,
+                'Authorization': 'Bearer ' + localStorage.getItem('Token')
             }
         }).then(
             function(response) {
@@ -198,7 +206,7 @@ app.controller("AdminCtrl", function ($scope, $http) {
 
     $scope.LoadDetailNgheSi = function(id){
         $scope.GetByIDNgheSi(id).then(function () {
-            $scope.LoadNS(10,1)
+            handleSelectChangeIndexNS()
         });
     };
 
@@ -223,7 +231,8 @@ app.controller("AdminCtrl", function ($scope, $http) {
             url: current_url + '/api-admin/nghesi/update-nghesi',
             data: item,
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('Token')
             }
         }).then(
             function (response) {
@@ -232,12 +241,39 @@ app.controller("AdminCtrl", function ($scope, $http) {
                     alert(data.message);
                 } else {
                     alert('Cập nhật thành công');
-                    $scope.LoadNS(10,1);
                     closeFormUpdateMusic();
-                    console.log(item);
+                    $scope.LoadNS($('#pageSizeNS').value,$('#pageIndexNS').value)
                 }
             },
             function () {
+                alert('Có lỗi');
+            }
+        );
+    };
+
+    $scope.DeleteNgheSiByID = function(id) {
+        $http({
+            method: 'DELETE',
+            url: current_url + '/api-admin/NgheSi/delete-nghesi?idNgheSi=' + id,
+            headers: {
+                'Content-Type': undefined,
+                'Authorization': 'Bearer ' + localStorage.getItem('Token')
+            }
+        }).then(
+            function (response) {
+                var data = response.data;
+                if (data != null && data.message != null && data.message != 'undefined') {
+                    alert(data.message);
+                } else {
+                    alert('Xóa thành công');
+                    $scope.listNgheSiSearch = $scope.listNgheSiSearch.filter(function(item) {
+                        return item.idNgheSi !== id;
+                    });
+                    closeForDeleteMusic();
+                }
+            },
+            function (error) {
+                console.error('Có lỗi', error);
                 alert('Có lỗi');
             }
         );
@@ -339,7 +375,7 @@ app.controller("AdminCtrl", function ($scope, $http) {
 
     $scope.LoadDetailTheLoai = function(id){
         $scope.GetByIDTheLoai(id).then(function () {
-            $scope.LoadTL(10,1)
+            handleSelectChangeIndexTL()
         });
     };
 
@@ -381,6 +417,93 @@ app.controller("AdminCtrl", function ($scope, $http) {
             }
         );
     };
+
+    $scope.DeleteTheLoaiByID = function(id) {
+        $http({
+            method: 'DELETE',
+            url: current_url + '/api-admin/TheLoai/delete-theloai?idTheLoai=' + id,
+            headers: {
+                'Content-Type': undefined,
+                'Authorization': 'Bearer ' + localStorage.getItem('Token')
+            }
+        }).then(
+            function (response) {
+                var data = response.data;
+                if (data != null && data.message != null && data.message != 'undefined') {
+                    alert(data.message);
+                } else {
+                    alert('Xóa thành công');
+                    $scope.listTheLoaiSearch = $scope.listTheLoaiSearch.filter(function(item) {
+                        return item.idTheLoai !== id;
+                    });
+                    closeForDeleteMusic();
+                }
+            },
+            function (error) {
+                console.error('Có lỗi', error);
+                alert('Có lỗi');
+            }
+        );
+    };
+
+    $scope.DeleteTheLoaiData = function() {
+        var item = {};
+
+        var checkedValues = [];
+        var checkboxes = document.getElementsByClassName('checkbox');
+        
+        for (var i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i].checked && checkboxes[i].value != null) {
+                var idTheLoai = Number(checkboxes[i].value);
+
+                if (!isNaN(idTheLoai) && isFinite(idTheLoai)){
+                    var chiTietTheLoai = {
+                        idTheLoai: idTheLoai,
+                        tenTheLoai: '',
+                        anhDaiDien: '',
+                        moTa: '',
+                        soLuongBaiHat: 0,
+                        list_jsonchitietnhactheotheloai: []
+                    };
+                    checkedValues.push(chiTietTheLoai);
+                }
+            }
+        }
+        
+        item.list_json_idtheloai = checkedValues;
+
+        $http({
+            method: 'DELETE',
+            url: current_url + '/api-admin/TheLoai/deletedata-theloai',
+            data: item,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('Token')
+            }
+        }).then(
+            function (response) {
+                var data = response.data;
+                if (data != null && data.message != null && data.message != 'undefined') {
+                    alert(data.message);
+                } else {
+                    alert('Xóa thành công');
+                    checkedValues.forEach(function(chiTietTheLoai) {
+                        $scope.listTheLoaiSearch = $scope.listTheLoaiSearch.filter(function(item) {
+                            return item.idTheLoai !== chiTietTheLoai.idTheLoai;
+                        });
+                    }); 
+                    closeFormDeleteDataMusic();           
+                }
+            },
+            function (error) {
+                console.error('Có lỗi', error);
+                alert('Có lỗi');
+            }
+        );
+    };
+
+
+    
 
     //Nhac
     $scope.LoadNhac = function (size, index) {
@@ -714,8 +837,12 @@ app.controller("AdminCtrl", function ($scope, $http) {
             img: img,
             idTheLoai: idTheLoai,
         }
-        $scope.listNhacCapNhat.push(chiTietAlbumCapNhat);
+        if (!$scope.listNhacTrongAlbum || !$scope.listNhacCapNhat) {
+            $scope.listNhacTrongAlbum = [];
+            $scope.listNhacCapNhat = [];
+        }
         $scope.listNhacTrongAlbum.push(chiTietAlbum);
+        $scope.listNhacCapNhat.push(chiTietAlbumCapNhat);
     }
 
     $scope.DeleteNhacKhoiAlbum = function(idNhac, idAlbum, tenNhac,img,idTheLoai){
@@ -733,6 +860,10 @@ app.controller("AdminCtrl", function ($scope, $http) {
             tenNhac: tenNhac,
             img: img,
             idTheLoai: idTheLoai,
+        }
+        if (!$scope.listNhacKhongCoTrongAlbum || !$scope.listNhacCapNhat) {
+            $scope.listNhacKhongCoTrongAlbum = [];
+            $scope.listNhacCapNhat = [];
         }
         $scope.listNhacCapNhat.push(chiTietAlbumCapNhat);
         $scope.listNhacKhongCoTrongAlbum.push(chiTietAlbum);
@@ -771,14 +902,44 @@ app.controller("AdminCtrl", function ($scope, $http) {
                 }
                 else{
                     alert('Cập nhật thành công');
+                    $scope.listNhacCapNhat = [];
+                    closeFormUpdateMusic();
+                    $scope.LoadA($('#pageSizeA').value,$('#pageIndexA').value)
                 }
             },
             function() {
                 alert('Có lỗi');
-                console.log(item);
             }
         );
     }
+
+    $scope.DeleteAlbumByID = function(id) {
+        $http({
+            method: 'DELETE',
+            url: current_url + '/api-admin/Album/delete-album?idAlbum=' + id,
+            headers: {
+                'Content-Type': undefined,
+                'Authorization': 'Bearer ' + localStorage.getItem('Token')
+            }
+        }).then(
+            function (response) {
+                var data = response.data;
+                if (data != null && data.message != null && data.message != 'undefined') {
+                    alert(data.message);
+                } else {
+                    alert('Xóa thành công');
+                    $scope.listAlbum = $scope.listAlbum.filter(function(item) {
+                        return item.idAlbum !== id;
+                    });
+                    closeForDeleteMusic();
+                }
+            },
+            function (error) {
+                console.error('Có lỗi', error);
+                alert('Có lỗi');
+            }
+        );
+    };
 
     //---------------------Load-----------------
     $scope.LoadTheLoai();

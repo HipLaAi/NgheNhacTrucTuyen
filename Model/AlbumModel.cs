@@ -13,6 +13,8 @@ namespace Model
         public string TenAlbum { get; set; }
         public string MoTa { get; set; }
         public string AnhDaiDien { get; set; }
+        public int SoLuongBaiHat { get; set; }
+        public int LuotNghe { get; set; }
         public List<ChiTietAlbum> list_json_chitietalbum { get; set; }
         public List<NhacModel> list_jsonnhactrongalbum { get; set; }
         public List<NhacModel> list_jsonnhactheonghesikhongcotrongalbum { get; set; }

@@ -17,5 +17,6 @@ namespace DAL
         NhacModel Create(NhacModel model);
         List<NhacModel> GetNhacByIDNgheSi (int idNgheSi);
         bool UpdateView(int idNhac);
+        List<NhacModel> TopHot(int top);
     }
 }

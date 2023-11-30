@@ -16,6 +16,7 @@ namespace DAL
         List<AlbumModel> TopNew(int top);
         List<AlbumModel> GetByID(int idAlbum);
         AlbumModel GetByName(string tenAlbum);
+        List<AlbumModel> TopHot(int top);
 
     }
 }

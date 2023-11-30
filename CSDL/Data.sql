@@ -91,6 +91,12 @@ AnhDaiDien nvarchar(500),
 MoTa nvarchar(250)
 )
 go
+alter table Album
+add LuotNghe int
+go
+alter table Album
+add SoLuongBaiHat int
+go
 
 create table ChiTietAlbum
 (
@@ -276,6 +282,24 @@ begin
 	end;
 go
 
+--Trigger xóa nhạc--------------------
+create trigger trg_xoanhac
+on Nhac
+after delete
+as
+begin
+    set nocount on;
+    update NgheSi
+    set SoLuongBaiHat = case when SoLuongBaiHat > 0 then SoLuongBaiHat - 1 else 0 end
+    from NgheSi
+    inner join deleted on NgheSi.IDNgheSi = deleted.IDNgheSi;
+
+	update TheLoai
+    set SoLuongBaiHat = case when SoLuongBaiHat > 0 then SoLuongBaiHat - 1 else 0 end
+	from TheLoai
+	inner join deleted on TheLoai.IDTheLoai = deleted.IDTheLoai;
+	end;
+go
 
 
 
@@ -287,3 +311,8 @@ select * from Nhac
 select * from TheLoai
 select * from Album
 select * from ChiTietAlbum
+
+
+select count(*) as [SoLuongBaiHat] from Nhac 
+inner join TheLoai on Nhac.IDTheLoai = TheLoai.IDTheLoai
+where TheLoai.TenTheLoai = N'r&b đương đại'

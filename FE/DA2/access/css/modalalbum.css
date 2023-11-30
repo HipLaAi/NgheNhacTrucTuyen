@@ -1,4 +1,4 @@
-#modal_create,#modal_update,#modal_addmussic {
+#modal_create,#modal_update,#modal_addmussic, #modal_delete {
     position: fixed;
     top: 0;
     left: 250px;
@@ -14,7 +14,7 @@
     transition: all 0.5s linear;
 }
 
-#modal_create .container ,#modal_update .container, #modal_addmussic .container{
+#modal_create .container ,#modal_update .container, #modal_addmussic .container, #modal_delete .container{
     width: 900px;
     border-radius: 10px;
     background-color: #ffffff;

@@ -157,5 +157,22 @@ namespace DAL
                 throw ex;
             }
         }
+
+        public List<NhacModel> TopHot(int top)
+        {
+            string msgError = "";
+            try
+            {
+                var dn = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "topnhacthinhhanh",
+                    "@top", top);
+                if (!string.IsNullOrEmpty(msgError))
+                    throw new Exception(msgError);
+                return dn.ConvertTo<NhacModel>().ToList();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

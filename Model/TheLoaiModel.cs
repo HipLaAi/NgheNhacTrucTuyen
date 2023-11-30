@@ -15,4 +15,8 @@ namespace Model
         public int SoLuongBaiHat { get; set; }
         public List<NhacModel> list_jsonchitietnhactheotheloai { get; set; }
     }
+    public class TheLoaiDataModel
+    {
+        public List<TheLoaiModel> list_json_idtheloai { get; set; }
+    }
 }

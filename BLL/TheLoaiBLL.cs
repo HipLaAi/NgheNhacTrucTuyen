@@ -47,5 +47,11 @@ namespace BLL
         {
             return _res.GetAll();
         }
+
+        public bool DeleteData(TheLoaiDataModel model)
+        {
+            return _res.DeleteData(model);
+        }
+
     }
 }

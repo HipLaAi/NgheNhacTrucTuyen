@@ -54,5 +54,9 @@ namespace BLL
         {
             return _res.UpdateView(idNhac);
         }
+        public List<NhacModel> TopHot(int top)
+        {
+            return _res.TopHot(top);
+        }
     }
 }

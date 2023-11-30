@@ -90,5 +90,14 @@ namespace API.NgheNhacTrucTuyen.Controllers.ADMIN
         {
             return _theloaiBLL.GetAll();
         }
+
+        [AllowAnonymous]
+        [Route("deletedata-theloai")]
+        [HttpDelete]
+        public TheLoaiDataModel DeleteData(TheLoaiDataModel model)
+        {
+            _theloaiBLL.DeleteData(model);
+            return model;
+        }
     }
 }
