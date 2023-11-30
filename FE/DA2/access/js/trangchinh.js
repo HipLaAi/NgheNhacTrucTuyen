@@ -3,6 +3,9 @@ app.controller("UserCtrl", function ($scope, $http) {
      //---------Initialization-------------------------
      $scope.listTopNewAlbum;
      $scope.listTopHotAlbum;
+     $scope.listByIDAlbum;
+     $scope.listNhacTrongAlbum;
+     $scope.listNhacTheoNgheSiKhongCoTrongAlbum;
 
      $scope.listTopHotNhac;
      $scope.listNhacLeft = [];
@@ -10,6 +13,8 @@ app.controller("UserCtrl", function ($scope, $http) {
      $scope.listNhacRight = [];
 
      $scope.listNgheSi;
+
+     $scope.listTheLoai;
 
      //-----------Function---------------------------------
      
@@ -42,6 +47,23 @@ app.controller("UserCtrl", function ($scope, $http) {
           )
      }
 
+     $scope.GetByIDAlbum = function(id){
+          $http({
+               method: "GET",
+               url: current_url + '/api-user/Album/getbyid-album?idAlbum=' + id,
+               headers: {
+                    'Content-Type': undefined
+               }
+          }).then(
+               function(response){
+                    $scope.listByIDAlbum = response.data.data;
+                    $scope.listNhacTrongAlbum = response.data.data[0].list_jsonnhactrongalbum;
+                    $scope.listNhacTheoNgheSiKhongCoTrongAlbum = response.data.data[0].list_jsonnhactheonghesikhongcotrongalbum;
+               }
+          )
+     }
+
+     
      //-- Nhac
      $scope.TopHotNhac = function(){
           $http({
@@ -79,11 +101,22 @@ app.controller("UserCtrl", function ($scope, $http) {
           });
      }
 
+     //-- TheLoai
+     $scope.LoadTheLoai= function () {
+          $http({
+               method: 'GET',
+               url: current_url + '/api-user/TheLoai/tophot-theloai?top=' + 5
+          }).then(function (response) {  
+               $scope.listTheLoai = response.data.data;  
+          });
+     }
+
      //---------------------Load-----------------
      $scope.TopNewAlbum();
      $scope.TopHotAlbum();
      $scope.TopHotNhac();
      $scope.LoadNgheSi();
+     $scope.LoadTheLoai();
      $scope.LoadNhac(10, 2, $scope.listNhacLeft)
      .then(function () {
          return $scope.LoadNhac(10, 3, $scope.listNhacCenter);

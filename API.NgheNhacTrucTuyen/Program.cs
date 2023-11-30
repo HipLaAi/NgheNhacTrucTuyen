@@ -18,6 +18,8 @@ builder.Services.AddTransient<INhacDAL, NhacDAL>();
 builder.Services.AddTransient<INhacBLL, NhacBLL>();
 builder.Services.AddTransient<INgheSiDAL, NgheSiDAL>();
 builder.Services.AddTransient<INgheSiBLL, NgheSiBLL>();
+builder.Services.AddTransient<ITheLoaiDAL, TheLoaiDAL>();
+builder.Services.AddTransient<ITheLoaiBLL, TheLoaiBLL>();
 
 //// configure strongly typed settings objects
 IConfiguration configuration = builder.Configuration;

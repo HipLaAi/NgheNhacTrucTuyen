@@ -90,6 +90,12 @@ item2.addEventListener("click", function () {
   music_detail.style.display="none";
 });
 
+function albumdetial(){
+  home.style.display="none";
+  album_detial.style.display="block";
+  music_detail.style.display="none";
+}
+
 
 
 const btnPlayVisulazer =document.querySelector('.music-detail_left_bottom .music-profile button');

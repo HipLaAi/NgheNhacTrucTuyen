@@ -52,6 +52,10 @@ namespace BLL
         {
             return _res.DeleteData(model);
         }
+        public List<TheLoaiModel> TopHot(int top)
+        {
+            return _res.TopHot(top);
+        }
 
     }
 }

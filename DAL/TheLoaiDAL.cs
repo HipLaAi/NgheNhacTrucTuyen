@@ -162,5 +162,21 @@ namespace DAL
                 throw ex;
             }
         }
+        public List<TheLoaiModel> TopHot(int top)
+        {
+            string msgError = "";
+            try
+            {
+                var dn = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "toptheloai",
+                    "@top", top);
+                if (!string.IsNullOrEmpty(msgError))
+                    throw new Exception(msgError);
+                return dn.ConvertTo<TheLoaiModel>().ToList();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

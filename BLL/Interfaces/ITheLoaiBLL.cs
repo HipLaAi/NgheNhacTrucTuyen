@@ -17,5 +17,6 @@ namespace BLL
         List<TheLoaiModel> GetByID(int idTheLoai);
         List<TheLoaiModel> GetAll();
         bool DeleteData(TheLoaiDataModel model);
+        List<TheLoaiModel> TopHot(int top);
     }
 }

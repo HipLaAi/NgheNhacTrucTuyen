@@ -17,6 +17,11 @@ function showtime(){
     `;
 }
 
+function logout(){
+    window.location.href = "dangnhap.html";
+    localStorage.clear();
+}
+
 function checkbox() {
     $('th .checkbox').addEventListener('change', function () {
       $$('td .checkbox').forEach(function (checkbox) {

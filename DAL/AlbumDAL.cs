@@ -166,7 +166,5 @@ namespace DAL
                 throw ex;
             }
         }
-
-
     }
 }

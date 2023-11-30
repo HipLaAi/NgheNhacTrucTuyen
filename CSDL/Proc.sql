@@ -851,6 +851,16 @@ as
 end;
 go
 
+-- thu tuc cac bai hat co trong the loai
+create proc toptheloai
+	@top int
+as
+begin
+	select Top(@top) * from TheLoai
+	order by SoLuongBaiHat desc
+end;
+go
+
 ---------thu tuc lien quan den danh muc yeu thich-------------------
 create proc createdanhmucyeuthich
 	@idtaikhoan int,
@@ -911,3 +921,4 @@ where IDAlbum = 10
 
 exec updateluotnghealbum 16
 exec updateluotnghe 14
+exec toptheloai 5
